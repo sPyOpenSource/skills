@@ -1,0 +1,15 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 3,
+  "edgesRestored": 3,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 4,
+  "complexityRemapped": 0,
+  "notes": [
+    "Fixed 3 unknown node types: script\u2192file, template\u2192file (shell scripts and HTML template)",
+    "Fixed 3 node IDs: file:script:* \u2192 file:scripts/*, file:template:* \u2192 file:scripts/*",
+    "32 nodes with unset complexity defaulted to moderate \u2014 acceptable for small project",
+    "No cross-batch edges needed \u2014 all importMap entries are empty",
+    "No dangling edges found"
+  ]
+}

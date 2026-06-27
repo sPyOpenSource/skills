@@ -1,0 +1,504 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/helper.js",
+      "type": "file",
+      "label": "helper.js",
+      "path": "scripts/helper.js",
+      "properties": {
+        "summary": "Browser-side WebSocket connection manager (IIFE) with exponential backoff reconnection, session key persistence, status pill UI, tombstone overlay on prolonged disconnection, and a click/choice event sender for the brainstorm companion interface."
+      }
+    },
+    {
+      "id": "file:scripts/server.cjs",
+      "type": "file",
+      "label": "server.cjs",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "summary": "Node.js HTTP+WebSocket server for the brainstorm companion. Serves framed/full-doc screens from a content directory, authenticates via per-session token (query/cookie), handles WebSocket upgrade/framing (RFC 6455), broadcasts reloads on file changes, tracks activity for idle shutdown, and monitors parent-process liveness."
+      }
+    },
+    {
+      "id": "function:helper.js/nextReconnectDelay",
+      "type": "function",
+      "label": "nextReconnectDelay",
+      "path": "scripts/helper.js",
+      "properties": {
+        "startLine": 7,
+        "endLine": 9,
+        "params": ["current", "max"],
+        "exported": true
+      }
+    },
+    {
+      "id": "function:helper.js/setStatus",
+      "type": "function",
+      "label": "setStatus",
+      "path": "scripts/helper.js",
+      "properties": {
+        "startLine": 47,
+        "endLine": 59,
+        "params": ["state"],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:helper.js/showTombstone",
+      "type": "function",
+      "label": "showTombstone",
+      "path": "scripts/helper.js",
+      "properties": {
+        "startLine": 62,
+        "endLine": 75,
+        "params": [],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:helper.js/connect",
+      "type": "function",
+      "label": "connect",
+      "path": "scripts/helper.js",
+      "properties": {
+        "startLine": 77,
+        "endLine": 118,
+        "params": [],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:helper.js/toggleSelect",
+      "type": "function",
+      "label": "toggleSelect",
+      "path": "scripts/helper.js",
+      "properties": {
+        "startLine": 146,
+        "endLine": 158,
+        "params": ["el"],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/computeAcceptKey",
+      "type": "function",
+      "label": "computeAcceptKey",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 12,
+        "endLine": 14,
+        "params": ["clientKey"],
+        "exported": true
+      }
+    },
+    {
+      "id": "function:server.cjs/encodeFrame",
+      "type": "function",
+      "label": "encodeFrame",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 16,
+        "endLine": 38,
+        "params": ["opcode", "payload"],
+        "exported": true
+      }
+    },
+    {
+      "id": "function:server.cjs/decodeFrame",
+      "type": "function",
+      "label": "decodeFrame",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 40,
+        "endLine": 81,
+        "params": ["buffer"],
+        "exported": true
+      }
+    },
+    {
+      "id": "function:server.cjs/preferredPort",
+      "type": "function",
+      "label": "preferredPort",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 89,
+        "endLine": 98,
+        "params": [],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/initialToken",
+      "type": "function",
+      "label": "initialToken",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 132,
+        "endLine": 146,
+        "params": [],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/waitingPage",
+      "type": "function",
+      "label": "waitingPage",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 161,
+        "endLine": 176,
+        "params": [],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/bootstrapPage",
+      "type": "function",
+      "label": "bootstrapPage",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 188,
+        "endLine": 200,
+        "params": ["key"],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/readSuperpowersVersion",
+      "type": "function",
+      "label": "readSuperpowersVersion",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 208,
+        "endLine": 225,
+        "params": [],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/brandMarkup",
+      "type": "function",
+      "label": "brandMarkup",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 242,
+        "endLine": 252,
+        "params": [],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/getNewestScreen",
+      "type": "function",
+      "label": "getNewestScreen",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 267,
+        "endLine": 278,
+        "params": [],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/browserLauncherForPlatform",
+      "type": "function",
+      "label": "browserLauncherForPlatform",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 290,
+        "endLine": 302,
+        "params": ["url"],
+        "exported": true
+      }
+    },
+    {
+      "id": "function:server.cjs/isRegularFileInsideContentDir",
+      "type": "function",
+      "label": "isRegularFileInsideContentDir",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 304,
+        "endLine": 317,
+        "params": ["filePath"],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/parseCookies",
+      "type": "function",
+      "label": "parseCookies",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 328,
+        "endLine": 337,
+        "params": ["header"],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/isAuthorized",
+      "type": "function",
+      "label": "isAuthorized",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 341,
+        "endLine": 353,
+        "params": ["req"],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/securityHeaders",
+      "type": "function",
+      "label": "securityHeaders",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 366,
+        "endLine": 375,
+        "params": ["headers"],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/handleRequest",
+      "type": "function",
+      "label": "handleRequest",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 387,
+        "endLine": 438,
+        "params": ["req", "res"],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/handleUpgrade",
+      "type": "function",
+      "label": "handleUpgrade",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 444,
+        "endLine": 501,
+        "params": ["req", "socket"],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/handleMessage",
+      "type": "function",
+      "label": "handleMessage",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 503,
+        "endLine": 517,
+        "params": ["text"],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/maybeOpenBrowser",
+      "type": "function",
+      "label": "maybeOpenBrowser",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 530,
+        "endLine": 548,
+        "params": [],
+        "exported": false
+      }
+    },
+    {
+      "id": "function:server.cjs/startServer",
+      "type": "function",
+      "label": "startServer",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 576,
+        "endLine": 710,
+        "params": [],
+        "exported": false
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/nextReconnectDelay",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/setStatus",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/showTombstone",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/connect",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/toggleSelect",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/nextReconnectDelay",
+      "type": "exports",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/computeAcceptKey",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/encodeFrame",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/decodeFrame",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/preferredPort",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/initialToken",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/waitingPage",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/bootstrapPage",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/readSuperpowersVersion",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/brandMarkup",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/getNewestScreen",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/browserLauncherForPlatform",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/isRegularFileInsideContentDir",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/parseCookies",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/isAuthorized",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/securityHeaders",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/handleRequest",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/handleUpgrade",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/handleMessage",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/maybeOpenBrowser",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/startServer",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/computeAcceptKey",
+      "type": "exports",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/encodeFrame",
+      "type": "exports",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/decodeFrame",
+      "type": "exports",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/browserLauncherForPlatform",
+      "type": "exports",
+      "weight": 0.8
+    }
+  ]
+}

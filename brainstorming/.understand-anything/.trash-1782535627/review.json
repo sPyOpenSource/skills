@@ -1,0 +1,25 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'function:is_windows_like_shell' has no edges (orphan)",
+    "Node 'function:command_has_server_id' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 35,
+    "totalEdges": 39,
+    "totalLayers": 6,
+    "tourSteps": 8,
+    "nodeTypes": {
+      "document": 3,
+      "file": 5,
+      "function": 27
+    },
+    "edgeTypes": {
+      "references": 6,
+      "related": 2,
+      "depends_on": 1,
+      "contains": 25,
+      "exports": 5
+    }
+  }
+}

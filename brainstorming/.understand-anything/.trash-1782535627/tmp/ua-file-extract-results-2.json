@@ -1,0 +1,81 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "scripts/frame-template.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 213,
+      "nonEmptyLines": 196,
+      "metrics": {}
+    },
+    {
+      "path": "scripts/start-server.sh",
+      "language": "shell",
+      "fileCategory": "script",
+      "totalLines": 209,
+      "nonEmptyLines": 188,
+      "functions": [
+        {
+          "name": "is_windows_like_shell",
+          "startLine": 82,
+          "endLine": 95,
+          "params": []
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/stop-server.sh",
+      "language": "shell",
+      "fileCategory": "script",
+      "totalLines": 120,
+      "nonEmptyLines": 102,
+      "functions": [
+        {
+          "name": "mark_stopped",
+          "startLine": 20,
+          "endLine": 24,
+          "params": []
+        },
+        {
+          "name": "read_expected_server_id",
+          "startLine": 26,
+          "endLine": 32,
+          "params": []
+        },
+        {
+          "name": "command_line_for_pid",
+          "startLine": 34,
+          "endLine": 41,
+          "params": []
+        },
+        {
+          "name": "command_has_server_id",
+          "startLine": 43,
+          "endLine": 61,
+          "params": []
+        },
+        {
+          "name": "is_brainstorm_server",
+          "startLine": 65,
+          "endLine": 71,
+          "params": []
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    }
+  ]
+}

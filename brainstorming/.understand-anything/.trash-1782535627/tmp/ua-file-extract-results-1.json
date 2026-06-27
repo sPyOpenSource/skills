@@ -1,0 +1,195 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 159,
+      "nonEmptyLines": 114,
+      "sections": [
+        {
+          "heading": "Brainstorming Ideas Into Designs",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "Anti-Pattern: \"This Is Too Simple To Need A Design\"",
+          "level": 2,
+          "line": 16
+        },
+        {
+          "heading": "Checklist",
+          "level": 2,
+          "line": 20
+        },
+        {
+          "heading": "Process Flow",
+          "level": 2,
+          "line": 34
+        },
+        {
+          "heading": "The Process",
+          "level": 2,
+          "line": 63
+        },
+        {
+          "heading": "After the Design",
+          "level": 2,
+          "line": 102
+        },
+        {
+          "heading": "Key Principles",
+          "level": 2,
+          "line": 133
+        },
+        {
+          "heading": "Visual Companion",
+          "level": 2,
+          "line": 142
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "spec-document-reviewer-prompt.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 49,
+      "nonEmptyLines": 33,
+      "sections": [
+        {
+          "heading": "Spec Document Reviewer Prompt Template",
+          "level": 1,
+          "line": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": "visual-companion.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 298,
+      "nonEmptyLines": 223,
+      "sections": [
+        {
+          "heading": "Visual Companion Guide",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "When to Use",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "How It Works",
+          "level": 2,
+          "line": 27
+        },
+        {
+          "heading": "Starting a Session",
+          "level": 2,
+          "line": 33
+        },
+        {
+          "heading": "The Loop",
+          "level": 2,
+          "line": 105
+        },
+        {
+          "heading": "Writing Content Fragments",
+          "level": 2,
+          "line": 139
+        },
+        {
+          "heading": "CSS Classes Available",
+          "level": 2,
+          "line": 169
+        },
+        {
+          "heading": "Options (A/B/C choices)",
+          "level": 3,
+          "line": 173
+        },
+        {
+          "heading": "Cards (visual designs)",
+          "level": 3,
+          "line": 195
+        },
+        {
+          "heading": "Mockup container",
+          "level": 3,
+          "line": 209
+        },
+        {
+          "heading": "Split view (side-by-side)",
+          "level": 3,
+          "line": 218
+        },
+        {
+          "heading": "Pros/Cons",
+          "level": 3,
+          "line": 227
+        },
+        {
+          "heading": "Mock elements (wireframe building blocks)",
+          "level": 3,
+          "line": 236
+        },
+        {
+          "heading": "Typography and sections",
+          "level": 3,
+          "line": 249
+        },
+        {
+          "heading": "Browser Events Format",
+          "level": 2,
+          "line": 257
+        },
+        {
+          "heading": "Design Tips",
+          "level": 2,
+          "line": 271
+        },
+        {
+          "heading": "File Naming",
+          "level": 2,
+          "line": 280
+        },
+        {
+          "heading": "Cleaning Up",
+          "level": 2,
+          "line": 287
+        },
+        {
+          "heading": "Reference",
+          "level": 2,
+          "line": 295
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 19
+      }
+    }
+  ]
+}

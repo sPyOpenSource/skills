@@ -1,0 +1,1130 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "brainstorming",
+    "languages": [
+      "html",
+      "javascript",
+      "markdown",
+      "shell"
+    ],
+    "frameworks": [],
+    "description": "Turn ideas into fully formed designs and specs through natural collaborative dialogue. Includes a visual companion tool for wireframing and prototyping, plus a spec document reviewer for design verification.",
+    "analyzedAt": "2026-06-27T04:46:35.946803+00:00",
+    "gitCommitHash": "none"
+  },
+  "nodes": [
+    {
+      "id": "document:SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "SKILL.md",
+      "summary": "Main brainstorming skill defining the process for turning ideas into fully-formed designs and specs through collaborative dialogue. Covers a 9-step checklist (explore context, ask questions, propose approaches, present design, write spec, self-review, user review, transition to implementation), a process flow diagram, key principles (one question at a time, YAGNI, incremental validation), and instructions for offering the visual companion tool just-in-time. Emphasizes that implementation must NOT begin until the user approves the design.",
+      "tags": [
+        "brainstorming",
+        "design-process",
+        "spec-writing",
+        "skill-definition",
+        "collaborative-design"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:spec-document-reviewer-prompt.md",
+      "type": "document",
+      "name": "spec-document-reviewer-prompt.md",
+      "filePath": "spec-document-reviewer-prompt.md",
+      "summary": "Prompt template for dispatching a subagent to review spec documents created during brainstorming. Checks five categories: completeness (TODOs/placeholders), consistency (contradictions), clarity (ambiguity), scope (single-plan focus), and YAGNI (unrequested features). Calibrated to only flag issues that would cause real implementation planning problems, with an output format of Status, Issues, and Recommendations.",
+      "tags": [
+        "spec-review",
+        "prompt-template",
+        "quality-assurance",
+        "subagent"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:visual-companion.md",
+      "type": "document",
+      "name": "visual-companion.md",
+      "filePath": "visual-companion.md",
+      "summary": "Detailed guide for the browser-based visual brainstorming companion tool. Covers per-question decision of browser vs terminal, session startup with platform-specific guidance (Claude Code, Codex, Gemini CLI, Copilot CLI), the interactive loop (write HTML screens, collect user feedback via WebSocket events, iterate), CSS classes for UI patterns (options, cards, mockups, split view, pros/cons), content fragments vs full documents, browser events format, and cleanup procedures.",
+      "tags": [
+        "visual-companion",
+        "wireframing",
+        "prototyping",
+        "browser-tool",
+        "mockups"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/frame-template.html",
+      "type": "file",
+      "label": "frame-template.html",
+      "properties": {
+        "path": "scripts/frame-template.html",
+        "language": "html",
+        "fileCategory": "markup",
+        "totalLines": 213,
+        "nonEmptyLines": 196,
+        "summary": "HTML frame template for the brainstorm companion. Provides OS-aware light/dark theming, header branding with connection status, a scrollable main content area, and CSS helpers for common UI patterns: option cards, design cards, mockup containers, split view, pros/cons, and inline mockup elements. Content is injected via placeholder comment."
+      },
+      "complexity": "moderate",
+      "name": "frame-template.html",
+      "summary": "HTML frame template providing the brainstorm companion browser UI shell with OS-aware CSS theming and UI pattern classes.",
+      "tags": [
+        "html-template",
+        "css-theming",
+        "ui-framework",
+        "dark-mode"
+      ]
+    },
+    {
+      "id": "file:scripts/start-server.sh",
+      "type": "file",
+      "label": "start-server.sh",
+      "properties": {
+        "path": "scripts/start-server.sh",
+        "language": "shell",
+        "fileCategory": "script",
+        "totalLines": 209,
+        "nonEmptyLines": 188,
+        "summary": "Starts the brainstorm server on a random high port. Parses CLI args (--project-dir, --host, --url-host, --idle-timeout-minutes, --open, --foreground/--background). Creates a unique session directory with state files, generates a server instance ID, kills any existing server via PID file, then launches server.cjs either in foreground (with wait) or background (with nohup/disown). Polls log file for 'server-started' confirmation with process-liveness verification."
+      },
+      "complexity": "moderate",
+      "name": "start-server.sh",
+      "summary": "Shell script to start the brainstorm visual companion server with CLI options and session management.",
+      "tags": [
+        "server-startup",
+        "shell-script",
+        "session-management"
+      ]
+    },
+    {
+      "id": "file:scripts/stop-server.sh",
+      "type": "file",
+      "label": "stop-server.sh",
+      "properties": {
+        "path": "scripts/stop-server.sh",
+        "language": "shell",
+        "fileCategory": "script",
+        "totalLines": 120,
+        "nonEmptyLines": 102,
+        "summary": "Stops a brainstorm server by session directory. Validates the server PID against the stored server instance ID to avoid signaling unrelated processes. Attempts graceful kill with up to 2s wait, escalates to SIGKILL if needed. Cleans up PID, instance ID, and log files. Only deletes session directory if under /tmp (ephemeral); preserves persistent .superpowers/ directories."
+      },
+      "complexity": "moderate",
+      "name": "stop-server.sh",
+      "summary": "Shell script to stop the brainstorm server gracefully with PID management and cleanup.",
+      "tags": [
+        "server-shutdown",
+        "shell-script",
+        "cleanup"
+      ]
+    },
+    {
+      "id": "function:is_windows_like_shell",
+      "type": "function",
+      "label": "is_windows_like_shell",
+      "properties": {
+        "name": "is_windows_like_shell",
+        "file": "scripts/start-server.sh",
+        "startLine": 82,
+        "endLine": 95,
+        "params": [],
+        "length": 14,
+        "summary": "Detects Windows-like shell environments (MSYS, Cygwin, MinGW) by checking OSTYPE and uname -s. Used to auto-foreground the server since these environments reap background/nohup processes."
+      },
+      "complexity": "moderate",
+      "name": "is_windows_like_shell",
+      "summary": "Detects whether the current shell environment resembles Windows (Git Bash, WSL) for platform-specific behavior.",
+      "tags": [
+        "platform-detection",
+        "shell",
+        "utility"
+      ]
+    },
+    {
+      "id": "function:command_has_server_id",
+      "type": "function",
+      "label": "command_has_server_id",
+      "properties": {
+        "name": "command_has_server_id",
+        "file": "scripts/stop-server.sh",
+        "startLine": 43,
+        "endLine": 61,
+        "params": [
+          "pid",
+          "expected"
+        ],
+        "length": 19,
+        "summary": "Checks whether a given PID's command line contains the expected --brainstorm-server-id argument. Supports /proc/$pid/cmdline (Linux) and ps -ww output (macOS/BSD). Called by is_brainstorm_server to verify process identity before signaling."
+      },
+      "complexity": "moderate",
+      "name": "command_has_server_id",
+      "summary": "Validates that a given PID corresponds to a brainstorm server session by checking a server instance identifier.",
+      "tags": [
+        "validation",
+        "server",
+        "utility"
+      ]
+    },
+    {
+      "id": "file:scripts/helper.js",
+      "type": "file",
+      "label": "helper.js",
+      "path": "scripts/helper.js",
+      "properties": {
+        "summary": "Browser-side WebSocket connection manager (IIFE) with exponential backoff reconnection, session key persistence, status pill UI, tombstone overlay on prolonged disconnection, and a click/choice event sender for the brainstorm companion interface."
+      },
+      "complexity": "moderate",
+      "name": "helper.js",
+      "summary": "Client-side helper module providing WebSocket connection management, status UI updates, and reconnection logic.",
+      "tags": [
+        "websocket",
+        "reconnection",
+        "ui-updates",
+        "client-side"
+      ]
+    },
+    {
+      "id": "file:scripts/server.cjs",
+      "type": "file",
+      "label": "server.cjs",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "summary": "Node.js HTTP+WebSocket server for the brainstorm companion. Serves framed/full-doc screens from a content directory, authenticates via per-session token (query/cookie), handles WebSocket upgrade/framing (RFC 6455), broadcasts reloads on file changes, tracks activity for idle shutdown, and monitors parent-process liveness."
+      },
+      "complexity": "moderate",
+      "name": "server.cjs",
+      "summary": "Node.js server providing WebSocket-based session management, file watching, screen rendering, and browser automation.",
+      "tags": [
+        "websocket-server",
+        "file-watching",
+        "browser-launcher",
+        "nodejs"
+      ]
+    },
+    {
+      "id": "function:helper.js/nextReconnectDelay",
+      "type": "function",
+      "label": "nextReconnectDelay",
+      "path": "scripts/helper.js",
+      "properties": {
+        "startLine": 7,
+        "endLine": 9,
+        "params": [
+          "current",
+          "max"
+        ],
+        "exported": true
+      },
+      "complexity": "moderate",
+      "name": "nextReconnectDelay",
+      "summary": "Calculates the next reconnection delay using exponential backoff from 500ms up to 30s maximum.",
+      "tags": [
+        "websocket",
+        "reconnection",
+        "backoff"
+      ]
+    },
+    {
+      "id": "function:helper.js/setStatus",
+      "type": "function",
+      "label": "setStatus",
+      "path": "scripts/helper.js",
+      "properties": {
+        "startLine": 47,
+        "endLine": 59,
+        "params": [
+          "state"
+        ],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "setStatus",
+      "summary": "Updates the connection status indicator UI element with current state (connected, disconnected, reconnecting).",
+      "tags": [
+        "ui-update",
+        "connection-status",
+        "dom-manipulation"
+      ]
+    },
+    {
+      "id": "function:helper.js/showTombstone",
+      "type": "function",
+      "label": "showTombstone",
+      "path": "scripts/helper.js",
+      "properties": {
+        "startLine": 62,
+        "endLine": 75,
+        "params": [],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "showTombstone",
+      "summary": "Displays a tombstone overlay after 15 seconds of disconnection to indicate the server may be down.",
+      "tags": [
+        "ui-overlay",
+        "disconnection",
+        "user-feedback"
+      ]
+    },
+    {
+      "id": "function:helper.js/connect",
+      "type": "function",
+      "label": "connect",
+      "path": "scripts/helper.js",
+      "properties": {
+        "startLine": 77,
+        "endLine": 118,
+        "params": [],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "connect",
+      "summary": "Establishes WebSocket connection with the server, handling authentication and reconnection lifecycle.",
+      "tags": [
+        "websocket",
+        "connection",
+        "lifecycle"
+      ]
+    },
+    {
+      "id": "function:helper.js/toggleSelect",
+      "type": "function",
+      "label": "toggleSelect",
+      "path": "scripts/helper.js",
+      "properties": {
+        "startLine": 146,
+        "endLine": 158,
+        "params": [
+          "el"
+        ],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "toggleSelect",
+      "summary": "Toggles selection state on clickable choice elements for interactive brainstorming.",
+      "tags": [
+        "interaction",
+        "selection",
+        "brainstorming"
+      ]
+    },
+    {
+      "id": "function:server.cjs/computeAcceptKey",
+      "type": "function",
+      "label": "computeAcceptKey",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 12,
+        "endLine": 14,
+        "params": [
+          "clientKey"
+        ],
+        "exported": true
+      },
+      "complexity": "moderate",
+      "name": "computeAcceptKey",
+      "summary": "Computes the Sec-WebSocket-Accept key for WebSocket handshake per RFC 6455.",
+      "tags": [
+        "websocket",
+        "handshake",
+        "rfc-6455"
+      ]
+    },
+    {
+      "id": "function:server.cjs/encodeFrame",
+      "type": "function",
+      "label": "encodeFrame",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 16,
+        "endLine": 38,
+        "params": [
+          "opcode",
+          "payload"
+        ],
+        "exported": true
+      },
+      "complexity": "moderate",
+      "name": "encodeFrame",
+      "summary": "Encodes a WebSocket data frame with masking, opcode, and payload length per RFC 6455.",
+      "tags": [
+        "websocket",
+        "framing",
+        "protocol"
+      ]
+    },
+    {
+      "id": "function:server.cjs/decodeFrame",
+      "type": "function",
+      "label": "decodeFrame",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 40,
+        "endLine": 81,
+        "params": [
+          "buffer"
+        ],
+        "exported": true
+      },
+      "complexity": "moderate",
+      "name": "decodeFrame",
+      "summary": "Decodes incoming WebSocket frames handling continuation, close, and fragmented messages.",
+      "tags": [
+        "websocket",
+        "framing",
+        "protocol-decode"
+      ]
+    },
+    {
+      "id": "function:server.cjs/preferredPort",
+      "type": "function",
+      "label": "preferredPort",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 89,
+        "endLine": 98,
+        "params": [],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "preferredPort",
+      "summary": "Determines the server listen port from configuration, environment, or default 1729.",
+      "tags": [
+        "configuration",
+        "port",
+        "server"
+      ]
+    },
+    {
+      "id": "function:server.cjs/initialToken",
+      "type": "function",
+      "label": "initialToken",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 132,
+        "endLine": 146,
+        "params": [],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "initialToken",
+      "summary": "Generates or loads a session authentication token for the WebSocket connection.",
+      "tags": [
+        "authentication",
+        "session",
+        "token"
+      ]
+    },
+    {
+      "id": "function:server.cjs/waitingPage",
+      "type": "function",
+      "label": "waitingPage",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 161,
+        "endLine": 176,
+        "params": [],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "waitingPage",
+      "summary": "Generates the default waiting/loading page HTML shown before the first screen.",
+      "tags": [
+        "html-generation",
+        "loading",
+        "ui"
+      ]
+    },
+    {
+      "id": "function:server.cjs/bootstrapPage",
+      "type": "function",
+      "label": "bootstrapPage",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 188,
+        "endLine": 200,
+        "params": [
+          "key"
+        ],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "bootstrapPage",
+      "summary": "Generates the bootstrap page HTML that injects helper.js and establishes the WebSocket connection.",
+      "tags": [
+        "html-generation",
+        "bootstrapping",
+        "websocket-injection"
+      ]
+    },
+    {
+      "id": "function:server.cjs/readSuperpowersVersion",
+      "type": "function",
+      "label": "readSuperpowersVersion",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 208,
+        "endLine": 225,
+        "params": [],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "readSuperpowersVersion",
+      "summary": "Reads the installed superpowers CLI version from the user config directory.",
+      "tags": [
+        "version-check",
+        "cli",
+        "utility"
+      ]
+    },
+    {
+      "id": "function:server.cjs/brandMarkup",
+      "type": "function",
+      "label": "brandMarkup",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 242,
+        "endLine": 252,
+        "params": [],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "brandMarkup",
+      "summary": "Returns the branded header HTML with connection status indicator.",
+      "tags": [
+        "html-generation",
+        "branding",
+        "header"
+      ]
+    },
+    {
+      "id": "function:server.cjs/getNewestScreen",
+      "type": "function",
+      "label": "getNewestScreen",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 267,
+        "endLine": 278,
+        "params": [],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "getNewestScreen",
+      "summary": "Finds the most recently modified HTML screen file in the content directory.",
+      "tags": [
+        "file-system",
+        "screen-management",
+        "utility"
+      ]
+    },
+    {
+      "id": "function:server.cjs/browserLauncherForPlatform",
+      "type": "function",
+      "label": "browserLauncherForPlatform",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 290,
+        "endLine": 302,
+        "params": [
+          "url"
+        ],
+        "exported": true
+      },
+      "complexity": "moderate",
+      "name": "browserLauncherForPlatform",
+      "summary": "Returns the platform-appropriate command to launch a browser window pointing at the server URL.",
+      "tags": [
+        "browser-automation",
+        "launcher",
+        "platform-specific"
+      ]
+    },
+    {
+      "id": "function:server.cjs/isRegularFileInsideContentDir",
+      "type": "function",
+      "label": "isRegularFileInsideContentDir",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 304,
+        "endLine": 317,
+        "params": [
+          "filePath"
+        ],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "isRegularFileInsideContentDir",
+      "summary": "Validates that a file path is within the content directory (path traversal guard).",
+      "tags": [
+        "security",
+        "path-validation",
+        "guard"
+      ]
+    },
+    {
+      "id": "function:server.cjs/parseCookies",
+      "type": "function",
+      "label": "parseCookies",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 328,
+        "endLine": 337,
+        "params": [
+          "header"
+        ],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "parseCookies",
+      "summary": "Parses HTTP Cookie header into a key-value map for session authentication.",
+      "tags": [
+        "http",
+        "cookie-parsing",
+        "authentication"
+      ]
+    },
+    {
+      "id": "function:server.cjs/isAuthorized",
+      "type": "function",
+      "label": "isAuthorized",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 341,
+        "endLine": 353,
+        "params": [
+          "req"
+        ],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "isAuthorized",
+      "summary": "Performs timing-safe comparison of the session token for WebSocket connection authorization.",
+      "tags": [
+        "authentication",
+        "security",
+        "timing-safe"
+      ]
+    },
+    {
+      "id": "function:server.cjs/securityHeaders",
+      "type": "function",
+      "label": "securityHeaders",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 366,
+        "endLine": 375,
+        "params": [
+          "headers"
+        ],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "securityHeaders",
+      "summary": "Returns HTTP security headers (X-Content-Type-Options, X-Frame-Options, etc.) for all responses.",
+      "tags": [
+        "http",
+        "security",
+        "headers"
+      ]
+    },
+    {
+      "id": "function:server.cjs/handleRequest",
+      "type": "function",
+      "label": "handleRequest",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 387,
+        "endLine": 438,
+        "params": [
+          "req",
+          "res"
+        ],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "handleRequest",
+      "summary": "Main HTTP request handler dispatching to appropriate response handlers by URL path.",
+      "tags": [
+        "http",
+        "request-handler",
+        "dispatch"
+      ]
+    },
+    {
+      "id": "function:server.cjs/handleUpgrade",
+      "type": "function",
+      "label": "handleUpgrade",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 444,
+        "endLine": 501,
+        "params": [
+          "req",
+          "socket"
+        ],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "handleUpgrade",
+      "summary": "Handles HTTP Upgrade request for WebSocket connection establishment.",
+      "tags": [
+        "websocket",
+        "upgrade",
+        "handshake"
+      ]
+    },
+    {
+      "id": "function:server.cjs/handleMessage",
+      "type": "function",
+      "label": "handleMessage",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 503,
+        "endLine": 517,
+        "params": [
+          "text"
+        ],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "handleMessage",
+      "summary": "Processes incoming WebSocket messages (ping, screen refresh requests, etc.).",
+      "tags": [
+        "websocket",
+        "message-handler",
+        "protocol"
+      ]
+    },
+    {
+      "id": "function:server.cjs/maybeOpenBrowser",
+      "type": "function",
+      "label": "maybeOpenBrowser",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 530,
+        "endLine": 548,
+        "params": [],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "maybeOpenBrowser",
+      "summary": "Attempts to launch a browser pointing at the server URL on startup.",
+      "tags": [
+        "browser-launch",
+        "startup",
+        "utility"
+      ]
+    },
+    {
+      "id": "function:server.cjs/startServer",
+      "type": "function",
+      "label": "startServer",
+      "path": "scripts/server.cjs",
+      "properties": {
+        "startLine": 576,
+        "endLine": 710,
+        "params": [],
+        "exported": false
+      },
+      "complexity": "moderate",
+      "name": "startServer",
+      "summary": "Creates and starts the HTTP server with WebSocket support, returning the server instance.",
+      "tags": [
+        "server-lifecycle",
+        "http-server",
+        "entry-point"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:SKILL.md",
+      "target": "document:visual-companion.md",
+      "type": "references",
+      "direction": "forward"
+    },
+    {
+      "source": "document:SKILL.md",
+      "target": "document:spec-document-reviewer-prompt.md",
+      "type": "references",
+      "direction": "forward"
+    },
+    {
+      "source": "document:visual-companion.md",
+      "target": "file:scripts/start-server.sh",
+      "type": "references",
+      "direction": "forward"
+    },
+    {
+      "source": "document:visual-companion.md",
+      "target": "file:scripts/stop-server.sh",
+      "type": "references",
+      "direction": "forward"
+    },
+    {
+      "source": "document:visual-companion.md",
+      "target": "file:scripts/frame-template.html",
+      "type": "references",
+      "direction": "forward"
+    },
+    {
+      "source": "document:visual-companion.md",
+      "target": "file:scripts/helper.js",
+      "type": "references",
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/start-server.sh",
+      "target": "file:scripts/stop-server.sh",
+      "type": "related",
+      "label": "start-server.sh and stop-server.sh coordinate to manage the same brainstorm server lifecycle: start-server.sh writes PID and state files that stop-server.sh reads to locate and terminate the server. start-server.sh also embeds its own cleanup logic (kills existing server at lines 145-149) mirroring stop-server.sh's approach.",
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/start-server.sh",
+      "target": "file:scripts/server.cjs",
+      "type": "depends_on",
+      "label": "start-server.sh launches server.cjs via `node server.cjs` (lines 171, 180) with environment variables BRAINSTORM_DIR, BRAINSTORM_HOST, BRAINSTORM_URL_HOST, and BRAINSTORM_OWNER_PID.",
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/frame-template.html",
+      "target": "file:scripts/helper.js",
+      "type": "related",
+      "label": "frame-template.html provides the markup/CSS skeleton that helper.js populates with dynamic content. helper.js injects content into the #frame-content div and updates the status indicator in the header.",
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/nextReconnectDelay",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/setStatus",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/showTombstone",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/connect",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/toggleSelect",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/helper.js",
+      "target": "function:helper.js/nextReconnectDelay",
+      "type": "exports",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/computeAcceptKey",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/encodeFrame",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/decodeFrame",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/preferredPort",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/initialToken",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/waitingPage",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/bootstrapPage",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/readSuperpowersVersion",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/brandMarkup",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/getNewestScreen",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/browserLauncherForPlatform",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/isRegularFileInsideContentDir",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/parseCookies",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/isAuthorized",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/securityHeaders",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/handleRequest",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/handleUpgrade",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/handleMessage",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/maybeOpenBrowser",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/startServer",
+      "type": "contains",
+      "weight": 1.0,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/computeAcceptKey",
+      "type": "exports",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/encodeFrame",
+      "type": "exports",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/decodeFrame",
+      "type": "exports",
+      "weight": 0.8,
+      "direction": "forward"
+    },
+    {
+      "source": "file:scripts/server.cjs",
+      "target": "function:server.cjs/browserLauncherForPlatform",
+      "type": "exports",
+      "weight": 0.8,
+      "direction": "forward"
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:skill-definition",
+      "name": "Skill Definition",
+      "description": "Core brainstorming methodology document that defines the step-by-step process for turning ideas into designs through collaborative dialogue, including the hard gate, process flow, principles, and transition conditions.",
+      "nodeIds": [
+        "document:SKILL.md"
+      ]
+    },
+    {
+      "id": "layer:spec-review",
+      "name": "Spec Review",
+      "description": "Subagent prompt template for automated quality assurance of design specs, checking completeness, consistency, clarity, scope, and YAGNI before implementation planning begins.",
+      "nodeIds": [
+        "document:spec-document-reviewer-prompt.md"
+      ]
+    },
+    {
+      "id": "layer:visual-companion-guide",
+      "name": "Visual Companion Guide",
+      "description": "Detailed usage documentation for the browser-based visual brainstorming companion, covering when to use it, session lifecycle, content fragment authoring, CSS classes, event format, and cleanup procedures.",
+      "nodeIds": [
+        "document:visual-companion.md"
+      ]
+    },
+    {
+      "id": "layer:server",
+      "name": "Server",
+      "description": "Node.js HTTP/WebSocket server that provides session management, file watching (auto-serves newest HTML screen), token-based authentication, browser automation, idle timeout, and cross-platform launcher support for the visual companion.",
+      "nodeIds": [
+        "file:scripts/server.cjs"
+      ]
+    },
+    {
+      "id": "layer:browser-client",
+      "name": "Browser Client",
+      "description": "Client-side presentation layer and interaction logic \u2014 the HTML frame template with OS-aware CSS theming (frame-template.html) and the WebSocket-driven helper script (helper.js) handling connection management, reconnection, event capture, and selection tracking.",
+      "nodeIds": [
+        "file:scripts/frame-template.html",
+        "file:scripts/helper.js"
+      ]
+    },
+    {
+      "id": "layer:operations",
+      "name": "Operations",
+      "description": "Shell scripts for server lifecycle management \u2014 start-server.sh handles CLI argument parsing, session directory creation, PID tracking, cross-platform compatibility (Windows/Codex/Gemini), and background daemonization; stop-server.sh handles graceful shutdown, stale PID detection, and ephemeral session cleanup.",
+      "nodeIds": [
+        "file:scripts/start-server.sh",
+        "file:scripts/stop-server.sh"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Brainstorming Methodology",
+      "description": "Start with SKILL.md to understand the full brainstorming process: the 9-step checklist (explore context, ask questions, propose approaches, present design, write spec, self-review, user review, transition to implementation), the process flow diagram, hard-gate preventing implementation before design approval, and the just-in-time visual companion offer strategy.",
+      "nodeIds": [
+        "document:SKILL.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Spec Document Review",
+      "description": "The spec-document-reviewer-prompt.md provides a subagent dispatch template for QA'ing spec documents. It checks completeness (TODOs/placeholders), internal consistency, clarity (ambiguity that could derail implementation), scope focus, and YAGNI \u2014 with a calibration that only flags issues that would cause real problems during planning.",
+      "nodeIds": [
+        "document:spec-document-reviewer-prompt.md"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Visual Companion Guide",
+      "description": "The visual-companion.md guide documents when to use the browser vs terminal per-question, how the screen-push loop works (write HTML, user clicks, read events from state_dir), content fragment authoring (no full HTML needed), the available CSS classes (options, cards, mockups, split view, pros/cons), browser events format, and cleanup procedures.",
+      "nodeIds": [
+        "document:visual-companion.md"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "Server Backend",
+      "description": "server.cjs is a zero-dependency Node.js server implementing raw WebSocket (RFC 6455) negotiation and framing, HTTP request handling, session key authentication via query param or HttpOnly cookie with timing-safe comparison, file watching for new screens with debouncing and broadcast of reload events, idle timeout and owner-PID lifecycle monitoring, and platform-aware browser auto-launch.",
+      "nodeIds": [
+        "file:scripts/server.cjs"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "Browser Client \u2014 Frame Template",
+      "description": "frame-template.html provides the browser UI shell with OS-aware light/dark CSS theme variables, a branded header with live connection status pill, a scrollable content area where screen content is injected, and pre-built CSS classes for options (A/B/C), cards, mockups, split-view comparisons, pros/cons lists, and wireframe mock elements.",
+      "nodeIds": [
+        "file:scripts/frame-template.html"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "Browser Client \u2014 Interaction Logic",
+      "description": "helper.js is the client-side module injected into every page. It manages WebSocket connections with exponential backoff reconnection (500ms\u201330s), shows a tombstone overlay after 15s of disconnection, queues events when offline, captures clicks on data-choice elements, exposes toggleSelect() for interactivity, and triggers page reload on server broadcast.",
+      "nodeIds": [
+        "file:scripts/helper.js"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "Server Operations \u2014 Startup",
+      "description": "start-server.sh handles session directory creation (persistent under .superpowers/ or ephemeral under /tmp), port/token file management for restart reuse, platform detection (auto-foreground on Windows/Codex), owner-PID resolution for lifecycle tracking, optional browser auto-open, idle timeout configuration, and startup verification with retry logic.",
+      "nodeIds": [
+        "file:scripts/start-server.sh"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "Server Operations \u2014 Shutdown",
+      "description": "stop-server.sh performs graceful server shutdown with PID validation via per-start instance ID matching (prevents killing wrong processes after PID wraparound), graceful kill with 2s wait window, SIGKILL escalation if needed, and conditional cleanup that preserves persistent session directories under .superpowers/ while deleting ephemeral /tmp directories.",
+      "nodeIds": [
+        "file:scripts/stop-server.sh"
+      ]
+    }
+  ]
+}

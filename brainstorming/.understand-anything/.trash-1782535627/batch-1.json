@@ -1,0 +1,99 @@
+{
+  "nodes": [
+    {
+      "id": "document:SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "SKILL.md",
+      "summary": "Main brainstorming skill defining the process for turning ideas into fully-formed designs and specs through collaborative dialogue. Covers a 9-step checklist (explore context, ask questions, propose approaches, present design, write spec, self-review, user review, transition to implementation), a process flow diagram, key principles (one question at a time, YAGNI, incremental validation), and instructions for offering the visual companion tool just-in-time. Emphasizes that implementation must NOT begin until the user approves the design.",
+      "tags": ["brainstorming", "design-process", "spec-writing", "skill-definition", "collaborative-design"],
+      "complexity": "medium"
+    },
+    {
+      "id": "document:spec-document-reviewer-prompt.md",
+      "type": "document",
+      "name": "spec-document-reviewer-prompt.md",
+      "filePath": "spec-document-reviewer-prompt.md",
+      "summary": "Prompt template for dispatching a subagent to review spec documents created during brainstorming. Checks five categories: completeness (TODOs/placeholders), consistency (contradictions), clarity (ambiguity), scope (single-plan focus), and YAGNI (unrequested features). Calibrated to only flag issues that would cause real implementation planning problems, with an output format of Status, Issues, and Recommendations.",
+      "tags": ["spec-review", "prompt-template", "quality-assurance", "subagent"],
+      "complexity": "low"
+    },
+    {
+      "id": "document:visual-companion.md",
+      "type": "document",
+      "name": "visual-companion.md",
+      "filePath": "visual-companion.md",
+      "summary": "Detailed guide for the browser-based visual brainstorming companion tool. Covers per-question decision of browser vs terminal, session startup with platform-specific guidance (Claude Code, Codex, Gemini CLI, Copilot CLI), the interactive loop (write HTML screens, collect user feedback via WebSocket events, iterate), CSS classes for UI patterns (options, cards, mockups, split view, pros/cons), content fragments vs full documents, browser events format, and cleanup procedures.",
+      "tags": ["visual-companion", "wireframing", "prototyping", "browser-tool", "mockups"],
+      "complexity": "high"
+    },
+    {
+      "id": "script:start-server.sh",
+      "type": "script",
+      "name": "start-server.sh",
+      "filePath": "scripts/start-server.sh",
+      "summary": "Shell script to start the brainstorm visual companion server. Parses CLI options (--project-dir, --host, --url-host, --open, --foreground), generates a unique session directory under .superpowers/brainstorm/ or /tmp, manages server process lifecycle with nohup/disown backgrounding and auto-detection of Windows/Codex environments, and outputs server connection JSON with URL, screen_dir, and state_dir.",
+      "tags": ["server-startup", "shell-script", "session-management"],
+      "complexity": "medium"
+    },
+    {
+      "id": "script:stop-server.sh",
+      "type": "script",
+      "name": "stop-server.sh",
+      "filePath": "scripts/stop-server.sh",
+      "summary": "Shell script to stop the brainstorm server gracefully. Reads the PID file, verifies the process is the correct brainstorm server via server-instance-id matching, sends SIGTERM with escalation to SIGKILL if needed, cleans up PID/server-id/log files, marks server as stopped, and conditionally deletes the session directory (only for /tmp sessions, preserving .superpowers/ persistent sessions).",
+      "tags": ["server-shutdown", "shell-script", "cleanup"],
+      "complexity": "medium"
+    },
+    {
+      "id": "template:frame-template.html",
+      "type": "template",
+      "name": "frame-template.html",
+      "filePath": "scripts/frame-template.html",
+      "summary": "HTML frame template providing the brainstorm companion's browser UI shell. Includes OS-aware light/dark CSS custom properties, a header with connection status pill, scrollable main content area, and CSS classes for all UI patterns: options (A/B/C), cards, mockup containers, split view, pros/cons, inline mock elements (nav, sidebar, buttons, inputs), and typography helpers.",
+      "tags": ["html-template", "css-theming", "ui-framework", "dark-mode"],
+      "complexity": "low"
+    },
+    {
+      "id": "script:helper.js",
+      "type": "script",
+      "name": "helper.js",
+      "filePath": "scripts/helper.js",
+      "summary": "Client-side JavaScript injected into brainstorm companion pages. Manages WebSocket connection with exponential backoff reconnection (500ms-30s), captures click events on data-choice elements and sends them as structured JSON events, exposes toggleSelect() with single and multi-select modes, shows a 'paused' tombstone overlay after 15s of disconnection, and provides window.brainstorm.send() and .choice() API for programmatic event sending.",
+      "tags": ["client-side", "websocket", "event-handling", "javascript", "reconnection"],
+      "complexity": "medium"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:SKILL.md",
+      "target": "document:visual-companion.md",
+      "type": "references"
+    },
+    {
+      "source": "document:SKILL.md",
+      "target": "document:spec-document-reviewer-prompt.md",
+      "type": "references"
+    },
+    {
+      "source": "document:visual-companion.md",
+      "target": "script:start-server.sh",
+      "type": "references"
+    },
+    {
+      "source": "document:visual-companion.md",
+      "target": "script:stop-server.sh",
+      "type": "references"
+    },
+    {
+      "source": "document:visual-companion.md",
+      "target": "template:frame-template.html",
+      "type": "references"
+    },
+    {
+      "source": "document:visual-companion.md",
+      "target": "script:helper.js",
+      "type": "references"
+    }
+  ]
+}

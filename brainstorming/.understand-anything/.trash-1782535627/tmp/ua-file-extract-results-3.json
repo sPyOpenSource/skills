@@ -1,0 +1,1890 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 2,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "scripts/helper.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 167,
+      "nonEmptyLines": 146,
+      "callGraph": [
+        {
+          "caller": "nextReconnectDelay",
+          "callee": "Math.min",
+          "lineNumber": 8
+        },
+        {
+          "caller": "sessionKey",
+          "callee": "window.sessionStorage.getItem",
+          "lineNumber": 27
+        },
+        {
+          "caller": "websocketUrl",
+          "callee": "sessionKey",
+          "lineNumber": 33
+        },
+        {
+          "caller": "websocketUrl",
+          "callee": "encodeURIComponent",
+          "lineNumber": 34
+        },
+        {
+          "caller": "reloadAfterRecovery",
+          "callee": "sessionKey",
+          "lineNumber": 38
+        },
+        {
+          "caller": "reloadAfterRecovery",
+          "callee": "window.location.replace",
+          "lineNumber": 40
+        },
+        {
+          "caller": "reloadAfterRecovery",
+          "callee": "encodeURIComponent",
+          "lineNumber": 40
+        },
+        {
+          "caller": "reloadAfterRecovery",
+          "callee": "window.location.reload",
+          "lineNumber": 42
+        },
+        {
+          "caller": "setStatus",
+          "callee": "document.querySelector",
+          "lineNumber": 48
+        },
+        {
+          "caller": "setStatus",
+          "callee": "el.style.setProperty",
+          "lineNumber": 58
+        },
+        {
+          "caller": "showTombstone",
+          "callee": "document.createElement",
+          "lineNumber": 65
+        },
+        {
+          "caller": "showTombstone",
+          "callee": "document.body.appendChild",
+          "lineNumber": 74
+        },
+        {
+          "caller": "connect",
+          "callee": "clearTimeout",
+          "lineNumber": 78
+        },
+        {
+          "caller": "connect",
+          "callee": "setStatus",
+          "lineNumber": 79
+        },
+        {
+          "caller": "connect",
+          "callee": "websocketUrl",
+          "lineNumber": 80
+        },
+        {
+          "caller": "connect",
+          "callee": "setStatus",
+          "lineNumber": 88
+        },
+        {
+          "caller": "connect",
+          "callee": "eventQueue.forEach",
+          "lineNumber": 89
+        },
+        {
+          "caller": "connect",
+          "callee": "ws.send",
+          "lineNumber": 89
+        },
+        {
+          "caller": "connect",
+          "callee": "JSON.stringify",
+          "lineNumber": 89
+        },
+        {
+          "caller": "connect",
+          "callee": "reloadAfterRecovery",
+          "lineNumber": 94
+        },
+        {
+          "caller": "connect",
+          "callee": "JSON.parse",
+          "lineNumber": 99
+        },
+        {
+          "caller": "connect",
+          "callee": "window.location.reload",
+          "lineNumber": 100
+        },
+        {
+          "caller": "connect",
+          "callee": "Date.now",
+          "lineNumber": 105
+        },
+        {
+          "caller": "connect",
+          "callee": "Date.now",
+          "lineNumber": 106
+        },
+        {
+          "caller": "connect",
+          "callee": "setStatus",
+          "lineNumber": 107
+        },
+        {
+          "caller": "connect",
+          "callee": "showTombstone",
+          "lineNumber": 108
+        },
+        {
+          "caller": "connect",
+          "callee": "setStatus",
+          "lineNumber": 110
+        },
+        {
+          "caller": "connect",
+          "callee": "setTimeout",
+          "lineNumber": 112
+        },
+        {
+          "caller": "connect",
+          "callee": "nextReconnectDelay",
+          "lineNumber": 113
+        },
+        {
+          "caller": "connect",
+          "callee": "ws.close",
+          "lineNumber": 117
+        },
+        {
+          "caller": "sendEvent",
+          "callee": "Date.now",
+          "lineNumber": 121
+        },
+        {
+          "caller": "sendEvent",
+          "callee": "ws.send",
+          "lineNumber": 123
+        },
+        {
+          "caller": "sendEvent",
+          "callee": "JSON.stringify",
+          "lineNumber": 123
+        },
+        {
+          "caller": "sendEvent",
+          "callee": "eventQueue.push",
+          "lineNumber": 125
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "scripts/server.cjs",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 723,
+      "nonEmptyLines": 632,
+      "functions": [
+        {
+          "name": "computeAcceptKey",
+          "startLine": 12,
+          "endLine": 14,
+          "params": [
+            "clientKey"
+          ]
+        },
+        {
+          "name": "encodeFrame",
+          "startLine": 16,
+          "endLine": 38,
+          "params": [
+            "opcode",
+            "payload"
+          ]
+        },
+        {
+          "name": "decodeFrame",
+          "startLine": 40,
+          "endLine": 81,
+          "params": [
+            "buffer"
+          ]
+        },
+        {
+          "name": "randomPort",
+          "startLine": 86,
+          "endLine": 86,
+          "params": []
+        },
+        {
+          "name": "preferredPort",
+          "startLine": 89,
+          "endLine": 98,
+          "params": []
+        },
+        {
+          "name": "generateToken",
+          "startLine": 124,
+          "endLine": 126,
+          "params": []
+        },
+        {
+          "name": "chmodOwnerOnly",
+          "startLine": 128,
+          "endLine": 130,
+          "params": [
+            "file"
+          ]
+        },
+        {
+          "name": "initialToken",
+          "startLine": 132,
+          "endLine": 146,
+          "params": []
+        },
+        {
+          "name": "waitingPage",
+          "startLine": 161,
+          "endLine": 176,
+          "params": []
+        },
+        {
+          "name": "bootstrapPage",
+          "startLine": 188,
+          "endLine": 200,
+          "params": [
+            "key"
+          ]
+        },
+        {
+          "name": "readSuperpowersVersion",
+          "startLine": 208,
+          "endLine": 225,
+          "params": []
+        },
+        {
+          "name": "isTruthyEnv",
+          "startLine": 227,
+          "endLine": 232,
+          "params": [
+            "value"
+          ]
+        },
+        {
+          "name": "escapeHtmlText",
+          "startLine": 234,
+          "endLine": 240,
+          "params": [
+            "value"
+          ]
+        },
+        {
+          "name": "brandMarkup",
+          "startLine": 242,
+          "endLine": 252,
+          "params": []
+        },
+        {
+          "name": "renderBranding",
+          "startLine": 254,
+          "endLine": 256,
+          "params": [
+            "html"
+          ]
+        },
+        {
+          "name": "isFullDocument",
+          "startLine": 258,
+          "endLine": 261,
+          "params": [
+            "html"
+          ]
+        },
+        {
+          "name": "wrapInFrame",
+          "startLine": 263,
+          "endLine": 265,
+          "params": [
+            "content"
+          ]
+        },
+        {
+          "name": "getNewestScreen",
+          "startLine": 267,
+          "endLine": 278,
+          "params": []
+        },
+        {
+          "name": "urlHostForHttp",
+          "startLine": 280,
+          "endLine": 284,
+          "params": [
+            "host"
+          ]
+        },
+        {
+          "name": "companionUrl",
+          "startLine": 286,
+          "endLine": 288,
+          "params": []
+        },
+        {
+          "name": "browserLauncherForPlatform",
+          "startLine": 290,
+          "endLine": 302,
+          "params": [
+            "url"
+          ]
+        },
+        {
+          "name": "isRegularFileInsideContentDir",
+          "startLine": 304,
+          "endLine": 317,
+          "params": [
+            "filePath"
+          ]
+        },
+        {
+          "name": "timingSafeEqualStr",
+          "startLine": 321,
+          "endLine": 326,
+          "params": [
+            "a",
+            "b"
+          ]
+        },
+        {
+          "name": "parseCookies",
+          "startLine": 328,
+          "endLine": 337,
+          "params": [
+            "header"
+          ]
+        },
+        {
+          "name": "isAuthorized",
+          "startLine": 341,
+          "endLine": 353,
+          "params": [
+            "req"
+          ]
+        },
+        {
+          "name": "pathnameOf",
+          "startLine": 355,
+          "endLine": 358,
+          "params": [
+            "url"
+          ]
+        },
+        {
+          "name": "queryKey",
+          "startLine": 360,
+          "endLine": 364,
+          "params": [
+            "url"
+          ]
+        },
+        {
+          "name": "securityHeaders",
+          "startLine": 366,
+          "endLine": 375,
+          "params": []
+        },
+        {
+          "name": "isAllowedWebSocketOrigin",
+          "startLine": 377,
+          "endLine": 383,
+          "params": [
+            "req"
+          ]
+        },
+        {
+          "name": "handleRequest",
+          "startLine": 387,
+          "endLine": 438,
+          "params": [
+            "req",
+            "res"
+          ]
+        },
+        {
+          "name": "handleUpgrade",
+          "startLine": 444,
+          "endLine": 501,
+          "params": [
+            "req",
+            "socket"
+          ]
+        },
+        {
+          "name": "handleMessage",
+          "startLine": 503,
+          "endLine": 517,
+          "params": [
+            "text"
+          ]
+        },
+        {
+          "name": "broadcast",
+          "startLine": 519,
+          "endLine": 524,
+          "params": [
+            "msg"
+          ]
+        },
+        {
+          "name": "maybeOpenBrowser",
+          "startLine": 530,
+          "endLine": 548,
+          "params": []
+        },
+        {
+          "name": "touchActivity",
+          "startLine": 566,
+          "endLine": 568,
+          "params": []
+        },
+        {
+          "name": "startServer",
+          "startLine": 576,
+          "endLine": 710,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "computeAcceptKey",
+          "callee": "crypto.createHash('sha1').update(clientKey + WS_MAGIC).digest",
+          "lineNumber": 13
+        },
+        {
+          "caller": "computeAcceptKey",
+          "callee": "crypto.createHash('sha1').update",
+          "lineNumber": 13
+        },
+        {
+          "caller": "computeAcceptKey",
+          "callee": "crypto.createHash",
+          "lineNumber": 13
+        },
+        {
+          "caller": "encodeFrame",
+          "callee": "Buffer.alloc",
+          "lineNumber": 22
+        },
+        {
+          "caller": "encodeFrame",
+          "callee": "Buffer.alloc",
+          "lineNumber": 26
+        },
+        {
+          "caller": "encodeFrame",
+          "callee": "header.writeUInt16BE",
+          "lineNumber": 29
+        },
+        {
+          "caller": "encodeFrame",
+          "callee": "Buffer.alloc",
+          "lineNumber": 31
+        },
+        {
+          "caller": "encodeFrame",
+          "callee": "header.writeBigUInt64BE",
+          "lineNumber": 34
+        },
+        {
+          "caller": "encodeFrame",
+          "callee": "BigInt",
+          "lineNumber": 34
+        },
+        {
+          "caller": "encodeFrame",
+          "callee": "Buffer.concat",
+          "lineNumber": 37
+        },
+        {
+          "caller": "decodeFrame",
+          "callee": "buffer.readUInt16BE",
+          "lineNumber": 53
+        },
+        {
+          "caller": "decodeFrame",
+          "callee": "buffer.readBigUInt64BE",
+          "lineNumber": 57
+        },
+        {
+          "caller": "decodeFrame",
+          "callee": "BigInt",
+          "lineNumber": 58
+        },
+        {
+          "caller": "decodeFrame",
+          "callee": "Number",
+          "lineNumber": 61
+        },
+        {
+          "caller": "decodeFrame",
+          "callee": "buffer.slice",
+          "lineNumber": 74
+        },
+        {
+          "caller": "decodeFrame",
+          "callee": "Buffer.alloc",
+          "lineNumber": 75
+        },
+        {
+          "caller": "randomPort",
+          "callee": "Math.floor",
+          "lineNumber": 86
+        },
+        {
+          "caller": "randomPort",
+          "callee": "Math.random",
+          "lineNumber": 86
+        },
+        {
+          "caller": "preferredPort",
+          "callee": "Number",
+          "lineNumber": 90
+        },
+        {
+          "caller": "preferredPort",
+          "callee": "Number",
+          "lineNumber": 93
+        },
+        {
+          "caller": "preferredPort",
+          "callee": "fs.readFileSync(PORT_FILE, 'utf-8').trim",
+          "lineNumber": 93
+        },
+        {
+          "caller": "preferredPort",
+          "callee": "fs.readFileSync",
+          "lineNumber": 93
+        },
+        {
+          "caller": "preferredPort",
+          "callee": "Number.isInteger",
+          "lineNumber": 94
+        },
+        {
+          "caller": "preferredPort",
+          "callee": "randomPort",
+          "lineNumber": 97
+        },
+        {
+          "caller": "generateToken",
+          "callee": "crypto.randomBytes(32).toString",
+          "lineNumber": 125
+        },
+        {
+          "caller": "generateToken",
+          "callee": "crypto.randomBytes",
+          "lineNumber": 125
+        },
+        {
+          "caller": "chmodOwnerOnly",
+          "callee": "fs.chmodSync",
+          "lineNumber": 129
+        },
+        {
+          "caller": "initialToken",
+          "callee": "fs.readFileSync(TOKEN_FILE, 'utf-8').trim",
+          "lineNumber": 138
+        },
+        {
+          "caller": "initialToken",
+          "callee": "fs.readFileSync",
+          "lineNumber": 138
+        },
+        {
+          "caller": "initialToken",
+          "callee": "/^[0-9a-f]{32,}$/i.test",
+          "lineNumber": 139
+        },
+        {
+          "caller": "initialToken",
+          "callee": "chmodOwnerOnly",
+          "lineNumber": 140
+        },
+        {
+          "caller": "initialToken",
+          "callee": "generateToken",
+          "lineNumber": 145
+        },
+        {
+          "caller": "waitingPage",
+          "callee": "renderBranding",
+          "lineNumber": 162
+        },
+        {
+          "caller": "bootstrapPage",
+          "callee": "JSON.stringify",
+          "lineNumber": 189
+        },
+        {
+          "caller": "bootstrapPage",
+          "callee": "String",
+          "lineNumber": 189
+        },
+        {
+          "caller": "readSuperpowersVersion",
+          "callee": "path.join",
+          "lineNumber": 209
+        },
+        {
+          "caller": "readSuperpowersVersion",
+          "callee": "path.join",
+          "lineNumber": 211
+        },
+        {
+          "caller": "readSuperpowersVersion",
+          "callee": "path.join",
+          "lineNumber": 212
+        },
+        {
+          "caller": "readSuperpowersVersion",
+          "callee": "JSON.parse",
+          "lineNumber": 217
+        },
+        {
+          "caller": "readSuperpowersVersion",
+          "callee": "fs.readFileSync",
+          "lineNumber": 217
+        },
+        {
+          "caller": "readSuperpowersVersion",
+          "callee": "String",
+          "lineNumber": 218
+        },
+        {
+          "caller": "isTruthyEnv",
+          "callee": "String(value).trim().toLowerCase",
+          "lineNumber": 229
+        },
+        {
+          "caller": "isTruthyEnv",
+          "callee": "String(value).trim",
+          "lineNumber": 229
+        },
+        {
+          "caller": "isTruthyEnv",
+          "callee": "String",
+          "lineNumber": 229
+        },
+        {
+          "caller": "isTruthyEnv",
+          "callee": "['0', 'false', 'no', 'off'].includes",
+          "lineNumber": 231
+        },
+        {
+          "caller": "escapeHtmlText",
+          "callee": "String(value)\n    .replace(/&/g, '&amp;')\n    .replace(/</g, '&lt;')\n    .replace(/>/g, '&gt;')\n    .replace",
+          "lineNumber": 235
+        },
+        {
+          "caller": "escapeHtmlText",
+          "callee": "String(value)\n    .replace(/&/g, '&amp;')\n    .replace(/</g, '&lt;')\n    .replace",
+          "lineNumber": 235
+        },
+        {
+          "caller": "escapeHtmlText",
+          "callee": "String(value)\n    .replace(/&/g, '&amp;')\n    .replace",
+          "lineNumber": 235
+        },
+        {
+          "caller": "escapeHtmlText",
+          "callee": "String(value)\n    .replace",
+          "lineNumber": 235
+        },
+        {
+          "caller": "escapeHtmlText",
+          "callee": "String",
+          "lineNumber": 235
+        },
+        {
+          "caller": "brandMarkup",
+          "callee": "escapeHtmlText",
+          "lineNumber": 243
+        },
+        {
+          "caller": "brandMarkup",
+          "callee": "encodeURIComponent",
+          "lineNumber": 249
+        },
+        {
+          "caller": "renderBranding",
+          "callee": "html.split('<!-- BRANDING -->').join",
+          "lineNumber": 255
+        },
+        {
+          "caller": "renderBranding",
+          "callee": "html.split",
+          "lineNumber": 255
+        },
+        {
+          "caller": "renderBranding",
+          "callee": "brandMarkup",
+          "lineNumber": 255
+        },
+        {
+          "caller": "isFullDocument",
+          "callee": "html.trimStart().toLowerCase",
+          "lineNumber": 259
+        },
+        {
+          "caller": "isFullDocument",
+          "callee": "html.trimStart",
+          "lineNumber": 259
+        },
+        {
+          "caller": "isFullDocument",
+          "callee": "trimmed.startsWith",
+          "lineNumber": 260
+        },
+        {
+          "caller": "isFullDocument",
+          "callee": "trimmed.startsWith",
+          "lineNumber": 260
+        },
+        {
+          "caller": "wrapInFrame",
+          "callee": "renderBranding(frameTemplate).replace",
+          "lineNumber": 264
+        },
+        {
+          "caller": "wrapInFrame",
+          "callee": "renderBranding",
+          "lineNumber": 264
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "fs.readdirSync(CONTENT_DIR)\n    .filter(f => !f.startsWith('.') && f.endsWith('.html'))\n    .map(f => {\n      const fp = path.join(CONTENT_DIR, f);\n      if (!isRegularFileInsideContentDir(fp)) return null;\n      return { path: fp, mtime: fs.statSync(fp).mtime.getTime() };\n    })\n    .filter(Boolean)\n    .sort",
+          "lineNumber": 268
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "fs.readdirSync(CONTENT_DIR)\n    .filter(f => !f.startsWith('.') && f.endsWith('.html'))\n    .map(f => {\n      const fp = path.join(CONTENT_DIR, f);\n      if (!isRegularFileInsideContentDir(fp)) return null;\n      return { path: fp, mtime: fs.statSync(fp).mtime.getTime() };\n    })\n    .filter",
+          "lineNumber": 268
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "fs.readdirSync(CONTENT_DIR)\n    .filter(f => !f.startsWith('.') && f.endsWith('.html'))\n    .map",
+          "lineNumber": 268
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "fs.readdirSync(CONTENT_DIR)\n    .filter",
+          "lineNumber": 268
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "fs.readdirSync",
+          "lineNumber": 268
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "f.startsWith",
+          "lineNumber": 269
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "f.endsWith",
+          "lineNumber": 269
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "path.join",
+          "lineNumber": 271
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "isRegularFileInsideContentDir",
+          "lineNumber": 272
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "fs.statSync(fp).mtime.getTime",
+          "lineNumber": 273
+        },
+        {
+          "caller": "getNewestScreen",
+          "callee": "fs.statSync",
+          "lineNumber": 273
+        },
+        {
+          "caller": "urlHostForHttp",
+          "callee": "String",
+          "lineNumber": 281
+        },
+        {
+          "caller": "urlHostForHttp",
+          "callee": "h.startsWith",
+          "lineNumber": 282
+        },
+        {
+          "caller": "urlHostForHttp",
+          "callee": "h.endsWith",
+          "lineNumber": 282
+        },
+        {
+          "caller": "urlHostForHttp",
+          "callee": "h.includes",
+          "lineNumber": 283
+        },
+        {
+          "caller": "companionUrl",
+          "callee": "urlHostForHttp",
+          "lineNumber": 287
+        },
+        {
+          "caller": "browserLauncherForPlatform",
+          "callee": "require('os').release",
+          "lineNumber": 292
+        },
+        {
+          "caller": "browserLauncherForPlatform",
+          "callee": "require",
+          "lineNumber": 292
+        },
+        {
+          "caller": "browserLauncherForPlatform",
+          "callee": "/microsoft/i.test",
+          "lineNumber": 295
+        },
+        {
+          "caller": "isRegularFileInsideContentDir",
+          "callee": "fs.lstatSync",
+          "lineNumber": 307
+        },
+        {
+          "caller": "isRegularFileInsideContentDir",
+          "callee": "stat.isSymbolicLink",
+          "lineNumber": 308
+        },
+        {
+          "caller": "isRegularFileInsideContentDir",
+          "callee": "stat.isFile",
+          "lineNumber": 309
+        },
+        {
+          "caller": "isRegularFileInsideContentDir",
+          "callee": "fs.realpathSync",
+          "lineNumber": 311
+        },
+        {
+          "caller": "isRegularFileInsideContentDir",
+          "callee": "fs.realpathSync",
+          "lineNumber": 312
+        },
+        {
+          "caller": "isRegularFileInsideContentDir",
+          "callee": "realFilePath.startsWith",
+          "lineNumber": 316
+        },
+        {
+          "caller": "timingSafeEqualStr",
+          "callee": "Buffer.from",
+          "lineNumber": 322
+        },
+        {
+          "caller": "timingSafeEqualStr",
+          "callee": "String",
+          "lineNumber": 322
+        },
+        {
+          "caller": "timingSafeEqualStr",
+          "callee": "Buffer.from",
+          "lineNumber": 323
+        },
+        {
+          "caller": "timingSafeEqualStr",
+          "callee": "String",
+          "lineNumber": 323
+        },
+        {
+          "caller": "timingSafeEqualStr",
+          "callee": "crypto.timingSafeEqual",
+          "lineNumber": 325
+        },
+        {
+          "caller": "parseCookies",
+          "callee": "header.split",
+          "lineNumber": 331
+        },
+        {
+          "caller": "parseCookies",
+          "callee": "part.indexOf",
+          "lineNumber": 332
+        },
+        {
+          "caller": "parseCookies",
+          "callee": "part.slice(0, eq).trim",
+          "lineNumber": 334
+        },
+        {
+          "caller": "parseCookies",
+          "callee": "part.slice",
+          "lineNumber": 334
+        },
+        {
+          "caller": "parseCookies",
+          "callee": "part.slice(eq + 1).trim",
+          "lineNumber": 334
+        },
+        {
+          "caller": "parseCookies",
+          "callee": "part.slice",
+          "lineNumber": 334
+        },
+        {
+          "caller": "isAuthorized",
+          "callee": "req.url.indexOf",
+          "lineNumber": 342
+        },
+        {
+          "caller": "isAuthorized",
+          "callee": "req.url.slice",
+          "lineNumber": 344
+        },
+        {
+          "caller": "isAuthorized",
+          "callee": "params.has",
+          "lineNumber": 345
+        },
+        {
+          "caller": "isAuthorized",
+          "callee": "params.get",
+          "lineNumber": 346
+        },
+        {
+          "caller": "isAuthorized",
+          "callee": "Boolean",
+          "lineNumber": 347
+        },
+        {
+          "caller": "isAuthorized",
+          "callee": "timingSafeEqualStr",
+          "lineNumber": 347
+        },
+        {
+          "caller": "isAuthorized",
+          "callee": "parseCookies",
+          "lineNumber": 350
+        },
+        {
+          "caller": "isAuthorized",
+          "callee": "timingSafeEqualStr",
+          "lineNumber": 351
+        },
+        {
+          "caller": "pathnameOf",
+          "callee": "url.indexOf",
+          "lineNumber": 356
+        },
+        {
+          "caller": "pathnameOf",
+          "callee": "url.slice",
+          "lineNumber": 357
+        },
+        {
+          "caller": "queryKey",
+          "callee": "url.indexOf",
+          "lineNumber": 361
+        },
+        {
+          "caller": "queryKey",
+          "callee": "new URLSearchParams(url.slice(q + 1)).get",
+          "lineNumber": 363
+        },
+        {
+          "caller": "queryKey",
+          "callee": "url.slice",
+          "lineNumber": 363
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "isAuthorized",
+          "lineNumber": 388
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.writeHead",
+          "lineNumber": 389
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "securityHeaders",
+          "lineNumber": 389
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.end",
+          "lineNumber": 390
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "touchActivity",
+          "lineNumber": 393
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.setHeader",
+          "lineNumber": 398
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "pathnameOf",
+          "lineNumber": 401
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "queryKey",
+          "lineNumber": 402
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "timingSafeEqualStr",
+          "lineNumber": 403
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.writeHead",
+          "lineNumber": 404
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "securityHeaders",
+          "lineNumber": 404
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.end",
+          "lineNumber": 405
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "bootstrapPage",
+          "lineNumber": 405
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "getNewestScreen",
+          "lineNumber": 407
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "(raw => isFullDocument(raw) ? raw : wrapInFrame(raw))",
+          "lineNumber": 409
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "isFullDocument",
+          "lineNumber": 409
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "wrapInFrame",
+          "lineNumber": 409
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "fs.readFileSync",
+          "lineNumber": 409
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "waitingPage",
+          "lineNumber": 410
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "html.includes",
+          "lineNumber": 412
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "html.replace",
+          "lineNumber": 413
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.writeHead",
+          "lineNumber": 418
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "securityHeaders",
+          "lineNumber": 418
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.end",
+          "lineNumber": 419
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "pathname.startsWith",
+          "lineNumber": 420
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "path.basename",
+          "lineNumber": 421
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "pathname.slice",
+          "lineNumber": 421
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "path.join",
+          "lineNumber": 422
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "fileName.startsWith",
+          "lineNumber": 425
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "isRegularFileInsideContentDir",
+          "lineNumber": 425
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.writeHead",
+          "lineNumber": 426
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "securityHeaders",
+          "lineNumber": 426
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.end",
+          "lineNumber": 427
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "path.extname(filePath).toLowerCase",
+          "lineNumber": 430
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "path.extname",
+          "lineNumber": 430
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.writeHead",
+          "lineNumber": 432
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "securityHeaders",
+          "lineNumber": 432
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.end",
+          "lineNumber": 433
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "fs.readFileSync",
+          "lineNumber": 433
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.writeHead",
+          "lineNumber": 435
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "securityHeaders",
+          "lineNumber": 435
+        },
+        {
+          "caller": "handleRequest",
+          "callee": "res.end",
+          "lineNumber": 436
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "isAuthorized",
+          "lineNumber": 445
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "isAllowedWebSocketOrigin",
+          "lineNumber": 445
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "socket.destroy",
+          "lineNumber": 445
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "socket.destroy",
+          "lineNumber": 448
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "computeAcceptKey",
+          "lineNumber": 450
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "socket.write",
+          "lineNumber": 451
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "Buffer.alloc",
+          "lineNumber": 458
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "clients.add",
+          "lineNumber": 459
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "socket.on",
+          "lineNumber": 461
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "Buffer.concat",
+          "lineNumber": 462
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "decodeFrame",
+          "lineNumber": 466
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "socket.end",
+          "lineNumber": 468
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "encodeFrame",
+          "lineNumber": 468
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "Buffer.alloc",
+          "lineNumber": 468
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "clients.delete",
+          "lineNumber": 469
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "buffer.slice",
+          "lineNumber": 473
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "handleMessage",
+          "lineNumber": 477
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "result.payload.toString",
+          "lineNumber": 477
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "socket.end",
+          "lineNumber": 480
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "encodeFrame",
+          "lineNumber": 480
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "Buffer.alloc",
+          "lineNumber": 480
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "clients.delete",
+          "lineNumber": 481
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "socket.write",
+          "lineNumber": 484
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "encodeFrame",
+          "lineNumber": 484
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "Buffer.alloc",
+          "lineNumber": 489
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "closeBuf.writeUInt16BE",
+          "lineNumber": 490
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "socket.end",
+          "lineNumber": 491
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "encodeFrame",
+          "lineNumber": 491
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "clients.delete",
+          "lineNumber": 492
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "socket.on",
+          "lineNumber": 499
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "clients.delete",
+          "lineNumber": 499
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "socket.on",
+          "lineNumber": 500
+        },
+        {
+          "caller": "handleUpgrade",
+          "callee": "clients.delete",
+          "lineNumber": 500
+        },
+        {
+          "caller": "handleMessage",
+          "callee": "JSON.parse",
+          "lineNumber": 506
+        },
+        {
+          "caller": "handleMessage",
+          "callee": "console.error",
+          "lineNumber": 508
+        },
+        {
+          "caller": "handleMessage",
+          "callee": "touchActivity",
+          "lineNumber": 511
+        },
+        {
+          "caller": "handleMessage",
+          "callee": "console.log",
+          "lineNumber": 512
+        },
+        {
+          "caller": "handleMessage",
+          "callee": "JSON.stringify",
+          "lineNumber": 512
+        },
+        {
+          "caller": "handleMessage",
+          "callee": "path.join",
+          "lineNumber": 514
+        },
+        {
+          "caller": "handleMessage",
+          "callee": "fs.appendFileSync",
+          "lineNumber": 515
+        },
+        {
+          "caller": "handleMessage",
+          "callee": "JSON.stringify",
+          "lineNumber": 515
+        },
+        {
+          "caller": "broadcast",
+          "callee": "encodeFrame",
+          "lineNumber": 520
+        },
+        {
+          "caller": "broadcast",
+          "callee": "Buffer.from",
+          "lineNumber": 520
+        },
+        {
+          "caller": "broadcast",
+          "callee": "JSON.stringify",
+          "lineNumber": 520
+        },
+        {
+          "caller": "broadcast",
+          "callee": "socket.write",
+          "lineNumber": 522
+        },
+        {
+          "caller": "broadcast",
+          "callee": "clients.delete",
+          "lineNumber": 522
+        },
+        {
+          "caller": "maybeOpenBrowser",
+          "callee": "companionUrl",
+          "lineNumber": 536
+        },
+        {
+          "caller": "maybeOpenBrowser",
+          "callee": "require",
+          "lineNumber": 537
+        },
+        {
+          "caller": "maybeOpenBrowser",
+          "callee": "cp.exec",
+          "lineNumber": 540
+        },
+        {
+          "caller": "maybeOpenBrowser",
+          "callee": "JSON.stringify",
+          "lineNumber": 540
+        },
+        {
+          "caller": "maybeOpenBrowser",
+          "callee": "browserLauncherForPlatform",
+          "lineNumber": 545
+        },
+        {
+          "caller": "maybeOpenBrowser",
+          "callee": "cp.execFile",
+          "lineNumber": 547
+        },
+        {
+          "caller": "touchActivity",
+          "callee": "Date.now",
+          "lineNumber": 567
+        },
+        {
+          "caller": "startServer",
+          "callee": "fs.existsSync",
+          "lineNumber": 577
+        },
+        {
+          "caller": "startServer",
+          "callee": "fs.mkdirSync",
+          "lineNumber": 577
+        },
+        {
+          "caller": "startServer",
+          "callee": "fs.existsSync",
+          "lineNumber": 578
+        },
+        {
+          "caller": "startServer",
+          "callee": "fs.mkdirSync",
+          "lineNumber": 578
+        },
+        {
+          "caller": "startServer",
+          "callee": "fs.readdirSync(CONTENT_DIR).filter",
+          "lineNumber": 584
+        },
+        {
+          "caller": "startServer",
+          "callee": "fs.readdirSync",
+          "lineNumber": 584
+        },
+        {
+          "caller": "startServer",
+          "callee": "f.startsWith",
+          "lineNumber": 584
+        },
+        {
+          "caller": "startServer",
+          "callee": "f.endsWith",
+          "lineNumber": 584
+        },
+        {
+          "caller": "startServer",
+          "callee": "http.createServer",
+          "lineNumber": 587
+        },
+        {
+          "caller": "startServer",
+          "callee": "server.on",
+          "lineNumber": 588
+        },
+        {
+          "caller": "startServer",
+          "callee": "fs.watch",
+          "lineNumber": 590
+        },
+        {
+          "caller": "startServer",
+          "callee": "filename.startsWith",
+          "lineNumber": 591
+        },
+        {
+          "caller": "startServer",
+          "callee": "filename.endsWith",
+          "lineNumber": 591
+        },
+        {
+          "caller": "startServer",
+          "callee": "debounceTimers.has",
+          "lineNumber": 593
+        },
+        {
+          "caller": "startServer",
+          "callee": "clearTimeout",
+          "lineNumber": 593
+        },
+        {
+          "caller": "startServer",
+          "callee": "debounceTimers.get",
+          "lineNumber": 593
+        },
+        {
+          "caller": "startServer",
+          "callee": "debounceTimers.set",
+          "lineNumber": 594
+        },
+        {
+          "caller": "startServer",
+          "callee": "setTimeout",
+          "lineNumber": 594
+        },
+        {
+          "caller": "startServer",
+          "callee": "debounceTimers.delete",
+          "lineNumber": 595
+        },
+        {
+          "caller": "startServer",
+          "callee": "path.join",
+          "lineNumber": 596
+        },
+        {
+          "caller": "startServer",
+          "callee": "fs.existsSync",
+          "lineNumber": 598
+        },
+        {
+          "caller": "startServer",
+          "callee": "touchActivity",
+          "lineNumber": 599
+        },
+        {
+          "caller": "startServer",
+          "callee": "knownFiles.has",
+          "lineNumber": 601
+        },
+        {
+          "caller": "startServer",
+          "callee": "knownFiles.add",
+          "lineNumber": 602
+        },
+        {
+          "caller": "startServer",
+          "callee": "path.join",
+          "lineNumber": 603
+        },
+        {
+          "caller": "startServer",
+          "callee": "fs.existsSync",
+          "lineNumber": 604
+        },
+        {
+          "caller": "startServer",
+          "callee": "fs.unlinkSync",
+          "lineNumber": 604
+        },
+        {
+          "caller": "startServer",
+          "callee": "console.log",
+          "lineNumber": 605
+        },
+        {
+          "caller": "startServer",
+          "callee": "JSON.stringify",
+          "lineNumber": 605
+        },
+        {
+          "caller": "startServer",
+          "callee": "maybeOpenBrowser",
+          "lineNumber": 606
+        },
+        {
+          "caller": "startServer",
+          "callee": "console.log",
+          "lineNumber": 608
+        },
+        {
+          "caller": "startServer",
+          "callee": "JSON.stringify",
+          "lineNumber": 608
+        },
+        {
+          "caller": "startServer",
+          "callee": "broadcast",
+          "lineNumber": 611
+        },
+        {
+          "caller": "startServer",
+          "callee": "watcher.on",
+          "lineNumber": 614
+        },
+        {
+          "caller": "startServer",
+          "callee": "console.error",
+          "lineNumber": 614
+        },
+        {
+          "caller": "shutdown",
+          "callee": "console.log",
+          "lineNumber": 617
+        },
+        {
+          "caller": "shutdown",
+          "callee": "JSON.stringify",
+          "lineNumber": 617
+        },
+        {
+          "caller": "shutdown",
+          "callee": "path.join",
+          "lineNumber": 618
+        },
+        {
+          "caller": "shutdown",
+          "callee": "fs.existsSync",
+          "lineNumber": 619
+        },
+        {
+          "caller": "shutdown",
+          "callee": "fs.unlinkSync",
+          "lineNumber": 619
+        },
+        {
+          "caller": "shutdown",
+          "callee": "fs.writeFileSync",
+          "lineNumber": 620
+        },
+        {
+          "caller": "shutdown",
+          "callee": "path.join",
+          "lineNumber": 621
+        },
+        {
+          "caller": "shutdown",
+          "callee": "JSON.stringify",
+          "lineNumber": 622
+        },
+        {
+          "caller": "shutdown",
+          "callee": "Date.now",
+          "lineNumber": 622
+        },
+        {
+          "caller": "shutdown",
+          "callee": "watcher.close",
+          "lineNumber": 624
+        },
+        {
+          "caller": "shutdown",
+          "callee": "clearInterval",
+          "lineNumber": 625
+        },
+        {
+          "caller": "shutdown",
+          "callee": "socket.destroy",
+          "lineNumber": 629
+        },
+        {
+          "caller": "shutdown",
+          "callee": "server.close",
+          "lineNumber": 631
+        },
+        {
+          "caller": "shutdown",
+          "callee": "process.exit",
+          "lineNumber": 631
+        },
+        {
+          "caller": "ownerAlive",
+          "callee": "process.kill",
+          "lineNumber": 636
+        },
+        {
+          "caller": "startServer",
+          "callee": "setInterval",
+          "lineNumber": 640
+        },
+        {
+          "caller": "startServer",
+          "callee": "ownerAlive",
+          "lineNumber": 641
+        },
+        {
+          "caller": "startServer",
+          "callee": "shutdown",
+          "lineNumber": 641
+        },
+        {
+          "caller": "startServer",
+          "callee": "Date.now",
+          "lineNumber": 642
+        },
+        {
+          "caller": "startServer",
+          "callee": "shutdown",
+          "lineNumber": 642
+        },
+        {
+          "caller": "startServer",
+          "callee": "lifecycleCheck.unref",
+          "lineNumber": 644
+        },
+        {
+          "caller": "startServer",
+          "callee": "process.kill",
+          "lineNumber": 650
+        },
+        {
+          "caller": "startServer",
+          "callee": "console.log",
+          "lineNumber": 653
+        },
+        {
+          "caller": "startServer",
+          "callee": "JSON.stringify",
+          "lineNumber": 653
+        },
+        {
+          "caller": "onListen",
+          "callee": "fs.writeFileSync",
+          "lineNumber": 673
+        },
+        {
+          "caller": "onListen",
+          "callee": "String",
+          "lineNumber": 673
+        },
+        {
+          "caller": "onListen",
+          "callee": "fs.writeFileSync",
+          "lineNumber": 676
+        },
+        {
+          "caller": "onListen",
+          "callee": "chmodOwnerOnly",
+          "lineNumber": 677
+        },
+        {
+          "caller": "onListen",
+          "callee": "JSON.stringify",
+          "lineNumber": 681
+        },
+        {
+          "caller": "onListen",
+          "callee": "Number",
+          "lineNumber": 682
+        },
+        {
+          "caller": "onListen",
+          "callee": "companionUrl",
+          "lineNumber": 683
+        },
+        {
+          "caller": "onListen",
+          "callee": "console.log",
+          "lineNumber": 686
+        },
+        {
+          "caller": "onListen",
+          "callee": "fs.writeFileSync",
+          "lineNumber": 688
+        },
+        {
+          "caller": "onListen",
+          "callee": "path.join",
+          "lineNumber": 688
+        },
+        {
+          "caller": "startServer",
+          "callee": "server.on",
+          "lineNumber": 691
+        },
+        {
+          "caller": "startServer",
+          "callee": "console.error",
+          "lineNumber": 694
+        },
+        {
+          "caller": "startServer",
+          "callee": "process.exit",
+          "lineNumber": 695
+        },
+        {
+          "caller": "startServer",
+          "callee": "randomPort",
+          "lineNumber": 698
+        },
+        {
+          "caller": "startServer",
+          "callee": "generateToken",
+          "lineNumber": 700
+        },
+        {
+          "caller": "startServer",
+          "callee": "server.listen",
+          "lineNumber": 703
+        },
+        {
+          "caller": "startServer",
+          "callee": "console.error",
+          "lineNumber": 705
+        },
+        {
+          "caller": "startServer",
+          "callee": "process.exit",
+          "lineNumber": 706
+        },
+        {
+          "caller": "startServer",
+          "callee": "server.listen",
+          "lineNumber": 709
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 36,
+        "classCount": 0
+      }
+    }
+  ]
+}

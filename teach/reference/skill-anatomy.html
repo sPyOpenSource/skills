@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKILL.md Anatomy — Reference</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.85rem; }
+  th, td { text-align: left; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border); }
+  th { font-weight: 600; }
+  .diagram { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.5; white-space: pre; }
+  @media print { body { font-size: 12px; } pre { font-size: 10px; } }
+</style>
+</head>
+<body>
+
+<h1>SKILL.md Anatomy</h1>
+<p class="sidenote">Reference — print-friendly cheat sheet</p>
+
+<h2>Minimal Skill</h2>
+<pre><code>---
+name: my-skill
+description: Do this specific thing when that specific condition arises
+---
+
+# My Skill
+
+Instructions for the agent go here.</code></pre>
+
+<h2>Frontmatter Fields</h2>
+<table>
+  <tr><th>Field</th><th>Required</th><th>Rules</th></tr>
+  <tr><td><code>name</code></td><td>Yes</td><td>1–64 chars, lowercase alphanumeric + hyphens, must match directory name</td></tr>
+  <tr><td><code>description</code></td><td>Yes</td><td>1–1024 chars. Agent reads this to decide when to load the skill</td></tr>
+  <tr><td><code>license</code></td><td>No</td><td>SPDX identifier (e.g., MIT, Apache-2.0)</td></tr>
+  <tr><td><code>compatibility</code></td><td>No</td><td>opencode, claude, codex, copilot, gemini, etc.</td></tr>
+  <tr><td><code>metadata</code></td><td>No</td><td>String-to-string map for extra info</td></tr>
+</table>
+
+<h2>Name Validation Regex</h2>
+<pre><code>^[a-z0-9]+(-[a-z0-9]+)*$</code></pre>
+<p>Valid: <code>my-skill</code>, <code>git-release</code>, <code>api-design</code>, <code>test-driven-development</code></p>
+<p>Invalid: <code>My Skill</code>, <code>-my-skill</code>, <code>my_skill</code>, <code>my--skill</code></p>
+
+<h2>Discovery Paths</h2>
+<table>
+  <tr><th>Runtime</th><th>Path</th></tr>
+  <tr><td>OpenCode (project)</td><td><code>.opencode/skills/&lt;name&gt;/SKILL.md</code></td></tr>
+  <tr><td>OpenCode (global)</td><td><code>~/.config/opencode/skills/&lt;name&gt;/SKILL.md</code></td></tr>
+  <tr><td>Cross-runtime</td><td><code>~/.agents/skills/&lt;name&gt;/SKILL.md</code></td></tr>
+  <tr><td>Claude Code (project)</td><td><code>.claude/skills/&lt;name&gt;/SKILL.md</code></td></tr>
+  <tr><td>Claude Code (global)</td><td><code>~/.claude/skills/&lt;name&gt;/SKILL.md</code></td></tr>
+</table>
+
+<h2>Skill Directory Structure</h2>
+<pre><code>skills/&lt;skill-name&gt;/
+├── SKILL.md          ← The skill (indexed + loaded on demand)
+├── references/       ← Supplementary docs (optional)
+└── scripts/          ← Helper scripts (optional)</code></pre>
+
+<h2>How Agents Use Skills</h2>
+<ol>
+  <li>Agent scans discovery paths for <code>skills/*/SKILL.md</code></li>
+  <li>Each skill appears in the <code>skill</code> tool's <code>&lt;available_skills&gt;</code> list</li>
+  <li>Agent reads <code>description</code> fields to decide relevance</li>
+  <li>Agent calls <code>skill({ name: "&lt;skill-name&gt;" })</code> to load the full content</li>
+  <li>Loaded instructions enter the agent's context as a reference</li>
+</ol>
+
+<h2>Permissions (opencode.json)</h2>
+<pre><code>{
+  "permission": {
+    "skill": {
+      "*": "allow",          /* allow all skills */
+      "internal-*": "deny",  /* hide internal skills */
+      "experimental-*": "ask" /* ask user before loading */
+    }
+  }
+}</code></pre>
+
+<h2>Quick Tips</h2>
+<ul>
+  <li>The <strong>description</strong> is a skill's most important field — it's how the agent decides to use it</li>
+  <li>Skills are <strong>not</strong> always loaded — only when the agent decides they're relevant</li>
+  <li>A skill can have companion files, but only <code>SKILL.md</code> is auto-discovered</li>
+  <li>Skills can reference each other: <code>See &lt;skill-name&gt; for the next step</code></li>
+</ul>
+
+<div class="footer">
+  <p>Source: <a href="https://opencode.ai/docs/skills/">OpenCode Docs — Agent Skills</a> &amp; <a href="https://github.com/anomalyco/opencode">github.com/anomalyco/opencode</a></p>
+</div>
+
+</body>
+</html>

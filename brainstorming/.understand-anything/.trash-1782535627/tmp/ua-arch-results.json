@@ -1,0 +1,163 @@
+{
+  "analysisType": "architecture-layers",
+  "project": "brainstorming",
+  "timestamp": "2026-06-27T04:44:35.926Z",
+  "stats": {
+    "totalNodes": 8,
+    "totalEdges": 9,
+    "directories": 2,
+    "types": [
+      "document",
+      "file"
+    ]
+  },
+  "directoryGrouping": {
+    ".": [
+      "document:SKILL.md",
+      "document:spec-document-reviewer-prompt.md",
+      "document:visual-companion.md"
+    ],
+    "scripts": [
+      "file:scripts/frame-template.html",
+      "file:scripts/helper.js",
+      "file:scripts/server.cjs",
+      "file:scripts/start-server.sh",
+      "file:scripts/stop-server.sh"
+    ]
+  },
+  "typeGrouping": {
+    "document": [
+      "document:SKILL.md",
+      "document:spec-document-reviewer-prompt.md",
+      "document:visual-companion.md"
+    ],
+    "file": [
+      "file:scripts/frame-template.html",
+      "file:scripts/helper.js",
+      "file:scripts/server.cjs",
+      "file:scripts/start-server.sh",
+      "file:scripts/stop-server.sh"
+    ]
+  },
+  "edgeTypeBreakdown": {
+    "documents": 6,
+    "depends_on": 1,
+    "related": 2
+  },
+  "connectivity": {
+    "mostConnected": [
+      {
+        "id": "document:visual-companion.md",
+        "name": "visual-companion.md",
+        "outgoing": 4,
+        "incoming": 1,
+        "total": 5
+      },
+      {
+        "id": "file:scripts/start-server.sh",
+        "name": "start-server.sh",
+        "outgoing": 2,
+        "incoming": 1,
+        "total": 3
+      },
+      {
+        "id": "document:SKILL.md",
+        "name": "SKILL.md",
+        "outgoing": 2,
+        "incoming": 0,
+        "total": 2
+      },
+      {
+        "id": "file:scripts/frame-template.html",
+        "name": "frame-template.html",
+        "outgoing": 1,
+        "incoming": 1,
+        "total": 2
+      },
+      {
+        "id": "file:scripts/helper.js",
+        "name": "helper.js",
+        "outgoing": 0,
+        "incoming": 2,
+        "total": 2
+      }
+    ],
+    "leastConnected": [
+      {
+        "id": "file:scripts/stop-server.sh",
+        "name": "stop-server.sh",
+        "outgoing": 0,
+        "incoming": 2,
+        "total": 2
+      },
+      {
+        "id": "document:spec-document-reviewer-prompt.md",
+        "name": "spec-document-reviewer-prompt.md",
+        "outgoing": 0,
+        "incoming": 1,
+        "total": 1
+      },
+      {
+        "id": "file:scripts/server.cjs",
+        "name": "server.cjs",
+        "outgoing": 0,
+        "incoming": 1,
+        "total": 1
+      }
+    ]
+  },
+  "bfsDiameter": {
+    "document:SKILL.md": 3,
+    "document:spec-document-reviewer-prompt.md": 4,
+    "document:visual-companion.md": 2,
+    "file:scripts/frame-template.html": 3,
+    "file:scripts/helper.js": 3,
+    "file:scripts/server.cjs": 4,
+    "file:scripts/start-server.sh": 3,
+    "file:scripts/stop-server.sh": 3
+  },
+  "clusteringCoefficient": {
+    "document:SKILL.md": 0,
+    "document:spec-document-reviewer-prompt.md": 0,
+    "document:visual-companion.md": 0.2,
+    "file:scripts/frame-template.html": 1,
+    "file:scripts/helper.js": 1,
+    "file:scripts/server.cjs": 0,
+    "file:scripts/start-server.sh": 0.3333333333333333,
+    "file:scripts/stop-server.sh": 1
+  },
+  "suggestedLayers": [
+    {
+      "name": "Root Documents",
+      "nodeIds": [
+        "document:SKILL.md",
+        "document:spec-document-reviewer-prompt.md",
+        "document:visual-companion.md"
+      ],
+      "description": "Top-level documentation files defining the brainstorming skill, process, and guides."
+    },
+    {
+      "name": "Server",
+      "nodeIds": [
+        "file:scripts/server.cjs"
+      ],
+      "description": "Node.js backend providing HTTP serving, WebSocket session management, file watching, and browser automation."
+    },
+    {
+      "name": "Browser Client",
+      "nodeIds": [
+        "file:scripts/frame-template.html",
+        "file:scripts/helper.js"
+      ],
+      "description": "Client-side HTML template, CSS theming, and WebSocket-based interaction logic for the visual companion."
+    },
+    {
+      "name": "Operations",
+      "nodeIds": [
+        "file:scripts/start-server.sh",
+        "file:scripts/stop-server.sh"
+      ],
+      "description": "Shell scripts for starting, stopping, and managing the brainstorm server lifecycle."
+    }
+  ]
+}

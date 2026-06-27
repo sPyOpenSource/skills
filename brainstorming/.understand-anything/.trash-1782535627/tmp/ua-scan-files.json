@@ -1,0 +1,71 @@
+{
+  "scriptCompleted": true,
+  "files": [
+    {
+      "path": "scripts/frame-template.html",
+      "language": "html",
+      "sizeLines": 213,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "scripts/helper.js",
+      "language": "javascript",
+      "sizeLines": 167,
+      "fileCategory": "code"
+    },
+    {
+      "path": "scripts/server.cjs",
+      "language": "javascript",
+      "sizeLines": 723,
+      "fileCategory": "code"
+    },
+    {
+      "path": "scripts/start-server.sh",
+      "language": "shell",
+      "sizeLines": 209,
+      "fileCategory": "script"
+    },
+    {
+      "path": "scripts/stop-server.sh",
+      "language": "shell",
+      "sizeLines": 120,
+      "fileCategory": "script"
+    },
+    {
+      "path": "SKILL.md",
+      "language": "markdown",
+      "sizeLines": 159,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "spec-document-reviewer-prompt.md",
+      "language": "markdown",
+      "sizeLines": 49,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "visual-companion.md",
+      "language": "markdown",
+      "sizeLines": 298,
+      "fileCategory": "docs"
+    }
+  ],
+  "totalFiles": 8,
+  "filteredByIgnore": 0,
+  "estimatedComplexity": "small",
+  "stats": {
+    "filesScanned": 8,
+    "byCategory": {
+      "markup": 1,
+      "code": 2,
+      "script": 2,
+      "docs": 3
+    },
+    "byLanguage": {
+      "html": 1,
+      "javascript": 2,
+      "shell": 2,
+      "markdown": 3
+    }
+  }
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is a Skill? — Lesson 1</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="0001-what-is-a-skill.html">Lesson 1</a>
+  <span>→</span>
+  <a href="../reference/skill-anatomy.html">Reference: SKILL.md Anatomy</a>
+</nav>
+
+<h1>What Is a Skill?</h1>
+<p class="sidenote">Lesson 1 of — How Skills Work</p>
+
+<p>This whole directory is a collection of <strong>skills</strong>. You're standing in a library of them right now. But what <em>is</em> a skill, exactly?</p>
+
+<h2>The One-Sentence Answer</h2>
+
+<p>A <strong>skill</strong> is a markdown file (<code>SKILL.md</code>) that tells an AI agent <em>how to do something</em> — a reference guide for proven techniques, patterns, or tools. When an agent faces a task, it can load a relevant skill and follow its instructions.</p>
+
+<blockquote>
+  Skills are how you give an AI agent a playbook. Without a skill, the agent guesses. With a skill, it follows a known good approach.
+</blockquote>
+
+<h2>What You'll See in This Lesson</h2>
+
+<ul>
+  <li>Where skills live</li>
+  <li>The anatomy of a <code>SKILL.md</code> file</li>
+  <li>How agents discover and load skills</li>
+  <li>A real example from this repo</li>
+</ul>
+
+<h2>1. Where Skills Live</h2>
+
+<p>Skills are organized as directories with a single <code>SKILL.md</code> inside. OpenCode (and compatible agents) search these locations:</p>
+
+<table style="width:100%; border-collapse: collapse; margin:0.75rem 0;">
+  <tr style="border-bottom:1px solid var(--border);">
+    <th style="text-align:left; padding:0.4rem 0.5rem;">Scope</th>
+    <th style="text-align:left; padding:0.4rem 0.5rem;">Path</th>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.4rem 0.5rem;">Project</td>
+    <td style="padding:0.4rem 0.5rem;"><code>.opencode/skills/&lt;name&gt;/SKILL.md</code></td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.4rem 0.5rem;">Global</td>
+    <td style="padding:0.4rem 0.5rem;"><code>~/.config/opencode/skills/&lt;name&gt;/SKILL.md</code></td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.4rem 0.5rem;">Cross-runtime</td>
+    <td style="padding:0.4rem 0.5rem;"><code>~/.agents/skills/&lt;name&gt;/SKILL.md</code></td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.4rem 0.5rem;">Claude compat</td>
+    <td style="padding:0.4rem 0.5rem;"><code>~/.claude/skills/&lt;name&gt;/SKILL.md</code></td>
+  </tr>
+</table>
+
+<p>The directory you're in (<code>~/Source/skills/</code>) is a collection of skills installed at <code>~/.agents/skills/</code> — the cross-runtime alias recognized by OpenCode, Claude Code, Codex CLI, Copilot CLI, and Gemini CLI.</p>
+
+<h2>2. The Anatomy of a SKILL.md</h2>
+
+<p>Every skill starts with <strong>YAML frontmatter</strong> — metadata between <code>---</code> lines:</p>
+
+<pre><code>---
+name: executing-plans
+description: Use when you have a written implementation plan to execute
+  in a separate session with review checkpoints
+---</code></pre>
+
+<p>Only two fields are <strong>required</strong>:</p>
+
+<ul>
+  <li><code>name</code> — Lowercase alphanumeric with hyphens. Must match the directory name. 1–64 chars.</li>
+  <li><code>description</code> — 1–1024 characters. The agent reads this to decide <em>when</em> to use the skill.</li>
+</ul>
+
+<p>Optional fields include <code>license</code>, <code>compatibility</code>, and <code>metadata</code>.</p>
+
+<p>After the frontmatter comes the <strong>body</strong> — markdown with the skill's instructions. This is what the agent reads and follows when the skill is loaded.</p>
+
+<h2>3. Discovery: How Agents Find Skills</h2>
+
+<p>When an agent starts, it collects all available skills into a list. It does this by scanning the paths above. Each skill becomes an entry in the agent's <code>skill</code> tool:</p>
+
+<pre><code>&lt;available_skills&gt;
+  &lt;skill&gt;
+    &lt;name&gt;executing-plans&lt;/name&gt;
+    &lt;description&gt;Use when you have a written implementation
+    plan to execute in a separate session...&lt;/description&gt;
+  &lt;/skill&gt;
+&lt;/available_skills&gt;</code></pre>
+
+<p>The agent reads the <code>description</code> to decide whether a skill applies. If it does, it calls:</p>
+
+<pre><code>skill({ name: "executing-plans" })</code></pre>
+
+<p>This loads the full <code>SKILL.md</code> into the agent's context, so it can follow the instructions.</p>
+
+<h2>4. A Real Example</h2>
+
+<p>Let's look at the <code>systematic-debugging</code> skill in this repo:</p>
+
+<pre><code>~/Source/skills/systematic-debugging/
+├── SKILL.md
+├── condition-based-waiting.md
+├── defense-in-depth.md
+├── find-polluter.sh
+├── root-cause-tracing.md
+├── test-academic.md
+├── test-pressure-1.md
+├── test-pressure-2.md
+└── test-pressure-3.md</code></pre>
+
+<p>The <code>SKILL.md</code> file is the skill. The other files are supplementary — reference documents, test scenarios, helper scripts — that the skill can reference. But only <code>SKILL.md</code> is indexed and loaded on demand.</p>
+
+<div class="quiz">
+  <p>Quiz: What two fields are required in every SKILL.md frontmatter?</p>
+  <button class="quiz-option" onclick="check(this, false)">title and description</button>
+  <button class="quiz-option" onclick="check(this, true)">name and description</button>
+  <button class="quiz-option" onclick="check(this, false)">name and version</button>
+  <button class="quiz-option" onclick="check(this, false)">name and trigger</button>
+  <div class="quiz-feedback" id="quiz1-feedback"></div>
+</div>
+
+<h2>Summary</h2>
+
+<ul>
+  <li>A <strong>skill</strong> is a <code>SKILL.md</code> file — a reference guide for an AI agent</li>
+  <li>Skills live in <code>skills/&lt;name&gt;/SKILL.md</code> under recognized directories</li>
+  <li>Frontmatter (<code>name</code> + <code>description</code>) is how agents discover which skill to load</li>
+  <li>The body is the actual instruction — markdown the agent follows</li>
+</ul>
+
+<div class="sidenote">
+  <strong>Next:</strong> <a href="../reference/skill-anatomy.html">Reference: SKILL.md Anatomy</a> — a printable cheat sheet of everything in a SKILL.md.
+</div>
+
+<div class="footer">
+  <p><strong>Primary source:</strong> <a href="https://opencode.ai/docs/skills/">OpenCode Docs — Agent Skills</a></p>
+  <p><strong>Want to go deeper?</strong> Read the <a href="https://opencode.ai/docs/skills/">official OpenCode docs</a> or explore <code>~/Source/skills/writing-skills/SKILL.md</code> for the full skill-authoring guide.</p>
+  <p>Any questions? Ask the agent — that's me!</p>
+</div>
+
+<script>
+function check(btn, correct) {
+  const parent = btn.parentElement;
+  const feedback = parent.querySelector('.quiz-feedback');
+  const allOptions = parent.querySelectorAll('.quiz-option');
+  allOptions.forEach(b => { b.disabled = true; });
+  if (correct) {
+    btn.classList.add('correct');
+    feedback.textContent = '✓ Correct! name and description are the two required fields.';
+  } else {
+    btn.classList.add('wrong');
+    feedback.textContent = '✗ Not quite. The required fields are name and description.';
+  }
+  feedback.classList.add('show');
+}
+</script>
+
+</body>
+</html>

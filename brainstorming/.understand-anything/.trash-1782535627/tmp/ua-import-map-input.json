@@ -1,0 +1,4 @@
+{
+  "projectRoot": "/Users/xuyi/Source/skills/brainstorming",
+  "files": [{"path": "scripts/frame-template.html", "language": "html", "fileCategory": "markup"}, {"path": "scripts/helper.js", "language": "javascript", "fileCategory": "code"}, {"path": "scripts/server.cjs", "language": "javascript", "fileCategory": "code"}, {"path": "scripts/start-server.sh", "language": "shell", "fileCategory": "script"}, {"path": "scripts/stop-server.sh", "language": "shell", "fileCategory": "script"}, {"path": "SKILL.md", "language": "markdown", "fileCategory": "docs"}, {"path": "spec-document-reviewer-prompt.md", "language": "markdown", "fileCategory": "docs"}, {"path": "visual-companion.md", "language": "markdown", "fileCategory": "docs"}]
+}

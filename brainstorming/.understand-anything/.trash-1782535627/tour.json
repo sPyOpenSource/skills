@@ -1,0 +1,50 @@
+[
+  {
+    "order": 1,
+    "title": "Brainstorming Methodology",
+    "description": "Start with SKILL.md to understand the full brainstorming process: the 9-step checklist (explore context, ask questions, propose approaches, present design, write spec, self-review, user review, transition to implementation), the process flow diagram, hard-gate preventing implementation before design approval, and the just-in-time visual companion offer strategy.",
+    "nodeIds": ["document:SKILL.md"]
+  },
+  {
+    "order": 2,
+    "title": "Spec Document Review",
+    "description": "The spec-document-reviewer-prompt.md provides a subagent dispatch template for QA'ing spec documents. It checks completeness (TODOs/placeholders), internal consistency, clarity (ambiguity that could derail implementation), scope focus, and YAGNI — with a calibration that only flags issues that would cause real problems during planning.",
+    "nodeIds": ["document:spec-document-reviewer-prompt.md"]
+  },
+  {
+    "order": 3,
+    "title": "Visual Companion Guide",
+    "description": "The visual-companion.md guide documents when to use the browser vs terminal per-question, how the screen-push loop works (write HTML, user clicks, read events from state_dir), content fragment authoring (no full HTML needed), the available CSS classes (options, cards, mockups, split view, pros/cons), browser events format, and cleanup procedures.",
+    "nodeIds": ["document:visual-companion.md"]
+  },
+  {
+    "order": 4,
+    "title": "Server Backend",
+    "description": "server.cjs is a zero-dependency Node.js server implementing raw WebSocket (RFC 6455) negotiation and framing, HTTP request handling, session key authentication via query param or HttpOnly cookie with timing-safe comparison, file watching for new screens with debouncing and broadcast of reload events, idle timeout and owner-PID lifecycle monitoring, and platform-aware browser auto-launch.",
+    "nodeIds": ["file:scripts/server.cjs"]
+  },
+  {
+    "order": 5,
+    "title": "Browser Client — Frame Template",
+    "description": "frame-template.html provides the browser UI shell with OS-aware light/dark CSS theme variables, a branded header with live connection status pill, a scrollable content area where screen content is injected, and pre-built CSS classes for options (A/B/C), cards, mockups, split-view comparisons, pros/cons lists, and wireframe mock elements.",
+    "nodeIds": ["file:scripts/frame-template.html"]
+  },
+  {
+    "order": 6,
+    "title": "Browser Client — Interaction Logic",
+    "description": "helper.js is the client-side module injected into every page. It manages WebSocket connections with exponential backoff reconnection (500ms–30s), shows a tombstone overlay after 15s of disconnection, queues events when offline, captures clicks on data-choice elements, exposes toggleSelect() for interactivity, and triggers page reload on server broadcast.",
+    "nodeIds": ["file:scripts/helper.js"]
+  },
+  {
+    "order": 7,
+    "title": "Server Operations — Startup",
+    "description": "start-server.sh handles session directory creation (persistent under .superpowers/ or ephemeral under /tmp), port/token file management for restart reuse, platform detection (auto-foreground on Windows/Codex), owner-PID resolution for lifecycle tracking, optional browser auto-open, idle timeout configuration, and startup verification with retry logic.",
+    "nodeIds": ["file:scripts/start-server.sh"]
+  },
+  {
+    "order": 8,
+    "title": "Server Operations — Shutdown",
+    "description": "stop-server.sh performs graceful server shutdown with PID validation via per-start instance ID matching (prevents killing wrong processes after PID wraparound), graceful kill with 2s wait window, SIGKILL escalation if needed, and conditional cleanup that preserves persistent session directories under .superpowers/ while deleting ephemeral /tmp directories.",
+    "nodeIds": ["file:scripts/stop-server.sh"]
+  }
+]

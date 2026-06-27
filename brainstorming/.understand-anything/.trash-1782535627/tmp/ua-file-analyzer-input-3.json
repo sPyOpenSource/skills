@@ -1,0 +1,11 @@
+{
+  "projectRoot": "/Users/xuyi/Source/skills/brainstorming",
+  "batchFiles": [
+    {"path": "scripts/helper.js", "language": "javascript", "sizeLines": 167, "fileCategory": "code"},
+    {"path": "scripts/server.cjs", "language": "javascript", "sizeLines": 723, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "scripts/helper.js": [],
+    "scripts/server.cjs": []
+  }
+}

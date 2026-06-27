@@ -1,0 +1,13 @@
+{
+  "projectRoot": "/Users/xuyi/Source/skills/brainstorming",
+  "batchFiles": [
+    {"path": "scripts/frame-template.html", "language": "html", "sizeLines": 213, "fileCategory": "markup"},
+    {"path": "scripts/start-server.sh", "language": "shell", "sizeLines": 209, "fileCategory": "script"},
+    {"path": "scripts/stop-server.sh", "language": "shell", "sizeLines": 120, "fileCategory": "script"}
+  ],
+  "batchImportData": {
+    "scripts/frame-template.html": [],
+    "scripts/start-server.sh": [],
+    "scripts/stop-server.sh": []
+  }
+}

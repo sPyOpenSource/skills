@@ -1,0 +1,91 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/frame-template.html",
+      "type": "file",
+      "label": "frame-template.html",
+      "properties": {
+        "path": "scripts/frame-template.html",
+        "language": "html",
+        "fileCategory": "markup",
+        "totalLines": 213,
+        "nonEmptyLines": 196,
+        "summary": "HTML frame template for the brainstorm companion. Provides OS-aware light/dark theming, header branding with connection status, a scrollable main content area, and CSS helpers for common UI patterns: option cards, design cards, mockup containers, split view, pros/cons, and inline mockup elements. Content is injected via placeholder comment."
+      }
+    },
+    {
+      "id": "file:scripts/start-server.sh",
+      "type": "file",
+      "label": "start-server.sh",
+      "properties": {
+        "path": "scripts/start-server.sh",
+        "language": "shell",
+        "fileCategory": "script",
+        "totalLines": 209,
+        "nonEmptyLines": 188,
+        "summary": "Starts the brainstorm server on a random high port. Parses CLI args (--project-dir, --host, --url-host, --idle-timeout-minutes, --open, --foreground/--background). Creates a unique session directory with state files, generates a server instance ID, kills any existing server via PID file, then launches server.cjs either in foreground (with wait) or background (with nohup/disown). Polls log file for 'server-started' confirmation with process-liveness verification."
+      }
+    },
+    {
+      "id": "file:scripts/stop-server.sh",
+      "type": "file",
+      "label": "stop-server.sh",
+      "properties": {
+        "path": "scripts/stop-server.sh",
+        "language": "shell",
+        "fileCategory": "script",
+        "totalLines": 120,
+        "nonEmptyLines": 102,
+        "summary": "Stops a brainstorm server by session directory. Validates the server PID against the stored server instance ID to avoid signaling unrelated processes. Attempts graceful kill with up to 2s wait, escalates to SIGKILL if needed. Cleans up PID, instance ID, and log files. Only deletes session directory if under /tmp (ephemeral); preserves persistent .superpowers/ directories."
+      }
+    },
+    {
+      "id": "function:is_windows_like_shell",
+      "type": "function",
+      "label": "is_windows_like_shell",
+      "properties": {
+        "name": "is_windows_like_shell",
+        "file": "scripts/start-server.sh",
+        "startLine": 82,
+        "endLine": 95,
+        "params": [],
+        "length": 14,
+        "summary": "Detects Windows-like shell environments (MSYS, Cygwin, MinGW) by checking OSTYPE and uname -s. Used to auto-foreground the server since these environments reap background/nohup processes."
+      }
+    },
+    {
+      "id": "function:command_has_server_id",
+      "type": "function",
+      "label": "command_has_server_id",
+      "properties": {
+        "name": "command_has_server_id",
+        "file": "scripts/stop-server.sh",
+        "startLine": 43,
+        "endLine": 61,
+        "params": ["pid", "expected"],
+        "length": 19,
+        "summary": "Checks whether a given PID's command line contains the expected --brainstorm-server-id argument. Supports /proc/$pid/cmdline (Linux) and ps -ww output (macOS/BSD). Called by is_brainstorm_server to verify process identity before signaling."
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/start-server.sh",
+      "target": "file:scripts/stop-server.sh",
+      "type": "related",
+      "label": "start-server.sh and stop-server.sh coordinate to manage the same brainstorm server lifecycle: start-server.sh writes PID and state files that stop-server.sh reads to locate and terminate the server. start-server.sh also embeds its own cleanup logic (kills existing server at lines 145-149) mirroring stop-server.sh's approach."
+    },
+    {
+      "source": "file:scripts/start-server.sh",
+      "target": "file:scripts/server.cjs",
+      "type": "depends_on",
+      "label": "start-server.sh launches server.cjs via `node server.cjs` (lines 171, 180) with environment variables BRAINSTORM_DIR, BRAINSTORM_HOST, BRAINSTORM_URL_HOST, and BRAINSTORM_OWNER_PID."
+    },
+    {
+      "source": "file:scripts/frame-template.html",
+      "target": "file:scripts/helper.js",
+      "type": "related",
+      "label": "frame-template.html provides the markup/CSS skeleton that helper.js populates with dynamic content. helper.js injects content into the #frame-content div and updates the status indicator in the header."
+    }
+  ]
+}

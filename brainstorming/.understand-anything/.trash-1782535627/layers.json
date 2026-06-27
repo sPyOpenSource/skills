@@ -1,0 +1,38 @@
+[
+  {
+    "id": "layer:skill-definition",
+    "name": "Skill Definition",
+    "description": "Core brainstorming methodology document that defines the step-by-step process for turning ideas into designs through collaborative dialogue, including the hard gate, process flow, principles, and transition conditions.",
+    "nodeIds": ["document:SKILL.md"]
+  },
+  {
+    "id": "layer:spec-review",
+    "name": "Spec Review",
+    "description": "Subagent prompt template for automated quality assurance of design specs, checking completeness, consistency, clarity, scope, and YAGNI before implementation planning begins.",
+    "nodeIds": ["document:spec-document-reviewer-prompt.md"]
+  },
+  {
+    "id": "layer:visual-companion-guide",
+    "name": "Visual Companion Guide",
+    "description": "Detailed usage documentation for the browser-based visual brainstorming companion, covering when to use it, session lifecycle, content fragment authoring, CSS classes, event format, and cleanup procedures.",
+    "nodeIds": ["document:visual-companion.md"]
+  },
+  {
+    "id": "layer:server",
+    "name": "Server",
+    "description": "Node.js HTTP/WebSocket server that provides session management, file watching (auto-serves newest HTML screen), token-based authentication, browser automation, idle timeout, and cross-platform launcher support for the visual companion.",
+    "nodeIds": ["file:scripts/server.cjs"]
+  },
+  {
+    "id": "layer:browser-client",
+    "name": "Browser Client",
+    "description": "Client-side presentation layer and interaction logic — the HTML frame template with OS-aware CSS theming (frame-template.html) and the WebSocket-driven helper script (helper.js) handling connection management, reconnection, event capture, and selection tracking.",
+    "nodeIds": ["file:scripts/frame-template.html", "file:scripts/helper.js"]
+  },
+  {
+    "id": "layer:operations",
+    "name": "Operations",
+    "description": "Shell scripts for server lifecycle management — start-server.sh handles CLI argument parsing, session directory creation, PID tracking, cross-platform compatibility (Windows/Codex/Gemini), and background daemonization; stop-server.sh handles graceful shutdown, stale PID detection, and ephemeral session cleanup.",
+    "nodeIds": ["file:scripts/start-server.sh", "file:scripts/stop-server.sh"]
+  }
+]

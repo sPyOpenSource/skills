@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 8,
+  "totalBatches": 3,
+  "exportsByPath": {
+    "scripts/helper.js": [],
+    "scripts/server.cjs": []
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "language": "markdown",
+          "sizeLines": 159,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "spec-document-reviewer-prompt.md",
+          "language": "markdown",
+          "sizeLines": 49,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "visual-companion.md",
+          "language": "markdown",
+          "sizeLines": 298,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "SKILL.md": [],
+        "spec-document-reviewer-prompt.md": [],
+        "visual-companion.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "scripts/frame-template.html",
+          "language": "html",
+          "sizeLines": 213,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "scripts/start-server.sh",
+          "language": "shell",
+          "sizeLines": 209,
+          "fileCategory": "script"
+        },
+        {
+          "path": "scripts/stop-server.sh",
+          "language": "shell",
+          "sizeLines": 120,
+          "fileCategory": "script"
+        }
+      ],
+      "batchImportData": {
+        "scripts/frame-template.html": [],
+        "scripts/start-server.sh": [],
+        "scripts/stop-server.sh": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": "scripts/helper.js",
+          "language": "javascript",
+          "sizeLines": 167,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scripts/server.cjs",
+          "language": "javascript",
+          "sizeLines": 723,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "scripts/helper.js": [],
+        "scripts/server.cjs": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}
