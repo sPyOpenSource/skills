@@ -1,0 +1,84 @@
+[
+  {
+    "order": 1,
+    "title": "Project Overview",
+    "description": "Start with the main SKILL.md to understand the 7-phase pipeline that analyzes codebases and produces interactive knowledge graphs.",
+    "nodeIds": ["document:understand/SKILL.md"]
+  },
+  {
+    "order": 2,
+    "title": "Project Scanning",
+    "description": "The scan-project.mjs script discovers all project files, detects languages and frameworks, and builds an import map — the foundation of all subsequent analysis.",
+    "nodeIds": ["file:understand/scan-project.mjs", "config:.understand-anything/intermediate/scan-result.json"]
+  },
+  {
+    "order": 3,
+    "title": "Semantic Batching",
+    "description": "The compute-batches.mjs script groups files into semantic batches using Louvain community detection on the import graph, so related files are analyzed together.",
+    "nodeIds": ["file:understand/compute-batches.mjs", "config:.understand-anything/intermediate/batches.json"]
+  },
+  {
+    "order": 4,
+    "title": "Import Map Extraction",
+    "description": "The extract-import-map.mjs script resolves imports across multiple languages (JavaScript/TypeScript, Python, Go) to build a complete dependency graph.",
+    "nodeIds": ["file:understand/extract-import-map.mjs", "config:.understand-anything/intermediate/import-map-input.json"]
+  },
+  {
+    "order": 5,
+    "title": "Structure Extraction",
+    "description": "The extract-structure.mjs script uses TreeSitter to extract function and class definitions from source files, enabling detailed code-level nodes.",
+    "nodeIds": ["file:understand/extract-structure.mjs"]
+  },
+  {
+    "order": 6,
+    "title": "Graph Merging",
+    "description": "The merge-batch-graphs.py script combines per-batch graph files into a single assembled graph, normalizing node IDs, deduplicating, and linking test coverage.",
+    "nodeIds": ["file:understand/merge-batch-graphs.py"]
+  },
+  {
+    "order": 7,
+    "title": "Domain & Knowledge Sub-skills",
+    "description": "Specialized skills for extracting domain context and processing wiki-style knowledge bases into graph nodes.",
+    "nodeIds": [
+      "document:understand-domain/SKILL.md",
+      "document:understand-knowledge/SKILL.md",
+      "file:understand-domain/extract-domain-context.py",
+      "file:understand-knowledge/merge-knowledge-graph.py",
+      "file:understand-knowledge/parse-knowledge-base.py"
+    ]
+  },
+  {
+    "order": 8,
+    "title": "User-Facing Skills",
+    "description": "Skills that provide the interactive interfaces to the knowledge graph: chat-based querying, visual dashboard, diff analysis, explain, and onboarding.",
+    "nodeIds": [
+      "document:understand-chat/SKILL.md",
+      "document:understand-dashboard/SKILL.md",
+      "document:understand-diff/SKILL.md",
+      "document:understand-explain/SKILL.md",
+      "document:understand-onboard/SKILL.md"
+    ]
+  },
+  {
+    "order": 9,
+    "title": "Language & Framework References",
+    "description": "Reference documents that guide how different programming languages and frameworks are analyzed, providing language-specific edge patterns and naming conventions.",
+    "nodeIds": [
+      "document:understand/languages/python.md",
+      "document:understand/languages/javascript.md",
+      "document:understand/frameworks/react.md",
+      "document:understand/frameworks/nextjs.md"
+    ]
+  },
+  {
+    "order": 10,
+    "title": "Localization & Configuration",
+    "description": "Locale guidance for multi-language output and configuration files that control analysis behavior.",
+    "nodeIds": [
+      "document:understand/locales/zh.md",
+      "document:understand/locales/ja.md",
+      "config:.understand-anything/config.json",
+      "config:.understand-anything/.understandignore"
+    ]
+  }
+]

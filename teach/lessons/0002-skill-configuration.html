@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Configuration & Agent Integration — Lesson 2</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .config-map {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 0.75rem 0;
+  }
+  @media (max-width: 600px) {
+    .config-map { grid-template-columns: 1fr; }
+  }
+  .config-card {
+    background: var(--code-bg);
+    border-radius: 4px;
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+  .config-card h4 {
+    margin: 0 0 0.3rem 0;
+    font-size: 0.85rem;
+  }
+  .config-card code {
+    display: block;
+    margin: 0.3rem 0;
+  }
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 0.75rem 0;
+    font-size: 0.85rem;
+  }
+  .flow-step {
+    background: var(--code-bg);
+    padding: 0.4rem 0.75rem;
+    border-radius: 4px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .flow-arrow {
+    color: var(--muted);
+    font-size: 1.2rem;
+  }
+  .file-path {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  ol.compact li {
+    margin-bottom: 0.3rem;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="tag">Lesson 2</span>
+  <span>Skill Configuration & Agent Integration</span>
+  <span>←</span>
+  <a href="0001-what-is-a-skill.html">Lesson 1</a>
+</nav>
+
+<h1>Skill Configuration &amp; Agent Integration</h1>
+<p class="sidenote">Skill System Architecture — Lesson 2 of ?</p>
+
+<p>
+  Lesson 1 covered <em>what</em> a skill is — a <code>SKILL.md</code> file with frontmatter and instructions. But how does the AI agent know which skills exist? How does it decide when to load one? And how does configuration control the behavior?
+</p>
+
+<blockquote>
+  A skill on disk is just a markdown file. A skill in the agent's hands is the result of a configuration pipeline: discovery → listing → loading → invocation.
+</blockquote>
+
+<h2>1. The Configuration Pipeline</h2>
+
+<p>Four steps connect a <code>SKILL.md</code> file to an agent's behavior:</p>
+
+<div class="flow">
+  <div class="flow-step"><strong>1. Discovery</strong><br><span style="font-size:0.75rem;">Config tells agent<br>where to look</span></div>
+  <span class="flow-arrow">→</span>
+  <div class="flow-step"><strong>2. Listing</strong><br><span style="font-size:0.75rem;">Available skills<br>appear in prompt</span></div>
+  <span class="flow-arrow">→</span>
+  <div class="flow-step"><strong>3. Loading</strong><br><span style="font-size:0.75rem;"><code>skill</code> tool<br>reads SKILL.md</span></div>
+  <span class="flow-arrow">→</span>
+  <div class="flow-step"><strong>4. Invocation</strong><br><span style="font-size:0.75rem;">Agent follows<br>skill instructions</span></div>
+</div>
+
+<p>Let's look at each step.</p>
+
+<h2>2. Step 1: Discovery — <code>opencode.json</code></h2>
+
+<p>
+  Skills are configured in the project's <code>opencode.json</code> (or <code>opencode.jsonc</code>). This is the same file that configures the AI agent for your project. The relevant configuration points:
+</p>
+
+<div class="config-map">
+  <div class="config-card">
+    <h4>📁 Skills Directory</h4>
+    <code>"skills": ["path/to/skills"]</code>
+    <p style="font-size:0.8rem; margin:0;">Tells opencode where to look for <code>SKILL.md</code> files. Can be a directory or an array of directories.</p>
+  </div>
+  <div class="config-card">
+    <h4>🔌 Skill Permission</h4>
+    <code>"permissions": {"skill": true}</code>
+    <p style="font-size:0.8rem; margin:0;">Whether the agent is <em>allowed</em> to load and run skills. Can be <code>true</code>, <code>false</code>, or a path allowlist.</p>
+  </div>
+</div>
+
+<div class="info-box">
+  <strong>Note:</strong> <code>opencode.json</code> is per-project. Skills directories are typically relative to the project root, e.g., <code>.opencode/skills/</code> or just <code>skills/</code>. You can have multiple skills directories.
+</div>
+
+<h2>3. Step 2: Listing — <code>available_skills</code></h2>
+
+<p>
+  At the start of a session, opencode reads all <code>SKILL.md</code> files from the configured directories and builds a list. This list is injected into the agent's <strong>system prompt</strong> as <code>available_skills</code> — a structured list of:
+</p>
+
+<ul>
+  <li><strong>name</strong> — the skill identifier (from frontmatter)</li>
+  <li><strong>description</strong> — what the skill does (from frontmatter)</li>
+  <li><strong>location</strong> — path to the <code>SKILL.md</code> file</li>
+</ul>
+
+<p>This is what you see at the start of every session — the full catalog of what the agent <em>could</em> do. Here's a real entry from this repo:</p>
+
+<pre>"description": "Diagnosis loop for hard bugs and performance regressions...",
+"location": "/Users/xuyi/.config/opencode/skills/.../diagnosing-bugs/SKILL.md",
+"name": "diagnosing-bugs"</pre>
+
+<h3>How the agent uses this list</h3>
+
+<p>The system prompt tells the agent:</p>
+
+<ol class="compact">
+  <li>Scan <code>available_skills</code> at the start of every task</li>
+  <li>If a skill's description matches what the user is asking for, <strong>load it before responding</strong></li>
+  <li>The agent matches by reading the <code>description</code> field — so descriptions are the key discovery mechanism</li>
+</ol>
+
+<div class="quiz">
+  <p>Quiz: A user asks "help me diagnose why my app is slow." Which field in <code>available_skills</code> tells the agent which skill to load?</p>
+  <button class="quiz-option" onclick="check(this, true)">The <code>description</code> field — the agent matches descriptions to user intent</button>
+  <button class="quiz-option" onclick="check(this, false)">The <code>name</code> field — the agent matches keywords in the skill name</button>
+  <button class="quiz-option" onclick="check(this, false)">The <code>location</code> field — the agent guesses based on the file path</button>
+  <div class="quiz-feedback" id="quiz1-feedback"></div>
+</div>
+
+<h2>4. Step 3: Loading — the <code>skill</code> Tool</h2>
+
+<p>
+  When the agent decides a skill is relevant, it uses the <strong><code>skill</code> tool</strong> to load it:
+</p>
+
+<pre>{
+  "name": "skill",
+  "description": "Load a specialized skill...",
+  "parameters": {
+    "name": {"type": "string"}
+  }
+}</pre>
+
+<p>The agent calls <code>skill("diagnosing-bugs")</code> and the tool returns the full <code>SKILL.md</code> content — both frontmatter and body. The instructions are now in the agent's context and the agent follows them.</p>
+
+<div class="info-box">
+  <strong>Key insight:</strong> The <code>skill</code> tool loads exactly one skill at a time. The agent chooses <em>which</em> to load based on the descriptions in <code>available_skills</code>. If multiple skills match, the agent should pick the best one (or ask the user).
+</div>
+
+<h2>5. Step 4: Invocation</h2>
+
+<p>
+  Once loaded, the skill's body becomes an instruction set. Skills can specify:
+</p>
+
+<ul>
+  <li><strong>Trigger phrases</strong> — "When the user types <code>/graphify</code>, load this skill before doing anything else"</li>
+  <li><strong>Workflows</strong> — step-by-step procedures the agent should follow</li>
+  <li><strong>Tool configurations</strong> — which tools to use and how</li>
+  <li><strong>Output formats</strong> — how to structure the result</li>
+</ul>
+
+<p>The agent executes the skill's instructions just like any other directive in its system prompt.</p>
+
+<h2>6. Putting It All Together: A Real Flow</h2>
+
+<p>When you asked me "<a href="https://opencode.ai">how skills work</a>," here's what happened under the hood:</p>
+
+<ol class="compact">
+  <li><strong>System prompt</strong> contained <code>available_skills</code> — including <code>writing-skills</code>, <code>customize-opencode</code>, etc.</li>
+  <li>I scanned descriptions and found the <strong>writing-skills</strong> skill: <em>"Use when creating new skills, editing existing skills, or verifying skills work before deployment"</em></li>
+  <li>The description didn't match well (you wanted to <em>learn</em> about skills, not write one), so I asked you for clarification</li>
+  <li>You confirmed you wanted to learn the system architecture, so I created this teaching workspace instead of loading a skill</li>
+</ol>
+
+<div class="info-box">
+  <strong>This is a real example of how skill discovery works in practice.</strong> The agent read <code>available_skills</code>, evaluated the <code>description</code> fields against your intent, and made a decision. Sometimes the right choice is <em>not</em> to load a skill.
+</div>
+
+<h2>7. The Permission Model</h2>
+
+<p>Skills are powerful — they can give the agent custom instructions that modify its behavior. opencode controls this with a permission system:</p>
+
+<table style="width:100%; border-collapse: collapse; margin:0.75rem 0;">
+  <tr style="border-bottom:1px solid var(--border);">
+    <th style="text-align:left; padding:0.3rem 0.5rem;">Permission Value</th>
+    <th style="text-align:left; padding:0.3rem 0.5rem;">Behavior</th>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.3rem 0.5rem;"><code>"skill": false</code></td>
+    <td style="padding:0.3rem 0.5rem;">Agent can't load any skills. <code>available_skills</code> is empty.</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.3rem 0.5rem;"><code>"skill": true</code></td>
+    <td style="padding:0.3rem 0.5rem;">Agent can load any skill from configured directories.</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.3rem 0.5rem;"><code>"skill": ["path/to/skill/SKILL.md"]</code></td>
+    <td style="padding:0.3rem 0.5rem;">Only specific skills can be loaded (allowlist).</td>
+  </tr>
+</table>
+
+<p class="sidenote">The permission check happens at load time — when the agent calls the <code>skill</code> tool. If the skill is not permitted, the tool returns an error and the instructions never enter the agent's context.</p>
+
+<h2>Summary</h2>
+
+<ul>
+  <li>A skill on disk becomes available to the agent through a four-step pipeline: discovery (opencode.json) → listing (available_skills in system prompt) → loading (skill tool) → invocation (agent follows instructions)</li>
+  <li>The <code>description</code> field in <code>available_skills</code> is how the agent decides which skill to load — it's the most important part of a skill's frontmatter</li>
+  <li>Permissions control whether skills can be loaded at all — set <code>"skill": true</code> in <code>opencode.json</code></li>
+  <li>Skills are single files loaded on demand — not plugins or modules. The agent reads the markdown and follows the instructions.</li>
+  <li>You saw this pipeline in action at the start of this session: I scanned <code>available_skills</code>, evaluated descriptions against your intent, and decided not to load a skill because none matched well enough</li>
+</ul>
+
+<div class="sidenote">
+  <strong>Next:</strong> Lesson 3 — we'll dive into writing a skill: frontmatter anatomy, trigger phrases, and instructions that agents actually follow. Or <a href="../reference/skill-anatomy.html">Reference: SKILL.md Anatomy</a> for a cheat sheet.
+</div>
+
+<div class="footer">
+  <p><strong>Primary source:</strong> <a href="https://opencode.ai">opencode.ai</a> — official opencode documentation.</p>
+  <p>Any questions? Ask the agent — that's me!</p>
+</div>
+
+<script>
+function check(btn, correct) {
+  const parent = btn.parentElement;
+  const feedback = parent.querySelector('.quiz-feedback');
+  const allOptions = parent.querySelectorAll('.quiz-option');
+  allOptions.forEach(b => { b.disabled = true; });
+  if (correct) {
+    btn.classList.add('correct');
+    feedback.textContent = '✓ Correct!';
+  } else {
+    btn.classList.add('wrong');
+    feedback.textContent = '✗ Try again.';
+  }
+  feedback.classList.add('show');
+}
+</script>
+
+</body>
+</html>

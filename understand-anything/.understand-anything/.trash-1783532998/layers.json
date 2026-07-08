@@ -1,0 +1,125 @@
+[
+  {
+    "id": "layer:core-pipeline",
+    "name": "Core Analysis Pipeline",
+    "description": "Core scripts that implement the understanding analysis pipeline: file scanning, import extraction, batching, graph assembly, and fingerprinting.",
+    "nodeIds": [
+      "file:understand/scan-project.mjs",
+      "file:understand/extract-import-map.mjs",
+      "file:understand/compute-batches.mjs",
+      "file:understand/merge-batch-graphs.py",
+      "file:understand/merge-subdomain-graphs.py",
+      "file:understand/build-fingerprints.mjs",
+      "file:understand/extract-structure.mjs",
+      "file:understand/generate-ignore.mjs",
+      "concept:codebase-analysis",
+      "concept:batch-processing",
+      "concept:knowledge-graph",
+      "module:understand"
+    ]
+  },
+  {
+    "id": "layer:skills",
+    "name": "Understand Skills",
+    "description": "SKILL.md definition files for each sub-skill under understand-anything.",
+    "nodeIds": [
+      "document:understand/SKILL.md",
+      "document:understand-domain/SKILL.md",
+      "document:understand-knowledge/SKILL.md"
+    ]
+  },
+  {
+    "id": "layer:domain-analysis",
+    "name": "Domain Analysis",
+    "description": "Scripts and skills for extracting business domain context from codebases.",
+    "nodeIds": [
+      "module:understand-domain",
+      "file:understand-domain/extract-domain-context.py",
+      "document:understand-domain/SKILL.md"
+    ]
+  },
+  {
+    "id": "layer:knowledge-processing",
+    "name": "Knowledge Processing",
+    "description": "Scripts for merging, parsing, and processing knowledge graphs and knowledge bases.",
+    "nodeIds": [
+      "module:understand-knowledge",
+      "file:understand-knowledge/merge-knowledge-graph.py",
+      "file:understand-knowledge/parse-knowledge-base.py",
+      "document:understand-knowledge/SKILL.md"
+    ]
+  },
+  {
+    "id": "layer:language-references",
+    "name": "Language References",
+    "description": "Language-specific analysis guidance files.",
+    "nodeIds": [
+      "document:understand/languages/cpp.md",
+      "document:understand/languages/csharp.md",
+      "document:understand/languages/css.md",
+      "document:understand/languages/dockerfile.md",
+      "document:understand/languages/go.md",
+      "document:understand/languages/graphql.md",
+      "document:understand/languages/html.md",
+      "document:understand/languages/java.md",
+      "document:understand/languages/javascript.md",
+      "document:understand/languages/json.md",
+      "document:understand/languages/kotlin.md",
+      "document:understand/languages/markdown.md",
+      "document:understand/languages/php.md",
+      "document:understand/languages/protobuf.md",
+      "document:understand/languages/python.md",
+      "document:understand/languages/ruby.md",
+      "document:understand/languages/rust.md",
+      "document:understand/languages/shell.md",
+      "document:understand/languages/sql.md",
+      "document:understand/languages/swift.md",
+      "document:understand/languages/terraform.md",
+      "document:understand/languages/typescript.md",
+      "document:understand/languages/yaml.md"
+    ]
+  },
+  {
+    "id": "layer:framework-references",
+    "name": "Framework References",
+    "description": "Framework-specific analysis guidance files.",
+    "nodeIds": [
+      "document:understand/frameworks/django.md",
+      "document:understand/frameworks/express.md",
+      "document:understand/frameworks/fastapi.md",
+      "document:understand/frameworks/flask.md",
+      "document:understand/frameworks/gin.md",
+      "document:understand/frameworks/nextjs.md",
+      "document:understand/frameworks/rails.md",
+      "document:understand/frameworks/react.md",
+      "document:understand/frameworks/spring.md",
+      "document:understand/frameworks/vue.md"
+    ]
+  },
+  {
+    "id": "layer:config",
+    "name": "Configuration",
+    "description": "Configuration files for the analysis pipeline.",
+    "nodeIds": [
+      "config:.understand-anything/config.json",
+      "file:.understand-anything/.understandignore"
+    ]
+  },
+  {
+    "id": "layer:user-interfaces",
+    "name": "User Interfaces",
+    "description": "Skills for interactive use: chat, dashboard, diff, explain, onboard.",
+    "nodeIds": [
+      "module:understand-chat",
+      "module:understand-dashboard",
+      "module:understand-diff",
+      "module:understand-explain",
+      "module:understand-onboard",
+      "document:understand-chat/SKILL.md",
+      "document:understand-dashboard/SKILL.md",
+      "document:understand-diff/SKILL.md",
+      "document:understand-explain/SKILL.md",
+      "document:understand-onboard/SKILL.md"
+    ]
+  }
+]

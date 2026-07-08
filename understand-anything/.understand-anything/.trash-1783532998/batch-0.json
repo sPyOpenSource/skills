@@ -1,0 +1,1473 @@
+{
+  "nodes": [
+    {
+      "id": "document:understand-chat/SKILL.md",
+      "type": "document",
+      "name": "SKILL",
+      "filePath": "understand-chat/SKILL.md",
+      "summary": "Skill definition for understand-chat",
+      "tags": [
+        "skill",
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand-dashboard/SKILL.md",
+      "type": "document",
+      "name": "SKILL",
+      "filePath": "understand-dashboard/SKILL.md",
+      "summary": "Skill definition for understand-dashboard",
+      "tags": [
+        "skill",
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand-diff/SKILL.md",
+      "type": "document",
+      "name": "SKILL",
+      "filePath": "understand-diff/SKILL.md",
+      "summary": "Skill definition for understand-diff",
+      "tags": [
+        "skill",
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "file:understand-domain/extract-domain-context.py",
+      "type": "file",
+      "name": "extract-domain-context",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Python script: extract-domain-context.py",
+      "tags": [
+        "python",
+        "script"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Python source"
+    },
+    {
+      "id": "document:understand-domain/SKILL.md",
+      "type": "document",
+      "name": "SKILL",
+      "filePath": "understand-domain/SKILL.md",
+      "summary": "Skill definition for understand-domain",
+      "tags": [
+        "skill",
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand-explain/SKILL.md",
+      "type": "document",
+      "name": "SKILL",
+      "filePath": "understand-explain/SKILL.md",
+      "summary": "Skill definition for understand-explain",
+      "tags": [
+        "skill",
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "file:understand-knowledge/merge-knowledge-graph.py",
+      "type": "file",
+      "name": "merge-knowledge-graph",
+      "filePath": "understand-knowledge/merge-knowledge-graph.py",
+      "summary": "Python script: merge-knowledge-graph.py",
+      "tags": [
+        "python",
+        "script"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Python source"
+    },
+    {
+      "id": "file:understand-knowledge/parse-knowledge-base.py",
+      "type": "file",
+      "name": "parse-knowledge-base",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Python script: parse-knowledge-base.py",
+      "tags": [
+        "python",
+        "script"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Python source"
+    },
+    {
+      "id": "document:understand-knowledge/SKILL.md",
+      "type": "document",
+      "name": "SKILL",
+      "filePath": "understand-knowledge/SKILL.md",
+      "summary": "Skill definition for understand-knowledge",
+      "tags": [
+        "skill",
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand-onboard/SKILL.md",
+      "type": "document",
+      "name": "SKILL",
+      "filePath": "understand-onboard/SKILL.md",
+      "summary": "Skill definition for understand-onboard",
+      "tags": [
+        "skill",
+        "documentation"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "file:understand/build-fingerprints.mjs",
+      "type": "file",
+      "name": "build-fingerprints",
+      "filePath": "understand/build-fingerprints.mjs",
+      "summary": "Node.js script: build-fingerprints.mjs",
+      "tags": [
+        "javascript",
+        "script"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "JavaScript source"
+    },
+    {
+      "id": "file:understand/compute-batches.mjs",
+      "type": "file",
+      "name": "compute-batches",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Node.js script: compute-batches.mjs",
+      "tags": [
+        "javascript",
+        "script"
+      ],
+      "complexity": "complex",
+      "languageNotes": "JavaScript source"
+    },
+    {
+      "id": "file:understand/extract-import-map.mjs",
+      "type": "file",
+      "name": "extract-import-map",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Node.js script: extract-import-map.mjs",
+      "tags": [
+        "javascript",
+        "script"
+      ],
+      "complexity": "complex",
+      "languageNotes": "JavaScript source"
+    },
+    {
+      "id": "file:understand/extract-structure.mjs",
+      "type": "file",
+      "name": "extract-structure",
+      "filePath": "understand/extract-structure.mjs",
+      "summary": "Node.js script: extract-structure.mjs",
+      "tags": [
+        "javascript",
+        "script"
+      ],
+      "complexity": "complex",
+      "languageNotes": "JavaScript source"
+    },
+    {
+      "id": "document:understand/frameworks/django.md",
+      "type": "document",
+      "name": "django",
+      "filePath": "understand/frameworks/django.md",
+      "summary": "Framework reference: django",
+      "tags": [
+        "framework",
+        "reference"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/frameworks/express.md",
+      "type": "document",
+      "name": "express",
+      "filePath": "understand/frameworks/express.md",
+      "summary": "Framework reference: express",
+      "tags": [
+        "framework",
+        "reference"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/frameworks/fastapi.md",
+      "type": "document",
+      "name": "fastapi",
+      "filePath": "understand/frameworks/fastapi.md",
+      "summary": "Framework reference: fastapi",
+      "tags": [
+        "framework",
+        "reference"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/frameworks/flask.md",
+      "type": "document",
+      "name": "flask",
+      "filePath": "understand/frameworks/flask.md",
+      "summary": "Framework reference: flask",
+      "tags": [
+        "framework",
+        "reference"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/frameworks/gin.md",
+      "type": "document",
+      "name": "gin",
+      "filePath": "understand/frameworks/gin.md",
+      "summary": "Framework reference: gin",
+      "tags": [
+        "framework",
+        "reference"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/frameworks/nextjs.md",
+      "type": "document",
+      "name": "nextjs",
+      "filePath": "understand/frameworks/nextjs.md",
+      "summary": "Framework reference: nextjs",
+      "tags": [
+        "framework",
+        "reference"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/frameworks/rails.md",
+      "type": "document",
+      "name": "rails",
+      "filePath": "understand/frameworks/rails.md",
+      "summary": "Framework reference: rails",
+      "tags": [
+        "framework",
+        "reference"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/frameworks/react.md",
+      "type": "document",
+      "name": "react",
+      "filePath": "understand/frameworks/react.md",
+      "summary": "Framework reference: react",
+      "tags": [
+        "framework",
+        "reference"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/frameworks/spring.md",
+      "type": "document",
+      "name": "spring",
+      "filePath": "understand/frameworks/spring.md",
+      "summary": "Framework reference: spring",
+      "tags": [
+        "framework",
+        "reference"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/frameworks/vue.md",
+      "type": "document",
+      "name": "vue",
+      "filePath": "understand/frameworks/vue.md",
+      "summary": "Framework reference: vue",
+      "tags": [
+        "framework",
+        "reference"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "file:understand/generate-ignore.mjs",
+      "type": "file",
+      "name": "generate-ignore",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Node.js script: generate-ignore.mjs",
+      "tags": [
+        "javascript",
+        "script"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "JavaScript source"
+    },
+    {
+      "id": "document:understand/languages/cpp.md",
+      "type": "document",
+      "name": "cpp",
+      "filePath": "understand/languages/cpp.md",
+      "summary": "Language reference: cpp",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/csharp.md",
+      "type": "document",
+      "name": "csharp",
+      "filePath": "understand/languages/csharp.md",
+      "summary": "Language reference: csharp",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/css.md",
+      "type": "document",
+      "name": "css",
+      "filePath": "understand/languages/css.md",
+      "summary": "Language reference: css",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/dockerfile.md",
+      "type": "document",
+      "name": "dockerfile",
+      "filePath": "understand/languages/dockerfile.md",
+      "summary": "Language reference: dockerfile",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/go.md",
+      "type": "document",
+      "name": "go",
+      "filePath": "understand/languages/go.md",
+      "summary": "Language reference: go",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/graphql.md",
+      "type": "document",
+      "name": "graphql",
+      "filePath": "understand/languages/graphql.md",
+      "summary": "Language reference: graphql",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/html.md",
+      "type": "document",
+      "name": "html",
+      "filePath": "understand/languages/html.md",
+      "summary": "Language reference: html",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/java.md",
+      "type": "document",
+      "name": "java",
+      "filePath": "understand/languages/java.md",
+      "summary": "Language reference: java",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/javascript.md",
+      "type": "document",
+      "name": "javascript",
+      "filePath": "understand/languages/javascript.md",
+      "summary": "Language reference: javascript",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/json.md",
+      "type": "document",
+      "name": "json",
+      "filePath": "understand/languages/json.md",
+      "summary": "Language reference: json",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/kotlin.md",
+      "type": "document",
+      "name": "kotlin",
+      "filePath": "understand/languages/kotlin.md",
+      "summary": "Language reference: kotlin",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/markdown.md",
+      "type": "document",
+      "name": "markdown",
+      "filePath": "understand/languages/markdown.md",
+      "summary": "Language reference: markdown",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/php.md",
+      "type": "document",
+      "name": "php",
+      "filePath": "understand/languages/php.md",
+      "summary": "Language reference: php",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/protobuf.md",
+      "type": "document",
+      "name": "protobuf",
+      "filePath": "understand/languages/protobuf.md",
+      "summary": "Language reference: protobuf",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/python.md",
+      "type": "document",
+      "name": "python",
+      "filePath": "understand/languages/python.md",
+      "summary": "Language reference: python",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/ruby.md",
+      "type": "document",
+      "name": "ruby",
+      "filePath": "understand/languages/ruby.md",
+      "summary": "Language reference: ruby",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/rust.md",
+      "type": "document",
+      "name": "rust",
+      "filePath": "understand/languages/rust.md",
+      "summary": "Language reference: rust",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/shell.md",
+      "type": "document",
+      "name": "shell",
+      "filePath": "understand/languages/shell.md",
+      "summary": "Language reference: shell",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/sql.md",
+      "type": "document",
+      "name": "sql",
+      "filePath": "understand/languages/sql.md",
+      "summary": "Language reference: sql",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/swift.md",
+      "type": "document",
+      "name": "swift",
+      "filePath": "understand/languages/swift.md",
+      "summary": "Language reference: swift",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/terraform.md",
+      "type": "document",
+      "name": "terraform",
+      "filePath": "understand/languages/terraform.md",
+      "summary": "Language reference: terraform",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/typescript.md",
+      "type": "document",
+      "name": "typescript",
+      "filePath": "understand/languages/typescript.md",
+      "summary": "Language reference: typescript",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/languages/yaml.md",
+      "type": "document",
+      "name": "yaml",
+      "filePath": "understand/languages/yaml.md",
+      "summary": "Language reference: yaml",
+      "tags": [
+        "language",
+        "reference"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/locales/en.md",
+      "type": "document",
+      "name": "en",
+      "filePath": "understand/locales/en.md",
+      "summary": "Locale guidance: en",
+      "tags": [
+        "locale",
+        "translation"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/locales/ja.md",
+      "type": "document",
+      "name": "ja",
+      "filePath": "understand/locales/ja.md",
+      "summary": "Locale guidance: ja",
+      "tags": [
+        "locale",
+        "translation"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/locales/ko.md",
+      "type": "document",
+      "name": "ko",
+      "filePath": "understand/locales/ko.md",
+      "summary": "Locale guidance: ko",
+      "tags": [
+        "locale",
+        "translation"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/locales/ru.md",
+      "type": "document",
+      "name": "ru",
+      "filePath": "understand/locales/ru.md",
+      "summary": "Locale guidance: ru",
+      "tags": [
+        "locale",
+        "translation"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/locales/zh-TW.md",
+      "type": "document",
+      "name": "zh-TW",
+      "filePath": "understand/locales/zh-TW.md",
+      "summary": "Locale guidance: zh-TW",
+      "tags": [
+        "locale",
+        "translation"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "document:understand/locales/zh.md",
+      "type": "document",
+      "name": "zh",
+      "filePath": "understand/locales/zh.md",
+      "summary": "Locale guidance: zh",
+      "tags": [
+        "locale",
+        "translation"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "file:understand/merge-batch-graphs.py",
+      "type": "file",
+      "name": "merge-batch-graphs",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Python script: merge-batch-graphs.py",
+      "tags": [
+        "python",
+        "script"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Python source"
+    },
+    {
+      "id": "file:understand/merge-subdomain-graphs.py",
+      "type": "file",
+      "name": "merge-subdomain-graphs",
+      "filePath": "understand/merge-subdomain-graphs.py",
+      "summary": "Python script: merge-subdomain-graphs.py",
+      "tags": [
+        "python",
+        "script"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Python source"
+    },
+    {
+      "id": "file:understand/scan-project.mjs",
+      "type": "file",
+      "name": "scan-project",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Node.js script: scan-project.mjs",
+      "tags": [
+        "javascript",
+        "script"
+      ],
+      "complexity": "complex",
+      "languageNotes": "JavaScript source"
+    },
+    {
+      "id": "document:understand/SKILL.md",
+      "type": "document",
+      "name": "SKILL",
+      "filePath": "understand/SKILL.md",
+      "summary": "Skill definition for understand",
+      "tags": [
+        "skill",
+        "documentation"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Documentation file"
+    },
+    {
+      "id": "function:understand/scan-project.mjs:detectLanguage",
+      "type": "function",
+      "name": "detectLanguage",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Function detectLanguage in understand/scan-project.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/scan-project.mjs"
+    },
+    {
+      "id": "function:understand/scan-project.mjs:detectCategory",
+      "type": "function",
+      "name": "detectCategory",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Function detectCategory in understand/scan-project.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/scan-project.mjs"
+    },
+    {
+      "id": "function:understand/scan-project.mjs:estimateComplexity",
+      "type": "function",
+      "name": "estimateComplexity",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Function estimateComplexity in understand/scan-project.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/scan-project.mjs"
+    },
+    {
+      "id": "function:understand/scan-project.mjs:enumerateViaGit",
+      "type": "function",
+      "name": "enumerateViaGit",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Function enumerateViaGit in understand/scan-project.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/scan-project.mjs"
+    },
+    {
+      "id": "function:understand/scan-project.mjs:enumerateViaWalk",
+      "type": "function",
+      "name": "enumerateViaWalk",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Function enumerateViaWalk in understand/scan-project.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/scan-project.mjs"
+    },
+    {
+      "id": "function:understand/scan-project.mjs:enumerateFiles",
+      "type": "function",
+      "name": "enumerateFiles",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Function enumerateFiles in understand/scan-project.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/scan-project.mjs"
+    },
+    {
+      "id": "function:understand/scan-project.mjs:countLines",
+      "type": "function",
+      "name": "countLines",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Function countLines in understand/scan-project.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/scan-project.mjs"
+    },
+    {
+      "id": "function:understand/scan-project.mjs:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Function main in understand/scan-project.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/scan-project.mjs"
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:resolveImports",
+      "type": "function",
+      "name": "resolveImports",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Function resolveImports in understand/extract-import-map.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/extract-import-map.mjs"
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Function main in understand/extract-import-map.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/extract-import-map.mjs"
+    },
+    {
+      "id": "function:understand/compute-batches.mjs:computeBatches",
+      "type": "function",
+      "name": "computeBatches",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Function computeBatches in understand/compute-batches.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/compute-batches.mjs"
+    },
+    {
+      "id": "function:understand/generate-ignore.mjs:generateStarterIgnore",
+      "type": "function",
+      "name": "generateStarterIgnore",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Function generateStarterIgnore in understand/generate-ignore.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/generate-ignore.mjs"
+    },
+    {
+      "id": "function:understand/generate-ignore.mjs:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Function main in understand/generate-ignore.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/generate-ignore.mjs"
+    },
+    {
+      "id": "function:understand/build-fingerprints.mjs:buildFingerprints",
+      "type": "function",
+      "name": "buildFingerprints",
+      "filePath": "understand/build-fingerprints.mjs",
+      "summary": "Function buildFingerprints in understand/build-fingerprints.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/build-fingerprints.mjs"
+    },
+    {
+      "id": "function:understand/extract-structure.mjs:extractStructure",
+      "type": "function",
+      "name": "extractStructure",
+      "filePath": "understand/extract-structure.mjs",
+      "summary": "Function extractStructure in understand/extract-structure.mjs",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand/extract-structure.mjs"
+    },
+    {
+      "id": "function:understand-domain/extract-domain-context.py:extractDomainContext",
+      "type": "function",
+      "name": "extractDomainContext",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Function extractDomainContext in understand-domain/extract-domain-context.py",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand-domain/extract-domain-context.py"
+    },
+    {
+      "id": "function:understand-knowledge/merge-knowledge-graph.py:mergeGraphs",
+      "type": "function",
+      "name": "mergeGraphs",
+      "filePath": "understand-knowledge/merge-knowledge-graph.py",
+      "summary": "Function mergeGraphs in understand-knowledge/merge-knowledge-graph.py",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand-knowledge/merge-knowledge-graph.py"
+    },
+    {
+      "id": "function:understand-knowledge/parse-knowledge-base.py:parseKnowledgeBase",
+      "type": "function",
+      "name": "parseKnowledgeBase",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Function parseKnowledgeBase in understand-knowledge/parse-knowledge-base.py",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key function in understand-knowledge/parse-knowledge-base.py"
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:mergeBatchGraphs",
+      "type": "function",
+      "name": "mergeBatchGraphs",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Function mergeBatchGraphs in understand/merge-batch-graphs.py",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key merge function"
+    },
+    {
+      "id": "function:understand/merge-subdomain-graphs.py:mergeSubdomainGraphs",
+      "type": "function",
+      "name": "mergeSubdomainGraphs",
+      "filePath": "understand/merge-subdomain-graphs.py",
+      "summary": "Function mergeSubdomainGraphs in understand/merge-subdomain-graphs.py",
+      "tags": [
+        "function"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Key merge function"
+    },
+    {
+      "id": "module:understand",
+      "type": "module",
+      "name": "understand",
+      "filePath": "understand",
+      "summary": "Core codebase understanding skill",
+      "tags": [
+        "module",
+        "skill-group"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Logical skill group"
+    },
+    {
+      "id": "module:understand-chat",
+      "type": "module",
+      "name": "understand-chat",
+      "filePath": "understand-chat",
+      "summary": "Chat-based codebase querying",
+      "tags": [
+        "module",
+        "skill-group"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Logical skill group"
+    },
+    {
+      "id": "module:understand-dashboard",
+      "type": "module",
+      "name": "understand-dashboard",
+      "filePath": "understand-dashboard",
+      "summary": "Knowledge graph visualization dashboard",
+      "tags": [
+        "module",
+        "skill-group"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Logical skill group"
+    },
+    {
+      "id": "module:understand-diff",
+      "type": "module",
+      "name": "understand-diff",
+      "filePath": "understand-diff",
+      "summary": "Git diff understanding skill",
+      "tags": [
+        "module",
+        "skill-group"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Logical skill group"
+    },
+    {
+      "id": "module:understand-domain",
+      "type": "module",
+      "name": "understand-domain",
+      "filePath": "understand-domain",
+      "summary": "Domain knowledge extraction",
+      "tags": [
+        "module",
+        "skill-group"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Logical skill group"
+    },
+    {
+      "id": "module:understand-explain",
+      "type": "module",
+      "name": "understand-explain",
+      "filePath": "understand-explain",
+      "summary": "Code explanation skill",
+      "tags": [
+        "module",
+        "skill-group"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Logical skill group"
+    },
+    {
+      "id": "module:understand-knowledge",
+      "type": "module",
+      "name": "understand-knowledge",
+      "filePath": "understand-knowledge",
+      "summary": "Knowledge base processing",
+      "tags": [
+        "module",
+        "skill-group"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Logical skill group"
+    },
+    {
+      "id": "module:understand-onboard",
+      "type": "module",
+      "name": "understand-onboard",
+      "filePath": "understand-onboard",
+      "summary": "Onboarding guide generation",
+      "tags": [
+        "module",
+        "skill-group"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Logical skill group"
+    },
+    {
+      "id": "concept:knowledge-graph",
+      "type": "concept",
+      "name": "knowledge-graph",
+      "filePath": "",
+      "summary": "Graph-based representation of codebase knowledge with nodes (files, functions, concepts) and typed edges",
+      "tags": [
+        "concept",
+        "architecture"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Abstract concept"
+    },
+    {
+      "id": "concept:codebase-analysis",
+      "type": "concept",
+      "name": "codebase-analysis",
+      "filePath": "",
+      "summary": "Automated analysis of source code to extract structure, dependencies, and architecture",
+      "tags": [
+        "concept",
+        "architecture"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Abstract concept"
+    },
+    {
+      "id": "concept:batch-processing",
+      "type": "concept",
+      "name": "batch-processing",
+      "filePath": "",
+      "summary": "Dividing analysis work into parallel batches for LLM-powered file analysis",
+      "tags": [
+        "concept",
+        "architecture"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Abstract concept"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:understand/scan-project.mjs",
+      "target": "function:understand/scan-project.mjs:detectLanguage",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/scan-project.mjs",
+      "target": "function:understand/scan-project.mjs:detectCategory",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/scan-project.mjs",
+      "target": "function:understand/scan-project.mjs:estimateComplexity",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/scan-project.mjs",
+      "target": "function:understand/scan-project.mjs:enumerateViaGit",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/scan-project.mjs",
+      "target": "function:understand/scan-project.mjs:enumerateViaWalk",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/scan-project.mjs",
+      "target": "function:understand/scan-project.mjs:enumerateFiles",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/scan-project.mjs",
+      "target": "function:understand/scan-project.mjs:countLines",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/scan-project.mjs",
+      "target": "function:understand/scan-project.mjs:main",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/extract-import-map.mjs",
+      "target": "function:understand/extract-import-map.mjs:resolveImports",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/extract-import-map.mjs",
+      "target": "function:understand/extract-import-map.mjs:main",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/compute-batches.mjs",
+      "target": "function:understand/compute-batches.mjs:computeBatches",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/generate-ignore.mjs",
+      "target": "function:understand/generate-ignore.mjs:generateStarterIgnore",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/generate-ignore.mjs",
+      "target": "function:understand/generate-ignore.mjs:main",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/build-fingerprints.mjs",
+      "target": "function:understand/build-fingerprints.mjs:buildFingerprints",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/extract-structure.mjs",
+      "target": "function:understand/extract-structure.mjs:extractStructure",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand-domain/extract-domain-context.py",
+      "target": "function:understand-domain/extract-domain-context.py:extractDomainContext",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand-knowledge/merge-knowledge-graph.py",
+      "target": "function:understand-knowledge/merge-knowledge-graph.py:mergeGraphs",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand-knowledge/parse-knowledge-base.py",
+      "target": "function:understand-knowledge/parse-knowledge-base.py:parseKnowledgeBase",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/merge-batch-graphs.py",
+      "target": "function:understand/merge-batch-graphs.py:mergeBatchGraphs",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "source": "file:understand/merge-subdomain-graphs.py",
+      "target": "function:understand/merge-subdomain-graphs.py:mergeSubdomainGraphs",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "file:understand/scan-project.mjs",
+      "to": "concept:codebase-analysis",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "from": "file:understand/scan-project.mjs",
+      "to": "file:understand/generate-ignore.mjs",
+      "type": "related",
+      "weight": 0.5
+    },
+    {
+      "from": "file:understand/extract-import-map.mjs",
+      "to": "concept:codebase-analysis",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "from": "file:understand/compute-batches.mjs",
+      "to": "concept:batch-processing",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "from": "file:understand/merge-batch-graphs.py",
+      "to": "file:understand/scan-project.mjs",
+      "type": "related",
+      "weight": 0.5
+    },
+    {
+      "from": "file:understand/merge-subdomain-graphs.py",
+      "to": "file:understand/merge-batch-graphs.py",
+      "type": "related",
+      "weight": 0.5
+    },
+    {
+      "from": "file:understand/generate-ignore.mjs",
+      "to": "file:understand/scan-project.mjs",
+      "type": "related",
+      "weight": 0.5
+    },
+    {
+      "from": "file:understand/build-fingerprints.mjs",
+      "to": "concept:codebase-analysis",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "from": "file:understand/extract-structure.mjs",
+      "to": "concept:codebase-analysis",
+      "type": "imports",
+      "weight": 0.7
+    },
+    {
+      "from": "module:understand",
+      "to": "document:understand/SKILL.md",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "from": "module:understand-chat",
+      "to": "document:understand-chat/SKILL.md",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "from": "module:understand-dashboard",
+      "to": "document:understand-dashboard/SKILL.md",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "from": "module:understand-diff",
+      "to": "document:understand-diff/SKILL.md",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "from": "module:understand-domain",
+      "to": "document:understand-domain/SKILL.md",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "from": "module:understand-explain",
+      "to": "document:understand-explain/SKILL.md",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "from": "module:understand-knowledge",
+      "to": "document:understand-knowledge/SKILL.md",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "from": "module:understand-onboard",
+      "to": "document:understand-onboard/SKILL.md",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "from": "module:understand",
+      "to": "file:understand/scan-project.mjs",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "module:understand",
+      "to": "file:understand/merge-batch-graphs.py",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "module:understand",
+      "to": "file:understand/generate-ignore.mjs",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "module:understand",
+      "to": "file:understand/extract-import-map.mjs",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "module:understand",
+      "to": "file:understand/merge-subdomain-graphs.py",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "module:understand",
+      "to": "file:understand/compute-batches.mjs",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "module:understand",
+      "to": "file:understand/extract-structure.mjs",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "module:understand",
+      "to": "file:understand/build-fingerprints.mjs",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "module:understand-domain",
+      "to": "file:understand-domain/extract-domain-context.py",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "module:understand-knowledge",
+      "to": "file:understand-knowledge/merge-knowledge-graph.py",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "module:understand-knowledge",
+      "to": "file:understand-knowledge/parse-knowledge-base.py",
+      "type": "contains",
+      "weight": 1
+    },
+    {
+      "from": "file:understand/scan-project.mjs",
+      "to": "concept:codebase-analysis",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "from": "file:understand/extract-import-map.mjs",
+      "to": "concept:codebase-analysis",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "from": "file:understand/compute-batches.mjs",
+      "to": "concept:batch-processing",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "from": "file:understand/merge-batch-graphs.py",
+      "to": "concept:knowledge-graph",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "from": "file:understand/merge-subdomain-graphs.py",
+      "to": "concept:knowledge-graph",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "from": "file:understand/build-fingerprints.mjs",
+      "to": "concept:codebase-analysis",
+      "type": "depends_on",
+      "weight": 0.6
+    },
+    {
+      "from": "file:understand/extract-structure.mjs",
+      "to": "concept:codebase-analysis",
+      "type": "depends_on",
+      "weight": 0.6
+    }
+  ]
+}

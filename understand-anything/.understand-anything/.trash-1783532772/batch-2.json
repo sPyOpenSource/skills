@@ -1,0 +1,444 @@
+{
+  "nodes": [
+    {
+      "id": "config:.understand-anything/.understandignore",
+      "type": "config",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Ignore file with .gitignore-style patterns to exclude files and directories from codebase analysis. Built-in defaults exclude node_modules, .git, dist, build, lock files, and minified JS. All patterns are commented out by default.",
+      "tags": ["config", "ignore", "filter", "exclusion"],
+      "complexity": 1,
+      "languageNotes": "Uses standard gitignore glob syntax with # comments, ! negation, and trailing / for directory matching."
+    },
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "Project configuration file with outputLanguage set to 'en' for English knowledge graph content generation.",
+      "tags": ["config", "settings", "output"],
+      "complexity": 1,
+      "languageNotes": "Minimal JSON config containing a single key-value pair."
+    },
+    {
+      "id": "config:.understand-anything/intermediate/scan-result.json",
+      "type": "config",
+      "name": "scan-result.json",
+      "filePath": ".understand-anything/intermediate/scan-result.json",
+      "summary": "Complete scan result cataloging 60 files across code (12), config (1), and docs (47) categories. Languages found: markdown (47), javascript (6), python (5), json (1), unknown (1). Project: understand-anything — codebase understanding and knowledge graph generation skill for opencode/AI CLI tools.",
+      "tags": ["scan", "inventory", "metadata", "catalog"],
+      "complexity": 2,
+      "languageNotes": "JSON file with structured metadata arrays including file paths, languages, categories, and estimated complexity."
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batches.json",
+      "type": "config",
+      "name": "batches.json",
+      "filePath": ".understand-anything/intermediate/batches.json",
+      "summary": "Batch definitions splitting 60 files across 3 processing batches for parallel knowledge graph generation. Each batch includes file list with metadata, batchImportData for import relationships, and neighborMap for graph connectivity.",
+      "tags": ["batch", "pipeline", "parallel", "split"],
+      "complexity": 2,
+      "languageNotes": "Structured as an array of 3 batch objects, each with nested import data and neighbor maps."
+    },
+    {
+      "id": "config:.understand-anything/intermediate/import-map-input.json",
+      "type": "config",
+      "name": "import-map-input.json",
+      "filePath": ".understand-anything/intermediate/import-map-input.json",
+      "summary": "Import map input listing all 60 project files with language and file category metadata, used as input to the import relationship extraction step in the analysis pipeline.",
+      "tags": ["import-map", "dependencies", "input", "inventory"],
+      "complexity": 2,
+      "languageNotes": "JSON file enumerating every project file with path, language, and fileCategory for import analysis."
+    },
+    {
+      "id": "config:.understand-anything/intermediate/import-map-output.json",
+      "type": "config",
+      "name": "import-map-output.json",
+      "filePath": ".understand-anything/intermediate/import-map-output.json",
+      "summary": "Expected output file for import relationship mappings between project files. Not yet generated — to be produced by the import map extraction stage.",
+      "tags": ["import-map", "dependencies", "output", "pending"],
+      "complexity": 0,
+      "languageNotes": "Not yet generated; expected JSON output of import extraction step."
+    },
+    {
+      "id": "document:understand/languages/python.md",
+      "type": "document",
+      "name": "Python Language Reference",
+      "filePath": "understand/languages/python.md",
+      "summary": "Language reference for Python covering decorators, list/dict comprehensions, generators, context managers, type hints, dunder methods, metaclasses, dataclasses, protocols, descriptors, async/await with asyncio, import patterns, and common frameworks like Django, FastAPI, Flask, SQLAlchemy, and Celery.",
+      "tags": ["language-reference", "python", "documentation", "prompt"],
+      "complexity": 2,
+      "languageNotes": "Covers Python-specific syntax patterns and idioms for codebase analysis prompts. Highlights @dataclass decorator behavior and __init__.py re-export patterns."
+    },
+    {
+      "id": "document:understand/languages/markdown.md",
+      "type": "document",
+      "name": "Markdown Language Reference",
+      "filePath": "understand/languages/markdown.md",
+      "summary": "Language reference for Markdown covering heading hierarchy, front matter, fenced code blocks, reference-style links, tables, admonitions, task lists, HTML embedding, and notable file patterns like README.md, CONTRIBUTING.md, CHANGELOG.md, and ADR files.",
+      "tags": ["language-reference", "markdown", "documentation", "prompt"],
+      "complexity": 1,
+      "languageNotes": "Defines edge patterns where Markdown files document code components and links between .md files create related edges."
+    },
+    {
+      "id": "document:understand/languages/javascript.md",
+      "type": "document",
+      "name": "JavaScript Language Reference",
+      "filePath": "understand/languages/javascript.md",
+      "summary": "Language reference for JavaScript covering closures, prototypes, promises, event loop, destructuring, spread/rest operators, proxies, generators, symbols, WeakMap/WeakSet, ESM vs CJS module systems, import patterns, and common frameworks like React, Vue, Express, Next.js, and Svelte.",
+      "tags": ["language-reference", "javascript", "documentation", "prompt"],
+      "complexity": 2,
+      "languageNotes": "Explains ESM (.mjs) vs CommonJS (.cjs) distinctions and module resolution via package.json type field."
+    },
+    {
+      "id": "document:understand/languages/yaml.md",
+      "type": "document",
+      "name": "YAML Language Reference",
+      "filePath": "understand/languages/yaml.md",
+      "summary": "Language reference for YAML covering indentation-based nesting, anchors and aliases, merge keys, multi-line strings, document separators, tags and types, flow style, environment variable substitution, and notable file patterns for Docker Compose, CI/CD workflows, Kubernetes, and application config.",
+      "tags": ["language-reference", "yaml", "documentation", "prompt"],
+      "complexity": 1,
+      "languageNotes": "Defines edge patterns where YAML configures code modules, triggers pipelines, and deploys services."
+    },
+    {
+      "id": "document:understand/languages/dockerfile.md",
+      "type": "document",
+      "name": "Dockerfile Language Reference",
+      "filePath": "understand/languages/dockerfile.md",
+      "summary": "Language reference for Dockerfiles covering multi-stage builds, layer caching, base images, COPY vs ADD, build arguments, health checks, entry point vs CMD, user permissions, .dockerignore patterns, and environment-specific Dockerfile variants.",
+      "tags": ["language-reference", "dockerfile", "documentation", "prompt"],
+      "complexity": 1,
+      "languageNotes": "Defines edge patterns where Dockerfiles deploy applications and depend on package manifests."
+    },
+    {
+      "id": "document:understand/languages/shell.md",
+      "type": "document",
+      "name": "Shell Language Reference",
+      "filePath": "understand/languages/shell.md",
+      "summary": "Language reference for shell scripts covering shebang lines, variables, functions, conditionals, loops, pipes and redirection, exit codes, strict mode (set -euo pipefail), command substitution, here documents, and common file patterns for build, deploy, and entry point scripts.",
+      "tags": ["language-reference", "shell", "documentation", "prompt"],
+      "complexity": 1,
+      "languageNotes": "Defines edge patterns where shell scripts trigger processes, deploy applications, or configure environments."
+    },
+    {
+      "id": "document:understand/languages/html.md",
+      "type": "document",
+      "name": "HTML Language Reference",
+      "filePath": "understand/languages/html.md",
+      "summary": "Language reference for HTML covering semantic elements, document structure, forms and validation, accessibility attributes, meta tags, script/style loading, data attributes, template syntax, and Web Components.",
+      "tags": ["language-reference", "html", "documentation", "prompt"],
+      "complexity": 1,
+      "languageNotes": "Defines edge patterns where HTML files depend on JavaScript and CSS, and templates depend on server-side rendering code."
+    },
+    {
+      "id": "document:understand/languages/css.md",
+      "type": "document",
+      "name": "CSS Language Reference",
+      "filePath": "understand/languages/css.md",
+      "summary": "Language reference for CSS covering selectors and specificity, box model, flexbox, grid, custom properties, media queries, SCSS/Sass features (nesting, mixins, extends), CSS Modules, and cascade layers.",
+      "tags": ["language-reference", "css", "documentation", "prompt"],
+      "complexity": 1,
+      "languageNotes": "Defines edge patterns where CSS is related to HTML/component files and SCSS partials create dependency chains."
+    },
+    {
+      "id": "document:understand/languages/sql.md",
+      "type": "document",
+      "name": "SQL Language Reference",
+      "filePath": "understand/languages/sql.md",
+      "summary": "Language reference for SQL covering DDL, DML, normalization, foreign keys, indexes, migrations, transactions, views, stored procedures, and constraints with notable file patterns for migrations, schema definitions, and seed data.",
+      "tags": ["language-reference", "sql", "documentation", "prompt"],
+      "complexity": 1,
+      "languageNotes": "Defines edge patterns where migrations create/alter tables and seed files depend on migration files."
+    },
+    {
+      "id": "document:understand/languages/terraform.md",
+      "type": "document",
+      "name": "Terraform Language Reference",
+      "filePath": "understand/languages/terraform.md",
+      "summary": "Language reference for Terraform covering declarative infrastructure, providers, resources, data sources, variables, outputs, modules, state management, workspaces, and plan/apply workflow with notable file patterns for main.tf, variables.tf, outputs.tf, and providers.tf.",
+      "tags": ["language-reference", "terraform", "documentation", "prompt"],
+      "complexity": 2,
+      "languageNotes": "Defines edge patterns where Terraform provisions infrastructure and module references create depends_on edges."
+    },
+    {
+      "id": "document:understand/languages/protobuf.md",
+      "type": "document",
+      "name": "Protobuf Language Reference",
+      "filePath": "understand/languages/protobuf.md",
+      "summary": "Language reference for Protocol Buffers covering message types, field numbers, scalar types, enums, services, oneof, repeated fields, maps, packages and imports, proto2 vs proto3 differences, and configuration with buf tooling.",
+      "tags": ["language-reference", "protobuf", "documentation", "prompt"],
+      "complexity": 1,
+      "languageNotes": "Defines edge patterns where proto files define schema for gRPC handlers and imports create depends_on edges."
+    },
+    {
+      "id": "document:understand/languages/graphql.md",
+      "type": "document",
+      "name": "GraphQL Language Reference",
+      "filePath": "understand/languages/graphql.md",
+      "summary": "Language reference for GraphQL covering type system, queries, mutations, subscriptions, resolvers, fragments, directives, input types, interfaces and unions, schema stitching and federation, with notable file patterns for schema, resolvers, and codegen config.",
+      "tags": ["language-reference", "graphql", "documentation", "prompt"],
+      "complexity": 1,
+      "languageNotes": "Defines edge patterns where GraphQL schemas define schema for resolver implementations and codegen configuration."
+    },
+    {
+      "id": "document:understand/locales/zh.md",
+      "type": "document",
+      "name": "Chinese (Simplified) Locale Guide",
+      "filePath": "understand/locales/zh.md",
+      "summary": "Chinese Simplified locale output guidelines for knowledge graph generation. Provides tag naming convention suggestions, 1-2 sentence summary style with active voice, technical terminology retention recommendations, and layer naming conventions using a hybrid Chinese-English approach.",
+      "tags": ["locale", "chinese", "i18n", "guide"],
+      "complexity": 1,
+      "languageNotes": "Recommends retaining English for universal technical terms (middleware, API handler, ORM) while using Chinese for descriptive tags."
+    },
+    {
+      "id": "document:understand/locales/ja.md",
+      "type": "document",
+      "name": "Japanese Locale Guide",
+      "filePath": "understand/locales/ja.md",
+      "summary": "Japanese locale output guidelines for knowledge graph generation. Provides tag naming convention suggestions, summary style with active voice, technical terminology retention recommendations, and layer naming conventions using a hybrid Japanese-English approach.",
+      "tags": ["locale", "japanese", "i18n", "guide"],
+      "complexity": 1,
+      "languageNotes": "Recommends retaining English for universal technical terms while using Japanese for descriptive tags."
+    },
+    {
+      "id": "document:understand/locales/ko.md",
+      "type": "document",
+      "name": "Korean Locale Guide",
+      "filePath": "understand/locales/ko.md",
+      "summary": "Korean locale output guidelines for knowledge graph generation. Provides tag naming convention suggestions, summary style with active voice, technical terminology retention recommendations, and layer naming conventions using a hybrid Korean-English approach.",
+      "tags": ["locale", "korean", "i18n", "guide"],
+      "complexity": 1,
+      "languageNotes": "Recommends retaining English for universal technical terms while using Korean for descriptive tags."
+    },
+    {
+      "id": "concept:language-reference",
+      "type": "concept",
+      "name": "Language Reference Collection",
+      "filePath": "understand/languages/",
+      "summary": "Collection of 23 language-specific prompt snippets used by the understand-anything pipeline to generate accurate knowledge graph nodes. Covers Python, JavaScript, TypeScript, Go, Rust, Java, Kotlin, Swift, Ruby, PHP, C++, C#, Markdown, YAML, Dockerfile, Shell, HTML, CSS, SQL, Terraform, Protobuf, GraphQL, and JSON.",
+      "tags": ["language-reference", "prompts", "collection", "documentation"],
+      "complexity": 2,
+      "languageNotes": "Each language file is optimized for inclusion in LLM prompts to guide codebase analysis with language-specific syntax patterns, import conventions, and edge type guidance."
+    },
+    {
+      "id": "concept:locale-guide",
+      "type": "concept",
+      "name": "Locale Guide Collection",
+      "filePath": "understand/locales/",
+      "summary": "Collection of 6 locale-specific output guidelines for generating knowledge graph content in different languages: English, Chinese Simplified, Japanese, Korean, Russian, and Chinese Traditional.",
+      "tags": ["locale", "i18n", "guide", "collection"],
+      "complexity": 1,
+      "languageNotes": "Each locale file provides tag naming conventions, summary style, and technical term guidance for generating knowledge graph content in that language."
+    },
+    {
+      "id": "concept:analysis-pipeline",
+      "type": "concept",
+      "name": "Analysis Pipeline",
+      "filePath": ".understand-anything/intermediate/",
+      "summary": "Intermediate data pipeline that scans projects, batches files for parallel processing, extracts import maps, and generates knowledge graph nodes. Produces intermediate JSON artifacts (scan-result.json, batches.json, import-map-input.json) that feed into downstream graph generation and merging stages.",
+      "tags": ["pipeline", "intermediate", "processing", "orchestration"],
+      "complexity": 2,
+      "languageNotes": "Pipeline processes 60 files across 3 batches with neighbor maps ensuring consistent graph connectivity across batch boundaries."
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:.understand-anything/.understandignore",
+      "target": "config:.understand-anything/intermediate/scan-result.json",
+      "type": "configures",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.understand-anything/config.json",
+      "target": "concept:language-reference",
+      "type": "configures",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.understand-anything/config.json",
+      "target": "concept:locale-guide",
+      "type": "configures",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.understand-anything/config.json",
+      "target": "concept:analysis-pipeline",
+      "type": "configures",
+      "weight": 0.6
+    },
+    {
+      "source": "config:.understand-anything/intermediate/scan-result.json",
+      "target": "config:.understand-anything/intermediate/batches.json",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.understand-anything/intermediate/scan-result.json",
+      "target": "config:.understand-anything/intermediate/import-map-input.json",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.understand-anything/intermediate/batches.json",
+      "target": "config:.understand-anything/intermediate/import-map-input.json",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.understand-anything/intermediate/batches.json",
+      "target": "config:.understand-anything/intermediate/import-map-output.json",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.understand-anything/intermediate/scan-result.json",
+      "target": "concept:language-reference",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.understand-anything/intermediate/scan-result.json",
+      "target": "concept:locale-guide",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.understand-anything/intermediate/scan-result.json",
+      "target": "concept:analysis-pipeline",
+      "type": "documents",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:analysis-pipeline",
+      "target": "config:.understand-anything/intermediate/scan-result.json",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:analysis-pipeline",
+      "target": "config:.understand-anything/intermediate/batches.json",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:analysis-pipeline",
+      "target": "config:.understand-anything/intermediate/import-map-input.json",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:analysis-pipeline",
+      "target": "config:.understand-anything/intermediate/import-map-output.json",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/python.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/markdown.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/javascript.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/yaml.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/dockerfile.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/shell.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/html.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/css.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/sql.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/terraform.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/protobuf.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/graphql.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:locale-guide",
+      "target": "document:understand/locales/zh.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:locale-guide",
+      "target": "document:understand/locales/ja.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:locale-guide",
+      "target": "document:understand/locales/ko.md",
+      "type": "contains",
+      "weight": 1.0
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "config:.understand-anything/intermediate/scan-result.json",
+      "type": "related",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:locale-guide",
+      "target": "config:.understand-anything/intermediate/scan-result.json",
+      "type": "related",
+      "weight": 0.5
+    },
+    {
+      "source": "config:.understand-anything/intermediate/import-map-input.json",
+      "target": "config:.understand-anything/intermediate/import-map-output.json",
+      "type": "depends_on",
+      "weight": 0.6
+    }
+  ]
+}

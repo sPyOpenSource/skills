@@ -1,0 +1,2097 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "2e70e86d65aaab52a44c10122cd9b4daecfe8ab4",
+  "generatedAt": "2026-07-08T17:46:05.688Z",
+  "files": {
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "521c93d62efcd5219881aac585edfef9399b6eeef56a0271ec882a318ba151e2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 28,
+      "hasStructuralAnalysis": false
+    },
+    ".understand-anything/config.json": {
+      "filePath": ".understand-anything/config.json",
+      "contentHash": "4b66f98f8a815dfeb2d3a29eeb73418e07c40ed020a1498c07e908b2254f0c8c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "understand-chat/SKILL.md": {
+      "filePath": "understand-chat/SKILL.md",
+      "contentHash": "d8234baaabcee97c2e4be8204a58123de592164e8d7502398caeddf1223b2e17",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    "understand-dashboard/SKILL.md": {
+      "filePath": "understand-dashboard/SKILL.md",
+      "contentHash": "5c2155ab1dcdf54e0b7e3e508d666a5c8faaf7c89ad1f7e1753d115eb371a691",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 106,
+      "hasStructuralAnalysis": true
+    },
+    "understand-diff/SKILL.md": {
+      "filePath": "understand-diff/SKILL.md",
+      "contentHash": "747a84b1a25f9b65f2b0dea3ed37bb701e70b31d8e5d03d04c4b10805c56a3fd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 73,
+      "hasStructuralAnalysis": true
+    },
+    "understand-domain/extract-domain-context.py": {
+      "filePath": "understand-domain/extract-domain-context.py",
+      "contentHash": "13e889cf3daaccbd3db8cc548f20ff4ac1525476bd57b088799eb0e61492a5c8",
+      "functions": [
+        {
+          "name": "parse_gitignore",
+          "params": [
+            "project_root"
+          ],
+          "returnType": "list[re.Pattern[str]]",
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "is_ignored",
+          "params": [
+            "rel_path",
+            "gitignore_patterns"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "scan_file_tree",
+          "params": [
+            "root",
+            "gitignore_patterns",
+            "max_depth"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 42
+        },
+        {
+          "name": "detect_entry_points",
+          "params": [
+            "root",
+            "file_paths"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 43
+        },
+        {
+          "name": "extract_file_signatures",
+          "params": [
+            "root",
+            "file_paths"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 58
+        },
+        {
+          "name": "extract_metadata",
+          "params": [
+            "root"
+          ],
+          "returnType": "dict[str, Any]",
+          "exported": true,
+          "lineCount": 33
+        },
+        {
+          "name": "_truncate_to_fit",
+          "params": [
+            "context"
+          ],
+          "returnType": "dict[str, Any]",
+          "exported": true,
+          "lineCount": 31
+        },
+        {
+          "name": "main",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 49
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        }
+      ],
+      "exports": [
+        "parse_gitignore",
+        "is_ignored",
+        "scan_file_tree",
+        "detect_entry_points",
+        "extract_file_signatures",
+        "extract_metadata",
+        "_truncate_to_fit",
+        "main"
+      ],
+      "totalLines": 429,
+      "hasStructuralAnalysis": true
+    },
+    "understand-domain/SKILL.md": {
+      "filePath": "understand-domain/SKILL.md",
+      "contentHash": "8c3c3bb810bcd11752f66be7c88347ceb4435e47cdfaf1bf39663fa5f37d0cb4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 141,
+      "hasStructuralAnalysis": true
+    },
+    "understand-explain/SKILL.md": {
+      "filePath": "understand-explain/SKILL.md",
+      "contentHash": "5a057cf9ce6717eb2d3ecbb8dd6a68647a41b901ebc1fc0b9439ca186f1b0739",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 59,
+      "hasStructuralAnalysis": true
+    },
+    "understand-knowledge/merge-knowledge-graph.py": {
+      "filePath": "understand-knowledge/merge-knowledge-graph.py",
+      "contentHash": "f5690aacc4fe90102923ba72e07f79e50ba7d0cebf53cdcad679b7a3534470de",
+      "functions": [
+        {
+          "name": "normalize_node_type",
+          "params": [
+            "t"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "normalize_edge_type",
+          "params": [
+            "t"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "normalize_entity_name",
+          "params": [
+            "name"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "merge",
+          "params": [
+            "root"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 289
+        },
+        {
+          "name": "main",
+          "params": [],
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "datetime",
+            "timezone"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        }
+      ],
+      "exports": [
+        "normalize_node_type",
+        "normalize_edge_type",
+        "normalize_entity_name",
+        "merge",
+        "main"
+      ],
+      "totalLines": 398,
+      "hasStructuralAnalysis": true
+    },
+    "understand-knowledge/parse-knowledge-base.py": {
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "contentHash": "2db13c356bbcae9b976b311fcd3fcec5dbfd2408bc584a1d2f525b0f1e66d51c",
+      "functions": [
+        {
+          "name": "detect_format",
+          "params": [
+            "root"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "extract_frontmatter",
+          "params": [
+            "text"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "extract_wikilinks",
+          "params": [
+            "text"
+          ],
+          "returnType": "list[dict]",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "extract_headings",
+          "params": [
+            "text"
+          ],
+          "returnType": "list[dict]",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "extract_code_blocks",
+          "params": [
+            "text"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "extract_first_paragraph",
+          "params": [
+            "text"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 42
+        },
+        {
+          "name": "extract_h1",
+          "params": [
+            "text"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "parse_index",
+          "params": [
+            "index_path"
+          ],
+          "returnType": "list[dict]",
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "parse_log",
+          "params": [
+            "log_path"
+          ],
+          "returnType": "list[dict]",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "build_name_to_stem_map",
+          "params": [
+            "wiki_root"
+          ],
+          "returnType": "dict[str, str]",
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "resolve_wikilink",
+          "params": [
+            "target",
+            "name_map",
+            "node_ids"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "parse_wiki",
+          "params": [
+            "root"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 202
+        },
+        {
+          "name": "main",
+          "params": [],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        }
+      ],
+      "exports": [
+        "detect_format",
+        "extract_frontmatter",
+        "extract_wikilinks",
+        "extract_headings",
+        "extract_code_blocks",
+        "extract_first_paragraph",
+        "extract_h1",
+        "parse_index",
+        "parse_log",
+        "build_name_to_stem_map",
+        "resolve_wikilink",
+        "parse_wiki",
+        "main"
+      ],
+      "totalLines": 510,
+      "hasStructuralAnalysis": true
+    },
+    "understand-knowledge/SKILL.md": {
+      "filePath": "understand-knowledge/SKILL.md",
+      "contentHash": "9664aabd22f87072c4d3653450a8934dc5df6dc991ffbbc44b6704b23b8439c5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 133,
+      "hasStructuralAnalysis": true
+    },
+    "understand-onboard/SKILL.md": {
+      "filePath": "understand-onboard/SKILL.md",
+      "contentHash": "fad391a6526aeeb90ae8686e071ebe2d29700ebb4ea975e47a1c6da8b66171c3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    "understand/build-fingerprints.mjs": {
+      "filePath": "understand/build-fingerprints.mjs",
+      "contentHash": "2ed228677bbf1bda3fba00d4662c8e542caa3d69c5fed911c4878e6382767881",
+      "functions": [
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 34
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:module",
+          "specifiers": [
+            "createRequire"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "dirname",
+            "resolve"
+          ]
+        },
+        {
+          "source": "node:url",
+          "specifiers": [
+            "fileURLToPath",
+            "pathToFileURL"
+          ]
+        },
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "readFileSync"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 91,
+      "hasStructuralAnalysis": true
+    },
+    "understand/compute-batches.mjs": {
+      "filePath": "understand/compute-batches.mjs",
+      "contentHash": "2c35a73fbeec6bba90fe07e51dc60f35f4899be53c660c4fa4ae7e4209a39554",
+      "functions": [
+        {
+          "name": "extractExports",
+          "params": [
+            "projectRoot",
+            "codeFiles"
+          ],
+          "exported": false,
+          "lineCount": 71
+        },
+        {
+          "name": "buildNonCodeBatches",
+          "params": [
+            "nonCodeFiles"
+          ],
+          "exported": false,
+          "lineCount": 85
+        },
+        {
+          "name": "buildBatchOfMap",
+          "params": [
+            "allBatches"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "runLouvain",
+          "params": [
+            "codeFiles",
+            "importMap"
+          ],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "countBasedAssignment",
+          "params": [
+            "codeFiles"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "mergeSmallBatches",
+          "params": [
+            "bareBatches"
+          ],
+          "exported": false,
+          "lineCount": 55
+        },
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 224
+        },
+        {
+          "name": "isCliEntry",
+          "params": [],
+          "exported": false,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "readFileSync",
+            "writeFileSync",
+            "existsSync",
+            "realpathSync"
+          ]
+        },
+        {
+          "source": "node:fs/promises",
+          "specifiers": [
+            "readFile"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "dirname",
+            "join",
+            "resolve"
+          ]
+        },
+        {
+          "source": "node:url",
+          "specifiers": [
+            "fileURLToPath",
+            "pathToFileURL"
+          ]
+        },
+        {
+          "source": "node:module",
+          "specifiers": [
+            "createRequire"
+          ]
+        },
+        {
+          "source": "graphology",
+          "specifiers": [
+            "Graph"
+          ]
+        },
+        {
+          "source": "graphology-communities-louvain",
+          "specifiers": [
+            "louvain"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 589,
+      "hasStructuralAnalysis": true
+    },
+    "understand/extract-import-map.mjs": {
+      "filePath": "understand/extract-import-map.mjs",
+      "contentHash": "ec0dff3313ce192d7e90eabca5b905ad73c997ef5152c562a852af9c0268e526",
+      "functions": [
+        {
+          "name": "readFilesParallel",
+          "params": [
+            "paths"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "toPosix",
+          "params": [
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "resolveRelative",
+          "params": [
+            "dir",
+            "rel"
+          ],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "dirOf",
+          "params": [
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "parseTsConfigText",
+          "params": [
+            "raw"
+          ],
+          "exported": false,
+          "lineCount": 29
+        },
+        {
+          "name": "loadTsConfigs",
+          "params": [
+            "projectRoot",
+            "files"
+          ],
+          "exported": false,
+          "lineCount": 38
+        },
+        {
+          "name": "loadGoModules",
+          "params": [
+            "projectRoot",
+            "files"
+          ],
+          "exported": false,
+          "lineCount": 32
+        },
+        {
+          "name": "findNearestConfigDir",
+          "params": [
+            "startDir",
+            "configMap"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "buildResolutionContext",
+          "params": [
+            "projectRoot",
+            "files"
+          ],
+          "exported": false,
+          "lineCount": 63
+        },
+        {
+          "name": "probeWithExtensions",
+          "params": [
+            "basePath",
+            "fileSet"
+          ],
+          "exported": false,
+          "lineCount": 29
+        },
+        {
+          "name": "resolveTsJsImport",
+          "params": [
+            "rawImport",
+            "file",
+            "ctx"
+          ],
+          "exported": true,
+          "lineCount": 58
+        },
+        {
+          "name": "matchTsAlias",
+          "params": [
+            "alias",
+            "src"
+          ],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "applyTsAlias",
+          "params": [
+            "target",
+            "wildcard"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "stripJsLikeComments",
+          "params": [
+            "content"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "extractRequireSources",
+          "params": [
+            "content"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "extractKotlinSources",
+          "params": [
+            "content"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "resolvePythonImport",
+          "params": [
+            "rawImport",
+            "specifiers",
+            "file",
+            "ctx"
+          ],
+          "exported": true,
+          "lineCount": 77
+        },
+        {
+          "name": "resolvePythonProbe",
+          "params": [
+            "moduleParts",
+            "specifiers",
+            "ctx"
+          ],
+          "exported": false,
+          "lineCount": 36
+        },
+        {
+          "name": "resolveGoImport",
+          "params": [
+            "rawImport",
+            "file",
+            "ctx"
+          ],
+          "exported": true,
+          "lineCount": 49
+        },
+        {
+          "name": "buildSuffixIndex",
+          "params": [
+            "files",
+            "extPredicate"
+          ],
+          "exported": false,
+          "lineCount": 19
+        },
+        {
+          "name": "resolveDottedFqn",
+          "params": [
+            "fqn",
+            "ext",
+            "suffixIndex"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "resolveJavaImport",
+          "params": [
+            "rawImport",
+            "_file",
+            "ctx"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "resolveKotlinImport",
+          "params": [
+            "rawImport",
+            "_file",
+            "ctx"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "resolveCSharpImport",
+          "params": [
+            "rawImport",
+            "_file",
+            "ctx"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "stripRubyComments",
+          "params": [
+            "content"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "parseRubyImports",
+          "params": [
+            "content"
+          ],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "resolveRubyImport",
+          "params": [
+            "file",
+            "ctx"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "parseComposerAutoloadText",
+          "params": [
+            "raw"
+          ],
+          "exported": false,
+          "lineCount": 27
+        },
+        {
+          "name": "loadPhpAutoloads",
+          "params": [
+            "projectRoot",
+            "files"
+          ],
+          "exported": false,
+          "lineCount": 36
+        },
+        {
+          "name": "resolvePhpImport",
+          "params": [
+            "rawImport",
+            "file",
+            "ctx"
+          ],
+          "exported": true,
+          "lineCount": 45
+        },
+        {
+          "name": "probeRustModule",
+          "params": [
+            "base",
+            "fileSet"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "findRustCrateSrc",
+          "params": [
+            "importerDir",
+            "fileSet"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "resolveRustImport",
+          "params": [
+            "rawImport",
+            "file",
+            "ctx"
+          ],
+          "exported": true,
+          "lineCount": 58
+        },
+        {
+          "name": "extractRustModSources",
+          "params": [
+            "content"
+          ],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "resolveCppImport",
+          "params": [
+            "rawImport",
+            "file",
+            "ctx"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "resolveImport",
+          "params": [
+            "imp",
+            "file",
+            "ctx"
+          ],
+          "exported": false,
+          "lineCount": 36
+        },
+        {
+          "name": "extractExtraImportSources",
+          "params": [
+            "file",
+            "content"
+          ],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 158
+        },
+        {
+          "name": "isCliEntry",
+          "params": [],
+          "exported": false,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:module",
+          "specifiers": [
+            "createRequire"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "dirname",
+            "resolve",
+            "join",
+            "posix"
+          ]
+        },
+        {
+          "source": "node:url",
+          "specifiers": [
+            "fileURLToPath",
+            "pathToFileURL"
+          ]
+        },
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "existsSync",
+            "readFileSync",
+            "realpathSync",
+            "writeFileSync"
+          ]
+        },
+        {
+          "source": "node:fs/promises",
+          "specifiers": [
+            "readFile"
+          ]
+        }
+      ],
+      "exports": [
+        "resolveTsJsImport",
+        "resolvePythonImport",
+        "resolveGoImport",
+        "resolveJavaImport",
+        "resolveKotlinImport",
+        "resolveCSharpImport",
+        "resolveRubyImport",
+        "resolvePhpImport",
+        "resolveRustImport",
+        "resolveCppImport"
+      ],
+      "totalLines": 1668,
+      "hasStructuralAnalysis": true
+    },
+    "understand/extract-structure.mjs": {
+      "filePath": "understand/extract-structure.mjs",
+      "contentHash": "ecf8e19203ee4328be8ef03d6cc00ac2db4dcf29e012a84f117c168772256d28",
+      "functions": [
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 92
+        },
+        {
+          "name": "buildResult",
+          "params": [
+            "file",
+            "totalLines",
+            "nonEmptyLines",
+            "analysis",
+            "callGraph",
+            "batchImportData"
+          ],
+          "exported": true,
+          "lineCount": 159
+        },
+        {
+          "name": "isCliEntry",
+          "params": [],
+          "exported": false,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:module",
+          "specifiers": [
+            "createRequire"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "dirname",
+            "resolve",
+            "join"
+          ]
+        },
+        {
+          "source": "node:url",
+          "specifiers": [
+            "fileURLToPath",
+            "pathToFileURL"
+          ]
+        },
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "existsSync",
+            "readFileSync",
+            "realpathSync",
+            "writeFileSync"
+          ]
+        }
+      ],
+      "exports": [
+        "buildResult"
+      ],
+      "totalLines": 335,
+      "hasStructuralAnalysis": true
+    },
+    "understand/frameworks/django.md": {
+      "filePath": "understand/frameworks/django.md",
+      "contentHash": "a2257a849cf64d09cf2869a3106991264d7f50acd03c93e76284ed288cba7051",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 68,
+      "hasStructuralAnalysis": true
+    },
+    "understand/frameworks/express.md": {
+      "filePath": "understand/frameworks/express.md",
+      "contentHash": "0a7b0d4ddc72fca3d1cbf5d7c63739f4cbbb924b86625907df03656b6734898c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "understand/frameworks/fastapi.md": {
+      "filePath": "understand/frameworks/fastapi.md",
+      "contentHash": "54f971f48dd74a6138d9cd03a3c4e7f4b06ab803403a663ebcc4a6422c0671b1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 59,
+      "hasStructuralAnalysis": true
+    },
+    "understand/frameworks/flask.md": {
+      "filePath": "understand/frameworks/flask.md",
+      "contentHash": "645844e41c9a09ab47233c4ed68febfb7e15d8cc6bb354bb029b4218b0d6141c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 54,
+      "hasStructuralAnalysis": true
+    },
+    "understand/frameworks/gin.md": {
+      "filePath": "understand/frameworks/gin.md",
+      "contentHash": "6621187a9fe0023d7d36ffe51680571ee58a7a77ebe915db4d35b6fb26eadb77",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 60,
+      "hasStructuralAnalysis": true
+    },
+    "understand/frameworks/nextjs.md": {
+      "filePath": "understand/frameworks/nextjs.md",
+      "contentHash": "99ae673ecaf27381e18483b12a6dc66ce7bbc37f3bf8f2f66344a160a882f2ea",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 60,
+      "hasStructuralAnalysis": true
+    },
+    "understand/frameworks/rails.md": {
+      "filePath": "understand/frameworks/rails.md",
+      "contentHash": "f5fb1fb05a32c9e71ba44e93d205252fd4e58b71a6cce9d62cd4ee20d14adc36",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 66,
+      "hasStructuralAnalysis": true
+    },
+    "understand/frameworks/react.md": {
+      "filePath": "understand/frameworks/react.md",
+      "contentHash": "eaaf30363244b89a6bad91971f3d476ec809a8892f387a8bf33c04638a04af20",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    "understand/frameworks/spring.md": {
+      "filePath": "understand/frameworks/spring.md",
+      "contentHash": "296c10395b794c8c0741cd2faaa61f9e171933003f39cbe45f462237ed1066c6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 60,
+      "hasStructuralAnalysis": true
+    },
+    "understand/frameworks/vue.md": {
+      "filePath": "understand/frameworks/vue.md",
+      "contentHash": "49a432fe59c8b0759632bd1745b4acc7ddcaef4343a270d97698d9bede69e5db",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 60,
+      "hasStructuralAnalysis": true
+    },
+    "understand/generate-ignore.mjs": {
+      "filePath": "understand/generate-ignore.mjs",
+      "contentHash": "38227d8e3175c16f0c18e2d232ee642958132a0756b53224ef66cec3c47ff421",
+      "functions": [
+        {
+          "name": "resolvePluginRoot",
+          "params": [],
+          "exported": false,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:module",
+          "specifiers": [
+            "createRequire"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "dirname",
+            "join",
+            "resolve"
+          ]
+        },
+        {
+          "source": "node:url",
+          "specifiers": [
+            "fileURLToPath",
+            "pathToFileURL"
+          ]
+        },
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "existsSync",
+            "mkdirSync",
+            "writeFileSync"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 67,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/cpp.md": {
+      "filePath": "understand/languages/cpp.md",
+      "contentHash": "2a658bb677944fa58e6a244430d120cb0657d09e4e50fe28a9cdfbdd554f46f9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/csharp.md": {
+      "filePath": "understand/languages/csharp.md",
+      "contentHash": "507cb86fb5c494d9d5e8ab947015ac6f4e7a2c280c0509ffdbab812a0472c467",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/css.md": {
+      "filePath": "understand/languages/css.md",
+      "contentHash": "ed3a8dcd96e9921d8d85cfcf0ea07d7a15838cd076180017a80162b1b7166131",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 38,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/dockerfile.md": {
+      "filePath": "understand/languages/dockerfile.md",
+      "contentHash": "bb548a778970cb234ea805ee35dde488274eb077d2b671aa4b55297985f88bb6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/go.md": {
+      "filePath": "understand/languages/go.md",
+      "contentHash": "359f808ba97c79726598fe92478ee5680c1bd22a6065db9d374e403f5e19f0e1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/graphql.md": {
+      "filePath": "understand/languages/graphql.md",
+      "contentHash": "735b28063ee40ad7b07fc76a4268f96fa59f9fd5d38f185f4914275a1fa430e3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/html.md": {
+      "filePath": "understand/languages/html.md",
+      "contentHash": "059b74d8ca82efa09c273afc00aa96796202f637f147242990ebe2c90897ce3f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/java.md": {
+      "filePath": "understand/languages/java.md",
+      "contentHash": "fd8584d68da5d11e2b8b4e1c8a3d737175bfe77abe55ba49ca5750359571f55d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 46,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/javascript.md": {
+      "filePath": "understand/languages/javascript.md",
+      "contentHash": "4e2bc5e4c4139c86baf2a0e48587a4130d337d06929a323d8b2ab302c3355352",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/json.md": {
+      "filePath": "understand/languages/json.md",
+      "contentHash": "6a420be6610ed2c5f2950f72b1e3f9c6c15a2377f23d70e066a9bd4ae860cf4a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/kotlin.md": {
+      "filePath": "understand/languages/kotlin.md",
+      "contentHash": "fe3d5eff0f190027ce6e9686bc80e7dce4313aced194a014febb3e93cd091977",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 46,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/markdown.md": {
+      "filePath": "understand/languages/markdown.md",
+      "contentHash": "32203c73af64c9f38768199887a25f5e58c166957b82b8b8934fb926d614f944",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/php.md": {
+      "filePath": "understand/languages/php.md",
+      "contentHash": "043635d64c89b6293936085f2cd341f055d61b71132b0d09ed599e608023c772",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/protobuf.md": {
+      "filePath": "understand/languages/protobuf.md",
+      "contentHash": "7db34b5f2085ab14ac888c4c817caa6f1045a7405e14f7c30000bec93139b3dd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/python.md": {
+      "filePath": "understand/languages/python.md",
+      "contentHash": "bb6553846c7ddb63ab4c156caf183fa64f59c63a56c3b0aaa42f764f9332ba94",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/ruby.md": {
+      "filePath": "understand/languages/ruby.md",
+      "contentHash": "f5942f0e7136e48723c7d70ef49358cc9d12d4e3b3144e65607c947137382788",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/rust.md": {
+      "filePath": "understand/languages/rust.md",
+      "contentHash": "32cb3c3fcd1a560821ed09dd9a0da184dfa5c79c85f1e03034945ef4d14208d4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/shell.md": {
+      "filePath": "understand/languages/shell.md",
+      "contentHash": "f9992d17799065cef318c6906ad6cdad646cb3bbbe9ff1d07234a0634f587bd9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/sql.md": {
+      "filePath": "understand/languages/sql.md",
+      "contentHash": "d0345797e637e91ae8e98f1f9fc37b62b881a6691e2801a60139fc422341c4a4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 37,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/swift.md": {
+      "filePath": "understand/languages/swift.md",
+      "contentHash": "4c866204fffe114a4e27f11b162829257cd687020cb69b30bce88dbfff334775",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/terraform.md": {
+      "filePath": "understand/languages/terraform.md",
+      "contentHash": "862d02b31ebc9de6d03d2112cf17084fcc15b4952bed08fa39e69260d642748e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/typescript.md": {
+      "filePath": "understand/languages/typescript.md",
+      "contentHash": "20d6d1ae757d806b8a4aeb0aa6e9fb5c3307ad4e3c83715d2e8532924e8afda6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "understand/languages/yaml.md": {
+      "filePath": "understand/languages/yaml.md",
+      "contentHash": "0cda6694a866ca53715a23cafcc00d5e8995437916a49e40eb77a50114e55d7f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "understand/locales/en.md": {
+      "filePath": "understand/locales/en.md",
+      "contentHash": "bfbecb6e2e902bf92ee0476a35ea8c267fd7040ba8ffa2621da183fe767dc3b2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 44,
+      "hasStructuralAnalysis": true
+    },
+    "understand/locales/ja.md": {
+      "filePath": "understand/locales/ja.md",
+      "contentHash": "97c8462f64dd6fd8400861eb49871b27640b144d532e4be7f866689eefc7b7c6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "understand/locales/ko.md": {
+      "filePath": "understand/locales/ko.md",
+      "contentHash": "2a7cbed153d563221516858160b073e33b1080881b13a652f60667e98f0a3e6f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "understand/locales/ru.md": {
+      "filePath": "understand/locales/ru.md",
+      "contentHash": "02a9cfb7894ffd6e68a24d1dfd050ccc06bd66cac10b0b35d75acf72cedf12de",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 50,
+      "hasStructuralAnalysis": true
+    },
+    "understand/locales/zh-TW.md": {
+      "filePath": "understand/locales/zh-TW.md",
+      "contentHash": "727f14f80a4edb73dfe53025686d5d3afe865eaa554ec1c6c787f3a9a070621f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "understand/locales/zh.md": {
+      "filePath": "understand/locales/zh.md",
+      "contentHash": "06cbd26979a3383f6177b3d37995bef44f104ebe2de43704b8b1d1b5031ad98b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "understand/merge-batch-graphs.py": {
+      "filePath": "understand/merge-batch-graphs.py",
+      "contentHash": "aec850cb49b091d54045f660733e2e5b644b73c012ba9fd15a8c1caae56dbd9f",
+      "functions": [
+        {
+          "name": "normalize_direction",
+          "params": [
+            "value"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "_num",
+          "params": [
+            "v"
+          ],
+          "returnType": "float",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "load_batch",
+          "params": [
+            "path"
+          ],
+          "returnType": "dict[str, Any] | None",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "classify_id_fix",
+          "params": [
+            "original",
+            "corrected"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "normalize_node_id",
+          "params": [
+            "node_id",
+            "node"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 44
+        },
+        {
+          "name": "normalize_complexity",
+          "params": [
+            "value"
+          ],
+          "returnType": "tuple[str, str]",
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "_path_segments",
+          "params": [
+            "path"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_basename",
+          "params": [
+            "path"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "is_test_path",
+          "params": [
+            "path"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "_strip_test_infix",
+          "params": [
+            "stem"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "_join",
+          "params": [
+            "dir_path",
+            "name"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_add_unique",
+          "params": [
+            "out",
+            "path"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_js_ts_sibling_candidates",
+          "params": [
+            "dir_path",
+            "base_stem"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "production_candidates",
+          "params": [
+            "test_path"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 167
+        },
+        {
+          "name": "_file_node_path",
+          "params": [
+            "node"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "_swap_tested_by_in_place",
+          "params": [
+            "edge",
+            "original_src",
+            "original_tgt"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "_ensure_tested_tag",
+          "params": [
+            "node"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "link_tests",
+          "params": [
+            "nodes_by_id",
+            "edges"
+          ],
+          "returnType": "tuple[int, int, int, int]",
+          "exported": true,
+          "lineCount": 164
+        },
+        {
+          "name": "merge_and_normalize",
+          "params": [
+            "batches"
+          ],
+          "returnType": "tuple[dict[str, Any], list[str]]",
+          "exported": true,
+          "lineCount": 185
+        },
+        {
+          "name": "recover_imports_from_scan",
+          "params": [
+            "assembled",
+            "scan_result_path"
+          ],
+          "returnType": "tuple[int, list[str]]",
+          "exported": true,
+          "lineCount": 86
+        },
+        {
+          "name": "main",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 158
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "re",
+          "specifiers": [
+            "re"
+          ]
+        },
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "collections",
+          "specifiers": [
+            "Counter"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        }
+      ],
+      "exports": [
+        "normalize_direction",
+        "_num",
+        "load_batch",
+        "classify_id_fix",
+        "normalize_node_id",
+        "normalize_complexity",
+        "_path_segments",
+        "_basename",
+        "is_test_path",
+        "_strip_test_infix",
+        "_join",
+        "_add_unique",
+        "_js_ts_sibling_candidates",
+        "production_candidates",
+        "_file_node_path",
+        "_swap_tested_by_in_place",
+        "_ensure_tested_tag",
+        "link_tests",
+        "merge_and_normalize",
+        "recover_imports_from_scan",
+        "main"
+      ],
+      "totalLines": 1165,
+      "hasStructuralAnalysis": true
+    },
+    "understand/merge-subdomain-graphs.py": {
+      "filePath": "understand/merge-subdomain-graphs.py",
+      "contentHash": "75aa0967ea8f93ba2538b1f2fcc0a48e6b38f7bcf12de3b42f9733d5dddf0d28",
+      "functions": [
+        {
+          "name": "_num",
+          "params": [
+            "v"
+          ],
+          "returnType": "float",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "load_graph",
+          "params": [
+            "path"
+          ],
+          "returnType": "dict[str, Any] | None",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "merge_graphs",
+          "params": [
+            "graphs"
+          ],
+          "returnType": "tuple[dict[str, Any], list[str]]",
+          "exported": true,
+          "lineCount": 181
+        },
+        {
+          "name": "main",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 70
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "collections",
+          "specifiers": [
+            "Counter"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        }
+      ],
+      "exports": [
+        "_num",
+        "load_graph",
+        "merge_graphs",
+        "main"
+      ],
+      "totalLines": 309,
+      "hasStructuralAnalysis": true
+    },
+    "understand/scan-project.mjs": {
+      "filePath": "understand/scan-project.mjs",
+      "contentHash": "d9673ab2b37eaad4df7d5e419d04b95077045d0b09cf4e5d4e330951df62de9b",
+      "functions": [
+        {
+          "name": "detectLanguage",
+          "params": [
+            "filePath"
+          ],
+          "exported": true,
+          "lineCount": 28
+        },
+        {
+          "name": "dotfileKey",
+          "params": [
+            "base"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "detectCategory",
+          "params": [
+            "filePath"
+          ],
+          "exported": true,
+          "lineCount": 45
+        },
+        {
+          "name": "estimateComplexity",
+          "params": [
+            "totalFiles"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "toPosix",
+          "params": [
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "enumerateViaGit",
+          "params": [
+            "projectRoot"
+          ],
+          "exported": false,
+          "lineCount": 23
+        },
+        {
+          "name": "enumerateViaWalk",
+          "params": [
+            "projectRoot"
+          ],
+          "exported": false,
+          "lineCount": 46
+        },
+        {
+          "name": "enumerateFiles",
+          "params": [
+            "projectRoot"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "buildDefaultsOnlyFilter",
+          "params": [],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "hasUserIgnoreFile",
+          "params": [
+            "projectRoot"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "countLines",
+          "params": [
+            "absPath",
+            "posixPath"
+          ],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 121
+        },
+        {
+          "name": "isCliEntry",
+          "params": [],
+          "exported": false,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "node:module",
+          "specifiers": [
+            "createRequire"
+          ]
+        },
+        {
+          "source": "node:path",
+          "specifiers": [
+            "dirname",
+            "resolve",
+            "join",
+            "basename",
+            "extname",
+            "relative",
+            "sep"
+          ]
+        },
+        {
+          "source": "node:url",
+          "specifiers": [
+            "fileURLToPath",
+            "pathToFileURL"
+          ]
+        },
+        {
+          "source": "node:fs",
+          "specifiers": [
+            "existsSync",
+            "readFileSync",
+            "readdirSync",
+            "realpathSync",
+            "statSync",
+            "writeFileSync"
+          ]
+        },
+        {
+          "source": "node:child_process",
+          "specifiers": [
+            "spawnSync"
+          ]
+        }
+      ],
+      "exports": [
+        "detectLanguage",
+        "detectCategory",
+        "estimateComplexity"
+      ],
+      "totalLines": 803,
+      "hasStructuralAnalysis": true
+    },
+    "understand/SKILL.md": {
+      "filePath": "understand/SKILL.md",
+      "contentHash": "88ecde51339428a705816481163f68eb300795820cd22e0f036c04220298cf62",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 839,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

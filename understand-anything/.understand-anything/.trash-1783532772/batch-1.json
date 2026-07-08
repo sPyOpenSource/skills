@@ -1,0 +1,915 @@
+{
+  "nodes": [
+    {
+      "id": "file:understand/generate-ignore.mjs",
+      "type": "file",
+      "name": "generate-ignore.mjs",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Node.js CLI script that generates a starter .understand-anything/.understandignore file for a project by delegating to generateStarterIgnoreFile from @understand-anything/core.",
+      "tags": ["script", "utility", "ignore-configuration"],
+      "complexity": "simple",
+      "languageNotes": "ESM module using dynamic import for @understand-anything/core resolution with workspace-link and dist fallback."
+    },
+    {
+      "id": "function:understand/generate-ignore.mjs:resolvePluginRoot",
+      "type": "function",
+      "name": "resolvePluginRoot",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Resolves the plugin root directory from the PLUGIN_ROOT environment variable or falls back to a relative path from __dirname.",
+      "tags": ["utility", "path-resolution"],
+      "complexity": "simple",
+      "languageNotes": "Pure function with early return for env var check before filesystem fallback."
+    },
+    {
+      "id": "function:understand/generate-ignore.mjs:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Main execution: resolves plugin root, imports @understand-anything/core, calls generateStarterIgnoreFile, and writes the output to .understand-anything/.understandignore.",
+      "tags": ["entry-point", "script-execution", "file-generation"],
+      "complexity": "simple",
+      "languageNotes": "Top-level await using ESM dynamic import pattern with try/catch fallback for module resolution."
+    },
+    {
+      "id": "document:understand/frameworks/gin.md",
+      "type": "document",
+      "name": "Gin Framework Addendum",
+      "filePath": "understand/frameworks/gin.md",
+      "summary": "Framework addendum injected into file-analyzer and architecture-analyzer prompts when Gin is detected. Documents canonical file roles, edge patterns, architectural layers, and notable patterns for Go Gin projects.",
+      "tags": ["framework-addendum", "go", "gin", "analysis-guidance", "architectural-layers"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown with canonical file role tables, edge pattern descriptions, layer definitions, and language lesson templates."
+    },
+    {
+      "id": "document:understand/frameworks/nextjs.md",
+      "type": "document",
+      "name": "Next.js Framework Addendum",
+      "filePath": "understand/frameworks/nextjs.md",
+      "summary": "Framework addendum injected into prompts when Next.js is detected. Covers App Router file conventions, canonical file roles, edge patterns for layout nesting, API routes, and server/client component boundaries.",
+      "tags": ["framework-addendum", "nextjs", "react", "analysis-guidance", "architectural-layers"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown documenting App Router conventions, parallel routes, route groups, and Server Component architecture."
+    },
+    {
+      "id": "document:understand/frameworks/rails.md",
+      "type": "document",
+      "name": "Rails Framework Addendum",
+      "filePath": "understand/frameworks/rails.md",
+      "summary": "Framework addendum injected into prompts when Ruby on Rails is detected. Documents canonical file roles, ActiveRecord associations, route-to-controller mappings, and Rails conventions.",
+      "tags": ["framework-addendum", "rails", "ruby", "analysis-guidance", "architectural-layers"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering Rails MVC conventions, ActiveRecord patterns, callbacks, and concern-based modularity."
+    },
+    {
+      "id": "document:understand/frameworks/react.md",
+      "type": "document",
+      "name": "React Framework Addendum",
+      "filePath": "understand/frameworks/react.md",
+      "summary": "Framework addendum injected into prompts when React is detected. Documents component composition, hook usage, context provider/consumer patterns, and architectural layers for React projects.",
+      "tags": ["framework-addendum", "react", "frontend", "analysis-guidance", "architectural-layers"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown with edge patterns for component composition, hook dependencies, and props drilling chains."
+    },
+    {
+      "id": "document:understand/frameworks/spring.md",
+      "type": "document",
+      "name": "Spring Boot Framework Addendum",
+      "filePath": "understand/frameworks/spring.md",
+      "summary": "Framework addendum injected into prompts when Spring Boot is detected. Covers canonical file roles, @Autowired dependency injection patterns, Controller-Service-Repository chain, and JPA entity relationships.",
+      "tags": ["framework-addendum", "spring", "java", "analysis-guidance", "architectural-layers"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown documenting Spring Boot layered architecture, annotation-driven development patterns, and AOP concepts."
+    },
+    {
+      "id": "document:understand/frameworks/vue.md",
+      "type": "document",
+      "name": "Vue Framework Addendum",
+      "filePath": "understand/frameworks/vue.md",
+      "summary": "Framework addendum injected into prompts when Vue is detected. Documents component parent-child composition, composable usage, store actions, router view mappings, and architectural layers.",
+      "tags": ["framework-addendum", "vue", "frontend", "analysis-guidance", "architectural-layers"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering Composition API, Pinia stores, Vue Router navigation guards, and single-file component patterns."
+    },
+    {
+      "id": "document:understand/languages/cpp.md",
+      "type": "document",
+      "name": "C++ Language Prompt Snippet",
+      "filePath": "understand/languages/cpp.md",
+      "summary": "Language reference snippet for C++ analysis. Documents templates, RAII, smart pointers, move semantics, and import patterns including #include directives.",
+      "tags": ["language-snippet", "cpp", "analysis-guidance", "import-patterns", "file-patterns"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown with key concepts, import patterns, file patterns, common frameworks, and example language notes."
+    },
+    {
+      "id": "document:understand/languages/csharp.md",
+      "type": "document",
+      "name": "C# Language Prompt Snippet",
+      "filePath": "understand/languages/csharp.md",
+      "summary": "Language reference snippet for C# analysis. Documents LINQ, async/await, generics, nullable reference types, and ASP.NET Core framework conventions.",
+      "tags": ["language-snippet", "csharp", "analysis-guidance", "import-patterns", "file-patterns"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown with key concepts, using directives, file patterns, and common frameworks like ASP.NET Core and Entity Framework."
+    },
+    {
+      "id": "document:understand/languages/css.md",
+      "type": "document",
+      "name": "CSS Language Prompt Snippet",
+      "filePath": "understand/languages/css.md",
+      "summary": "Language reference snippet for CSS analysis. Documents selectors, specificity, box model, flexbox, grid, custom properties, and SCSS/Sass features.",
+      "tags": ["language-snippet", "css", "analysis-guidance", "edge-patterns", "file-patterns"],
+      "complexity": "simple",
+      "languageNotes": "Non-code language snippet with edge patterns for CSS file relationships, SCSS partial dependencies, and CSS Modules."
+    },
+    {
+      "id": "document:understand/languages/dockerfile.md",
+      "type": "document",
+      "name": "Dockerfile Language Prompt Snippet",
+      "filePath": "understand/languages/dockerfile.md",
+      "summary": "Language reference snippet for Dockerfile analysis. Documents multi-stage builds, layer caching, base images, build arguments, health checks, and docker-compose patterns.",
+      "tags": ["language-snippet", "dockerfile", "analysis-guidance", "edge-patterns", "infrastructure"],
+      "complexity": "simple",
+      "languageNotes": "Non-code language snippet with edge patterns for Dockerfile deploys, docker-compose depends_on, and build dependency relationships."
+    },
+    {
+      "id": "document:understand/languages/go.md",
+      "type": "document",
+      "name": "Go Language Prompt Snippet",
+      "filePath": "understand/languages/go.md",
+      "summary": "Language reference snippet for Go analysis. Documents goroutines, channels, interfaces, struct embedding, error handling, and import patterns.",
+      "tags": ["language-snippet", "go", "analysis-guidance", "import-patterns", "file-patterns"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering Go's concurrency model, interface satisfaction, internal package enforcement, and common frameworks like Gin and Echo."
+    },
+    {
+      "id": "document:understand/languages/graphql.md",
+      "type": "document",
+      "name": "GraphQL Language Prompt Snippet",
+      "filePath": "understand/languages/graphql.md",
+      "summary": "Language reference snippet for GraphQL analysis. Documents type system, queries, mutations, subscriptions, resolvers, fragments, and schema federation.",
+      "tags": ["language-snippet", "graphql", "analysis-guidance", "edge-patterns", "schema"],
+      "complexity": "simple",
+      "languageNotes": "Non-code language snippet with edge patterns for schema definitions, resolver implementations, and code generation pipelines."
+    },
+    {
+      "id": "document:understand/languages/html.md",
+      "type": "document",
+      "name": "HTML Language Prompt Snippet",
+      "filePath": "understand/languages/html.md",
+      "summary": "Language reference snippet for HTML analysis. Documents semantic elements, forms, accessibility, meta tags, Web Components, and template syntax patterns.",
+      "tags": ["language-snippet", "html", "analysis-guidance", "edge-patterns", "file-patterns"],
+      "complexity": "simple",
+      "languageNotes": "Non-code language snippet with edge patterns for HTML dependencies on CSS/JS files and server-side template rendering."
+    },
+    {
+      "id": "document:understand/languages/java.md",
+      "type": "document",
+      "name": "Java Language Prompt Snippet",
+      "filePath": "understand/languages/java.md",
+      "summary": "Language reference snippet for Java analysis. Documents generics, annotations, streams, lambdas, sealed classes, dependency injection, and Spring Boot conventions.",
+      "tags": ["language-snippet", "java", "analysis-guidance", "import-patterns", "file-patterns"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering Java 17+ features, Maven/Gradle directory layout, checked vs unchecked exceptions, and common frameworks."
+    },
+    {
+      "id": "document:understand/languages/javascript.md",
+      "type": "document",
+      "name": "JavaScript Language Prompt Snippet",
+      "filePath": "understand/languages/javascript.md",
+      "summary": "Language reference snippet for JavaScript analysis. Documents closures, prototypes, promises, event loop, ESM vs CJS module systems, and common frameworks.",
+      "tags": ["language-snippet", "javascript", "analysis-guidance", "import-patterns", "file-patterns"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering ESM and CommonJS module patterns, destructuring, spread operators, and closure-based module patterns."
+    },
+    {
+      "id": "document:understand/languages/json.md",
+      "type": "document",
+      "name": "JSON Language Prompt Snippet",
+      "filePath": "understand/languages/json.md",
+      "summary": "Language reference snippet for JSON analysis. Documents strict syntax rules, JSON Schema, JSONC, JSON5, and notable file patterns like package.json and tsconfig.json.",
+      "tags": ["language-snippet", "json", "analysis-guidance", "edge-patterns", "configuration"],
+      "complexity": "simple",
+      "languageNotes": "Non-code language snippet with edge patterns for JSON config files that configure build tools, compilers, and runtime behavior."
+    },
+    {
+      "id": "document:understand/languages/kotlin.md",
+      "type": "document",
+      "name": "Kotlin Language Prompt Snippet",
+      "filePath": "understand/languages/kotlin.md",
+      "summary": "Language reference snippet for Kotlin analysis. Documents coroutines, data classes, sealed classes, extension functions, null safety, and Ktor/Spring Boot conventions.",
+      "tags": ["language-snippet", "kotlin", "analysis-guidance", "import-patterns", "file-patterns"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering Kotlin-specific features like coroutines, Flow, scope functions, and Gradle Kotlin DSL build files."
+    },
+    {
+      "id": "document:understand/languages/markdown.md",
+      "type": "document",
+      "name": "Markdown Language Prompt Snippet",
+      "filePath": "understand/languages/markdown.md",
+      "summary": "Language reference snippet for Markdown analysis. Documents heading hierarchy, front matter, fenced code blocks, reference-style links, and edge patterns for documentation-to-code relationships.",
+      "tags": ["language-snippet", "markdown", "analysis-guidance", "edge-patterns", "documentation"],
+      "complexity": "simple",
+      "languageNotes": "Non-code language snippet with edge patterns for documents relationships between markdown files and the code components they describe."
+    },
+    {
+      "id": "document:understand/languages/php.md",
+      "type": "document",
+      "name": "PHP Language Prompt Snippet",
+      "filePath": "understand/languages/php.md",
+      "summary": "Language reference snippet for PHP analysis. Documents namespaces, traits, type declarations, attributes, enums, fibers, and Laravel/Symfony conventions.",
+      "tags": ["language-snippet", "php", "analysis-guidance", "import-patterns", "file-patterns"],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering PHP 8 features, PSR-4 autoloading, Composer dependency management, and common frameworks like Laravel and Symfony."
+    },
+    {
+      "id": "config:.understand-anything/.understandignore",
+      "type": "config",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Project-specific ignore patterns for file analysis exclusions. Generated by generate-ignore.mjs with commented-out test file pattern suggestions organized by language.",
+      "tags": ["ignore-configuration", "exclusion-patterns", "generated"],
+      "complexity": "simple",
+      "languageNotes": "Line-oriented text file following .gitignore syntax with commented-out suggestions for JS/TS, C#, Java/Kotlin, and Go test patterns."
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:understand/generate-ignore.mjs",
+      "target": "function:understand/generate-ignore.mjs:resolvePluginRoot",
+      "type": "contains",
+      "weight": 1.0,
+      "description": "File contains the resolvePluginRoot function definition."
+    },
+    {
+      "source": "file:understand/generate-ignore.mjs",
+      "target": "function:understand/generate-ignore.mjs:main",
+      "type": "contains",
+      "weight": 1.0,
+      "description": "File contains the main execution logic."
+    },
+    {
+      "source": "function:understand/generate-ignore.mjs:main",
+      "target": "function:understand/generate-ignore.mjs:resolvePluginRoot",
+      "type": "calls",
+      "weight": 0.8,
+      "description": "Main execution calls resolvePluginRoot to determine the plugin directory."
+    },
+    {
+      "source": "document:understand/frameworks/gin.md",
+      "target": "document:understand/frameworks/nextjs.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/gin.md",
+      "target": "document:understand/frameworks/rails.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/gin.md",
+      "target": "document:understand/frameworks/react.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/gin.md",
+      "target": "document:understand/frameworks/spring.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/gin.md",
+      "target": "document:understand/frameworks/vue.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/nextjs.md",
+      "target": "document:understand/frameworks/rails.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/nextjs.md",
+      "target": "document:understand/frameworks/react.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/nextjs.md",
+      "target": "document:understand/frameworks/spring.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/nextjs.md",
+      "target": "document:understand/frameworks/vue.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/rails.md",
+      "target": "document:understand/frameworks/react.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/rails.md",
+      "target": "document:understand/frameworks/spring.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/rails.md",
+      "target": "document:understand/frameworks/vue.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/react.md",
+      "target": "document:understand/frameworks/spring.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/react.md",
+      "target": "document:understand/frameworks/vue.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/frameworks/spring.md",
+      "target": "document:understand/frameworks/vue.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/csharp.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/css.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/dockerfile.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/go.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/graphql.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/css.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/dockerfile.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/go.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/graphql.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/dockerfile.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/go.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/graphql.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/go.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/graphql.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/graphql.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/java.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/java.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/java.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/java.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/java.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/javascript.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/javascript.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/javascript.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/javascript.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/json.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/json.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/json.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/kotlin.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/kotlin.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "document:understand/languages/markdown.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose."
+    },
+    {
+      "source": "file:understand/generate-ignore.mjs",
+      "target": "config:.understand-anything/.understandignore",
+      "type": "configures",
+      "weight": 0.6,
+      "description": "generate-ignore.mjs writes and configures the .understand-anything/.understandignore file for a project."
+    }
+  ]
+}

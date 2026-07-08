@@ -1,0 +1,305 @@
+{
+  "projectRoot": "/Users/xuyi/Source/skills/understand-anything",
+  "files": [
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "fileCategory": "config"
+    },
+    {
+      "path": "understand-chat/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand-dashboard/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand-diff/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand-domain/extract-domain-context.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand-domain/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand-explain/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand-knowledge/merge-knowledge-graph.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand-knowledge/parse-knowledge-base.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand-knowledge/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand-onboard/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/build-fingerprints.mjs",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand/compute-batches.mjs",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand/extract-import-map.mjs",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand/extract-structure.mjs",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand/frameworks/django.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/frameworks/express.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/frameworks/fastapi.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/frameworks/flask.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/frameworks/gin.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/frameworks/nextjs.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/frameworks/rails.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/frameworks/react.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/frameworks/spring.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/frameworks/vue.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/generate-ignore.mjs",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand/languages/cpp.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/csharp.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/css.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/dockerfile.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/go.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/graphql.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/html.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/java.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/javascript.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/json.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/kotlin.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/markdown.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/php.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/protobuf.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/python.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/ruby.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/rust.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/shell.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/sql.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/swift.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/terraform.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/typescript.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/languages/yaml.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/locales/en.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/locales/ja.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/locales/ko.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/locales/ru.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/locales/zh-TW.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/locales/zh.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "understand/merge-batch-graphs.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand/merge-subdomain-graphs.py",
+      "language": "python",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand/scan-project.mjs",
+      "language": "javascript",
+      "fileCategory": "code"
+    },
+    {
+      "path": "understand/SKILL.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    }
+  ]
+}

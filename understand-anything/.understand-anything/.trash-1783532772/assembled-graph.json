@@ -1,0 +1,2733 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "understand-anything",
+    "languages": [
+      "markdown",
+      "javascript",
+      "python"
+    ],
+    "frameworks": [],
+    "description": "Codebase understanding and knowledge graph generation skill for opencode/AI CLI tools. Analyzes codebases, produces interactive knowledge graphs, and provides guided tours.",
+    "analyzedAt": "2026-07-08T17:45:07.672Z",
+    "gitCommitHash": ""
+  },
+  "nodes": [
+    {
+      "id": "document:understand/SKILL.md",
+      "type": "document",
+      "name": "/understand — Knowledge Graph Generation Pipeline",
+      "filePath": "understand/SKILL.md",
+      "summary": "Core orchestration skill that coordinates a 7-phase pipeline to analyze a codebase and produce an interactive knowledge graph. Phases cover pre-flight, ignore configuration, project scanning, semantic batch computation, file analysis via LLM subagents, architecture layer detection, guided tour generation, graph validation, and final save with fingerprint baselines for auto-update.",
+      "tags": [
+        "skill",
+        "knowledge-graph",
+        "pipeline",
+        "codebase-analysis",
+        "orchestration",
+        "multi-phase"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-chat/SKILL.md",
+      "type": "document",
+      "name": "/understand-chat — Knowledge Graph Query",
+      "filePath": "understand-chat/SKILL.md",
+      "summary": "Interactive query skill that answers questions about a codebase using the generated knowledge graph. Uses grep-based search strategies to find relevant nodes, edges, and layers while minimizing context usage.",
+      "tags": [
+        "skill",
+        "knowledge-graph",
+        "query",
+        "chat",
+        "search"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-dashboard/SKILL.md",
+      "type": "document",
+      "name": "/understand-dashboard — Knowledge Graph Visualizer",
+      "filePath": "understand-dashboard/SKILL.md",
+      "summary": "Launch skill that starts an interactive web dashboard (Vite dev server) to visualize the knowledge graph. Resolves the plugin root via multi-candidate path search, builds dependencies, and launches the dashboard with a token-protected URL.",
+      "tags": [
+        "skill",
+        "dashboard",
+        "visualization",
+        "vite",
+        "web-ui"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-diff/SKILL.md",
+      "type": "document",
+      "name": "/understand-diff — Git Diff Impact Analysis",
+      "filePath": "understand-diff/SKILL.md",
+      "summary": "Analysis skill that examines git diffs or pull requests against the knowledge graph to identify changed components, affected components (1-hop edges), impacted architectural layers, and risk assessment based on complexity and blast radius. Writes a diff-overlay JSON for the dashboard.",
+      "tags": [
+        "skill",
+        "diff",
+        "git",
+        "risk-analysis",
+        "code-review",
+        "impact-analysis"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-domain/SKILL.md",
+      "type": "document",
+      "name": "/understand-domain — Business Domain Extraction",
+      "filePath": "understand-domain/SKILL.md",
+      "summary": "Domain extraction skill that identifies business domains, flows, and process steps from a codebase. Works standalone with a lightweight scan (file tree, entry points, exports/imports) or derives from an existing /understand knowledge graph. Produces a domain-graph.json with flow visualization.",
+      "tags": [
+        "skill",
+        "domain-analysis",
+        "business-flows",
+        "knowledge-graph",
+        "entry-points"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand-domain/extract-domain-context.py",
+      "type": "file",
+      "name": "extract-domain-context.py",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Lightweight Python codebase scanner that produces structured JSON context for the domain-analyzer agent. Extracts file trees (respecting .gitignore), detects entry points via regex patterns (HTTP routes, CLI commands, event handlers, cron jobs, GraphQL resolvers, gRPC services), captures file signatures (exports/imports), and reads project metadata files. Enforces output size limits to stay within agent context.",
+      "tags": [
+        "python",
+        "scanner",
+        "domain-analysis",
+        "entry-points",
+        "regex",
+        "gitignore"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-explain/SKILL.md",
+      "type": "document",
+      "name": "/understand-explain — Deep-Dive Code Explanation",
+      "filePath": "understand-explain/SKILL.md",
+      "summary": "Deep-dive explanation skill that looks up a specific file, function, or module in the knowledge graph and provides contextual analysis including architectural role (layer), internal structure (functions/classes), external connections (edges), and data flow from source code.",
+      "tags": [
+        "skill",
+        "explanation",
+        "deep-dive",
+        "code-understanding",
+        "debugging"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-knowledge/SKILL.md",
+      "type": "document",
+      "name": "/understand-knowledge — Karpathy Wiki Knowledge Graph",
+      "filePath": "understand-knowledge/SKILL.md",
+      "summary": "Knowledge base analysis skill that processes Karpathy-pattern LLM wikis (three-layer pattern: raw sources + wiki markdown with wikilinks + schema file) into an interactive knowledge graph. Uses a deterministic parse script for structure extraction and LLM subagents for implicit knowledge inference (entities, claims). Produces force-directed layout graphs.",
+      "tags": [
+        "skill",
+        "knowledge-base",
+        "wiki",
+        "karpathy",
+        "entity-extraction",
+        "wikilinks",
+        "markdown"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand-knowledge/merge-knowledge-graph.py",
+      "type": "file",
+      "name": "merge-knowledge-graph.py",
+      "filePath": "understand-knowledge/merge-knowledge-graph.py",
+      "summary": "Merge script for Karpathy-pattern knowledge graphs. Combines deterministic scan-manifest.json with LLM analysis batches into a final assembled graph. Handles entity deduplication (case-insensitive name matching), edge normalization via alias maps, node type canonicalization, layer building from index.md categories, and tour generation from index.md section ordering.",
+      "tags": [
+        "python",
+        "merge",
+        "knowledge-graph",
+        "deduplication",
+        "karpathy"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand-knowledge/parse-knowledge-base.py",
+      "type": "file",
+      "name": "parse-knowledge-base.py",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Deterministic parser for Karpathy-pattern LLM wikis. Detects the three-layer pattern (raw sources + wiki markdown + schema), extracts wikilinks, headings, frontmatter, code blocks, and first paragraphs from markdown files. Resolves wikilinks against a built name map, derives categories from index.md section headings, computes backlinks, and builds topic nodes. Handles ambiguous basenames via collision detection.",
+      "tags": [
+        "python",
+        "parser",
+        "wiki",
+        "markdown",
+        "karpathy",
+        "wikilinks",
+        "frontmatter"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-onboard/SKILL.md",
+      "type": "document",
+      "name": "/understand-onboard — Developer Onboarding Guide",
+      "filePath": "understand-onboard/SKILL.md",
+      "summary": "Onboarding guide generator that produces comprehensive developer documentation from the knowledge graph. Structures the guide around project overview, architecture layers, key concepts, guided tour, file map, and complexity hotspots. Can save output to docs/ONBOARDING.md.",
+      "tags": [
+        "skill",
+        "onboarding",
+        "documentation",
+        "developer-guide",
+        "learning"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/scan-project.mjs",
+      "type": "file",
+      "name": "scan-project.mjs",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Deterministic file enumerator and language/category detector for the project-scanner agent. Uses git ls-files with a recursive walker fallback, per-file language detection via a comprehensive extension/filename table, category assignment via priority-ordered rules (LICENSE, infra by filename, infra by path, extension-based mapping, fallback to code), line counting, and complexity estimation. Dual-filter accounting tracks user-driven .understandignore drops.",
+      "tags": [
+        "javascript",
+        "scanner",
+        "file-enumeration",
+        "language-detection",
+        "git",
+        "node"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/merge-batch-graphs.py",
+      "type": "file",
+      "name": "merge-batch-graphs.py",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Batch merge and normalization script for Phase 2 of /understand. Combines batch-*.json files from file-analyzer subagents, normalizes node IDs (strips double prefixes, project-name prefixes, canonicalizes func→function, adds missing prefixes), normalizes complexity values via alias map, rewrites edge references after ID changes, deduplicates nodes by ID and edges by (source, target, type, direction), runs a two-pass tested_by linker that preserves LLM pairing evidence while fixing direction, and recovers dropped imports edges from the scan importMap for deterministic completeness.",
+      "tags": [
+        "python",
+        "merge",
+        "normalization",
+        "graph-assembly",
+        "test-linker",
+        "deduplication"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/generate-ignore.mjs",
+      "type": "file",
+      "name": "generate-ignore.mjs",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Node.js CLI script that generates a starter .understand-anything/.understandignore file for a project by delegating to generateStarterIgnoreFile from @understand-anything/core.",
+      "tags": [
+        "script",
+        "utility",
+        "ignore-configuration"
+      ],
+      "complexity": "simple",
+      "languageNotes": "ESM module using dynamic import for @understand-anything/core resolution with workspace-link and dist fallback."
+    },
+    {
+      "id": "file:understand/extract-import-map.mjs",
+      "type": "file",
+      "name": "extract-import-map.mjs",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Deterministic import resolution script using tree-sitter via PluginRegistry to extract raw import paths and resolve them to project-internal file paths. Supports TypeScript/JavaScript (relative imports, tsconfig path aliases, NodeNext rewrites, CJS require()), Python (relative with leading dots, absolute with per-ancestor probing for multi-service repos), Go (go.mod prefix matching for multi-module monorepos), Java/Kotlin/C# (dotted-FQN suffix index), Ruby (require vs require_relative discrimination), PHP (PSR-4 autoload resolution), Rust (crate/super/self module probing), and C/C++ (quoted and angle include resolution). Parallel file I/O and config loading with per-file resilience.",
+      "tags": [
+        "javascript",
+        "import-resolution",
+        "tree-sitter",
+        "dependency-graph",
+        "monorepo",
+        "node"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/merge-subdomain-graphs.py",
+      "type": "file",
+      "name": "merge-subdomain-graphs.py",
+      "filePath": "understand/merge-subdomain-graphs.py",
+      "summary": "Auto-discovers and merges subdomain knowledge-graph files (*knowledge-graph*.json excluding the main output) into a single knowledge-graph.json. Handles node deduplication by ID (later occurrence wins), edge deduplication by (source, target, type) with higher-weight wins, layer merging by ID with union of nodeIds, tour step concatenation with duplicate title merging, and dangling reference cleanup for all sections.",
+      "tags": [
+        "python",
+        "merge",
+        "knowledge-graph",
+        "subdomain",
+        "deduplication",
+        "layer-merge"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/compute-batches.mjs",
+      "type": "file",
+      "name": "compute-batches.mjs",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Phase 1.5 batch computation script that runs Louvain community detection on the import graph to create semantic file batches for the file-analyzer pipeline. Handles code file grouping via community detection with size enforcement and alphabetical splitting for oversized communities, non-code file grouping into semantic groups (Dockerfile clusters, GitHub workflows, CI configs, SQL migrations, parent-dir catchall), exports extraction via tree-sitter for neighbor map enrichment, neighbor map computation with 1-hop degree truncation, and a merge-small pass that consolidates singleton/orphan batches to reduce subagent dispatch overhead.",
+      "tags": [
+        "javascript",
+        "batches",
+        "louvain",
+        "community-detection",
+        "graphology",
+        "import-graph",
+        "node"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/extract-structure.mjs",
+      "type": "file",
+      "name": "extract-structure.mjs",
+      "filePath": "understand/extract-structure.mjs",
+      "summary": "Deterministic structural extraction script using PluginRegistry (TreeSitterPlugin + non-code parsers) from @understand-anything/core. Analyzes each batch file to extract functions, classes, exports, sections, definitions, services, endpoints, steps, resources, and call graphs. Reports per-file metrics (import count, export count, function count, etc.) and handles per-file resilience with skip-and-continue on failures.",
+      "tags": [
+        "javascript",
+        "structural-analysis",
+        "tree-sitter",
+        "code-analysis",
+        "call-graph",
+        "node"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/build-fingerprints.mjs",
+      "type": "file",
+      "name": "build-fingerprints.mjs",
+      "filePath": "understand/build-fingerprints.mjs",
+      "summary": "Structural fingerprint baseline builder for auto-update incremental change detection. Invoked during Phase 7 of /understand after graph assembly. Uses TreeSitterPlugin and PluginRegistry (mirroring extract-structure.mjs) to generate fingerprints.json for comparing structural changes on subsequent commits. Must succeed before meta.json is written to prevent auto-update from misclassifying every file as CHANGED on the next run.",
+      "tags": [
+        "javascript",
+        "fingerprints",
+        "auto-update",
+        "structural-analysis",
+        "tree-sitter",
+        "node"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "module:@understand-anything/core",
+      "type": "module",
+      "name": "@understand-anything/core",
+      "filePath": "",
+      "summary": "Core library providing TreeSitterPlugin, PluginRegistry, builtinLanguageConfigs, registerAllParsers, createIgnoreFilter, generateStarterIgnoreFile, buildFingerprintStore, saveFingerprints, and other shared utilities consumed by all JS scripts in the understand-anything plugin.",
+      "tags": [
+        "library",
+        "core",
+        "tree-sitter",
+        "plugin-registry",
+        "typescript"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "module:graphology",
+      "type": "module",
+      "name": "graphology",
+      "filePath": "",
+      "summary": "Graph data structure library used by compute-batches.mjs for Louvain community detection on the import graph.",
+      "tags": [
+        "library",
+        "graph",
+        "data-structure"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "module:graphology-communities-louvain",
+      "type": "module",
+      "name": "graphology-communities-louvain",
+      "filePath": "",
+      "summary": "Louvain community detection algorithm for graphology, used by compute-batches.mjs to partition code files into semantically related batches based on their import graph structure.",
+      "tags": [
+        "library",
+        "community-detection",
+        "louvain",
+        "graph-partitioning"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/scan-project.mjs:detectLanguage",
+      "type": "function",
+      "name": "detectLanguage",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Detects a file's programming language by checking extension lookup table, filename lookup table, dotfile key extraction, and Dockerfile variants. Never returns null — falls back to lowercased extension or 'unknown'.",
+      "tags": [
+        "function",
+        "language-detection"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/scan-project.mjs:detectCategory",
+      "type": "function",
+      "name": "detectCategory",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Assigns a file category (code, config, docs, infra, data, script, markup) via priority-ordered rules: LICENSE exception, infra by filename, infra by path, extension-based mapping, dotfile config catch-all, and code fallback.",
+      "tags": [
+        "function",
+        "category-detection"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/scan-project.mjs:estimateComplexity",
+      "type": "function",
+      "name": "estimateComplexity",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Maps total file count to a complexity tier: small (1-30), moderate (31-150), large (151-500), very-large (>500). Edge case: 0 files maps to small.",
+      "tags": [
+        "function",
+        "complexity-estimation"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/scan-project.mjs:enumerateFiles",
+      "type": "function",
+      "name": "enumerateFiles",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Enumerates all files in a project root, preferring git ls-files with -z NUL-terminated output for non-ASCII path safety, falling back to a recursive directory walker with hard-skip dirs.",
+      "tags": [
+        "function",
+        "file-enumeration",
+        "git"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/scan-project.mjs:countLines",
+      "type": "function",
+      "name": "countLines",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Counts newline-delimited lines in a file by scanning the byte buffer for 0x0a characters. Matches wc -l semantics. Per-file failure emits a Warning and returns null.",
+      "tags": [
+        "function",
+        "line-counting"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:normalize_node_id",
+      "type": "function",
+      "name": "normalize_node_id",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Normalizes node IDs by stripping double prefixes (file:file:), project-name prefixes, canonicalizing func: to function:, and adding missing type prefixes for bare file paths.",
+      "tags": [
+        "function",
+        "normalization",
+        "id-sanitization"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:normalize_complexity",
+      "type": "function",
+      "name": "normalize_complexity",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Normalizes complexity values from aliases (low→simple, medium→moderate, high→complex) and numeric ranges (1-3→simple, 4-6→moderate, 7+→complex). Unknown values default to moderate. Returns (normalized, status) tuple.",
+      "tags": [
+        "function",
+        "normalization",
+        "complexity"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:link_tests",
+      "type": "function",
+      "name": "link_tests",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Two-pass tested_by edge linker. Pass 1 canonicalizes LLM-emitted test→production edges by flipping direction, dropping semantically broken pairs. Pass 2 supplements path-convention pairings for unmatched test files using language-specific naming conventions (JS/TS .test infix, Go _test suffix, Python test_ prefix, Java Maven/Gradle layout, C# mirroring, C/C++ test_ prefix/suffix). Tags production nodes with 'tested'.",
+      "tags": [
+        "function",
+        "test-linker",
+        "edge-canonicalization",
+        "path-conventions"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:production_candidates",
+      "type": "function",
+      "name": "production_candidates",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Generates ordered candidate production file paths for a given test file path, using language-specific conventions: JS/TS sibling de-infix and mirrored tree, Go _test suffix stripping, Python test_ prefix/suffix with test directory walk-out, Java Maven src/test/java→src/main/java mapping, C# mirroring, and C/C++ conventions.",
+      "tags": [
+        "function",
+        "path-generation",
+        "test-framework"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:merge_and_normalize",
+      "type": "function",
+      "name": "merge_and_normalize",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Main merge pipeline: combines batch nodes/edges, normalizes IDs and complexity, rewrites edge references, deduplicates nodes by ID (keep last) and edges by key with higher-weight wins, runs the tested_by linker, and produces a detailed correction report.",
+      "tags": [
+        "function",
+        "merge",
+        "normalization",
+        "pipeline"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:recover_imports_from_scan",
+      "type": "function",
+      "name": "recover_imports_from_scan",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Recovers imports edges that file-analyzer agents dropped despite being present in scan-result.json's deterministic importMap. Scans every importMap entry and emits missing imports edges with weight 0.7 and recoveredFromImportMap flag.",
+      "tags": [
+        "function",
+        "import-recovery",
+        "edge-repair"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:resolveTsJsImport",
+      "type": "function",
+      "name": "resolveTsJsImport",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Resolves TypeScript/JavaScript imports. Handles relative imports with extension probing (including NodeNext .js→.ts rewrite) and tsconfig path aliases with per-importer nearest-tsconfig walk-up for monorepo support.",
+      "tags": [
+        "function",
+        "import-resolution",
+        "typescript",
+        "javascript",
+        "path-aliases"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:resolvePythonImport",
+      "type": "function",
+      "name": "resolvePythonImport",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Resolves Python imports. Relative imports (starts with .) use leading-dot counting for parent walk. Absolute imports probe every ancestor directory as a candidate Python root for multi-service repo support. Returns multiple matches for from-package-import-submodule patterns.",
+      "tags": [
+        "function",
+        "import-resolution",
+        "python",
+        "multi-service"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:resolveGoImport",
+      "type": "function",
+      "name": "resolveGoImport",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Resolves Go imports by walking up from the importer to find the nearest go.mod, stripping the module prefix, and expanding package-level imports to all .go files in the target directory. Handles multi-module monorepos correctly.",
+      "tags": [
+        "function",
+        "import-resolution",
+        "go",
+        "monorepo",
+        "package-level"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:buildResolutionContext",
+      "type": "function",
+      "name": "buildResolutionContext",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Builds the shared resolution context with parallel loading of tsconfig.json files, go.mod files, and composer.json autoload maps. Indexes .go, .java, .kt, and .cs files by directory/suffix for fast per-import resolution.",
+      "tags": [
+        "function",
+        "context-building",
+        "config-loading",
+        "parallel-io"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:resolveImport",
+      "type": "function",
+      "name": "resolveImport",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Language-dispatching import resolver that routes raw import sources to the appropriate language-specific resolver (TS/JS, Python, Go, Java, Kotlin, C#, PHP, Rust, C/C++). Returns array of project-relative resolved paths.",
+      "tags": [
+        "function",
+        "dispatcher",
+        "import-resolution",
+        "multi-language"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/compute-batches.mjs:extractExports",
+      "type": "function",
+      "name": "extractExports",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Extracts top-level exported symbol names from code files using tree-sitter via PluginRegistry. Uses bounded parallel I/O (64 concurrent reads) with sequential tree-sitter parsing on the main thread. Per-file failures produce warnings with empty fallback.",
+      "tags": [
+        "function",
+        "exports-extraction",
+        "tree-sitter",
+        "parallel-io"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/compute-batches.mjs:runLouvain",
+      "type": "function",
+      "name": "runLouvain",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Runs Louvain community detection on the import graph using graphology. Builds an undirected graph from code files and their importMap entries, then partitions into communities. Falls back to count-based alphabetical chunking on failure.",
+      "tags": [
+        "function",
+        "community-detection",
+        "louvain",
+        "graph-partitioning"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/compute-batches.mjs:mergeSmallBatches",
+      "type": "function",
+      "name": "mergeSmallBatches",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Merges small mergeable batches (below MIN_BATCH_SIZE=3) into consolidated misc batches capped at MAX_MERGE_TARGET=25 files each. Preserves semantic non-code groupings (Groups A-D, marked mergeable=false) regardless of size.",
+      "tags": [
+        "function",
+        "batch-optimization",
+        "merge",
+        "dispatch-overhead"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/compute-batches.mjs:buildNonCodeBatches",
+      "type": "function",
+      "name": "buildNonCodeBatches",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Builds semantic batches for non-code files organized into groups: A (per-directory Dockerfile clusters), B (GitHub workflows), C (CI configs), D (SQL migrations), and E (remaining files grouped by parent directory, max 20 per batch).",
+      "tags": [
+        "function",
+        "batch-building",
+        "non-code",
+        "docker",
+        "ci",
+        "sql"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-structure.mjs:buildResult",
+      "type": "function",
+      "name": "buildResult",
+      "filePath": "understand/extract-structure.mjs",
+      "summary": "Maps tree-sitter structural analysis output to the file-analyzer result schema. Extracts functions, classes, exports, sections, definitions, services, endpoints, steps, resources, and call graphs. Falls back to basic metrics when no parser matched.",
+      "tags": [
+        "function",
+        "result-building",
+        "structural-analysis",
+        "schema-mapping"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-domain/extract-domain-context.py:scan_file_tree",
+      "type": "function",
+      "name": "scan_file_tree",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Recursively walks a project directory to build a flat list of source file paths, respecting gitignore patterns, skip directories, max depth (6), max files per directory (50), and total file limit (5000).",
+      "tags": [
+        "function",
+        "file-tree",
+        "scanning",
+        "gitignore"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-domain/extract-domain-context.py:detect_entry_points",
+      "type": "function",
+      "name": "detect_entry_points",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Scans source files for entry point patterns using regex: HTTP routes (Express, Flask, FastAPI, NestJS, Next.js), CLI commands, event listeners, cron schedules, GraphQL resolvers, gRPC services, and exported handlers. Returns structured entries with file, line, type, and snippet.",
+      "tags": [
+        "function",
+        "entry-points",
+        "regex",
+        "route-detection"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-domain/extract-domain-context.py:extract_file_signatures",
+      "type": "function",
+      "name": "extract_file_signatures",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Extracts exports and imports from priority-scored source files (prioritizing business logic keywords like controller, service, handler). Samples up to 40 files with 80 lines each, extracting JS/TS and Python exports and imports.",
+      "tags": [
+        "function",
+        "file-signatures",
+        "exports",
+        "imports",
+        "sampling"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-domain/extract-domain-context.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Entry point for extract-domain-context.py. Parses arguments, runs the scanning pipeline (file tree, entry points, signatures, metadata), enforces output size limits via progressive trimming, and writes domain-context.json.",
+      "tags": [
+        "function",
+        "entry-point",
+        "pipeline"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-knowledge/merge-knowledge-graph.py:merge",
+      "type": "function",
+      "name": "merge",
+      "filePath": "understand-knowledge/merge-knowledge-graph.py",
+      "summary": "Main merge pipeline for Karpathy knowledge graphs. Loads scan-manifest.json as base, processes analysis-batch-*.json files with entity deduplication, node type normalization, edge alias resolution, and deduped entity ID remapping. Builds layers from categories, assigns orphan entities to parent article layers via name/content matching, generates tour from index.md ordering, and detects project name from index.md H1.",
+      "tags": [
+        "function",
+        "merge",
+        "karpathy",
+        "pipeline"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-knowledge/parse-knowledge-base.py:detect_format",
+      "type": "function",
+      "name": "detect_format",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Detects if a directory follows the Karpathy LLM wiki three-layer pattern by checking for index.md, log.md, raw/ directory, and schema files.",
+      "tags": [
+        "function",
+        "detection",
+        "format-recognition"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-knowledge/parse-knowledge-base.py:parse_wiki",
+      "type": "function",
+      "name": "parse_wiki",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Full wiki parser that builds article nodes with wikilinks, headings, frontmatter, complexity from link density, and knowledgeMeta. Resolves wikilinks against known article IDs, builds topic nodes from index.md categories, creates source nodes from raw/ directory, computes backlinks, and deduplicates edges.",
+      "tags": [
+        "function",
+        "wiki-parser",
+        "karpathy",
+        "node-building"
+      ],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-knowledge/parse-knowledge-base.py:parse_index",
+      "type": "function",
+      "name": "parse_index",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Parses index.md to extract categories from ## section headings and their associated wikilink article references.",
+      "tags": [
+        "function",
+        "index-parser",
+        "categories"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-knowledge/parse-knowledge-base.py:resolve_wikilink",
+      "type": "function",
+      "name": "resolve_wikilink",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Resolves a wikilink target to an article node ID using a case-insensitive name map with unambiguous basename resolution and collision detection.",
+      "tags": [
+        "function",
+        "wikilink",
+        "resolution",
+        "name-matching"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-subdomain-graphs.py:merge_graphs",
+      "type": "function",
+      "name": "merge_graphs",
+      "filePath": "understand/merge-subdomain-graphs.py",
+      "summary": "Merges multiple knowledge graph dicts into one by deduplicating nodes by ID (later occurrence wins), deduplicating edges by key with higher-weight wins, dropping dangling refs, merging layers by ID with union nodeIds, and concatenating tour steps with duplicate title merging.",
+      "tags": [
+        "function",
+        "merge",
+        "deduplication",
+        "graph-combination"
+      ],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/build-fingerprints.mjs:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "understand/build-fingerprints.mjs",
+      "summary": "Builds structural fingerprint baseline by initializing TreeSitterPlugin and PluginRegistry, calling buildFingerprintStore, and saving fingerprints.json. Must succeed before meta.json write to prevent auto-update misclassification.",
+      "tags": [
+        "function",
+        "fingerprints",
+        "auto-update"
+      ],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/generate-ignore.mjs:resolvePluginRoot",
+      "type": "function",
+      "name": "resolvePluginRoot",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Resolves the plugin root directory from the PLUGIN_ROOT environment variable or falls back to a relative path from __dirname.",
+      "tags": [
+        "utility",
+        "path-resolution"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Pure function with early return for env var check before filesystem fallback."
+    },
+    {
+      "id": "function:understand/generate-ignore.mjs:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Main execution: resolves plugin root, imports @understand-anything/core, calls generateStarterIgnoreFile, and writes the output to .understand-anything/.understandignore.",
+      "tags": [
+        "entry-point",
+        "script-execution",
+        "file-generation"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Top-level await using ESM dynamic import pattern with try/catch fallback for module resolution."
+    },
+    {
+      "id": "document:understand/frameworks/gin.md",
+      "type": "document",
+      "name": "Gin Framework Addendum",
+      "filePath": "understand/frameworks/gin.md",
+      "summary": "Framework addendum injected into file-analyzer and architecture-analyzer prompts when Gin is detected. Documents canonical file roles, edge patterns, architectural layers, and notable patterns for Go Gin projects.",
+      "tags": [
+        "framework-addendum",
+        "go",
+        "gin",
+        "analysis-guidance",
+        "architectural-layers"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown with canonical file role tables, edge pattern descriptions, layer definitions, and language lesson templates."
+    },
+    {
+      "id": "document:understand/frameworks/nextjs.md",
+      "type": "document",
+      "name": "Next.js Framework Addendum",
+      "filePath": "understand/frameworks/nextjs.md",
+      "summary": "Framework addendum injected into prompts when Next.js is detected. Covers App Router file conventions, canonical file roles, edge patterns for layout nesting, API routes, and server/client component boundaries.",
+      "tags": [
+        "framework-addendum",
+        "nextjs",
+        "react",
+        "analysis-guidance",
+        "architectural-layers"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown documenting App Router conventions, parallel routes, route groups, and Server Component architecture."
+    },
+    {
+      "id": "document:understand/frameworks/rails.md",
+      "type": "document",
+      "name": "Rails Framework Addendum",
+      "filePath": "understand/frameworks/rails.md",
+      "summary": "Framework addendum injected into prompts when Ruby on Rails is detected. Documents canonical file roles, ActiveRecord associations, route-to-controller mappings, and Rails conventions.",
+      "tags": [
+        "framework-addendum",
+        "rails",
+        "ruby",
+        "analysis-guidance",
+        "architectural-layers"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering Rails MVC conventions, ActiveRecord patterns, callbacks, and concern-based modularity."
+    },
+    {
+      "id": "document:understand/frameworks/react.md",
+      "type": "document",
+      "name": "React Framework Addendum",
+      "filePath": "understand/frameworks/react.md",
+      "summary": "Framework addendum injected into prompts when React is detected. Documents component composition, hook usage, context provider/consumer patterns, and architectural layers for React projects.",
+      "tags": [
+        "framework-addendum",
+        "react",
+        "frontend",
+        "analysis-guidance",
+        "architectural-layers"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown with edge patterns for component composition, hook dependencies, and props drilling chains."
+    },
+    {
+      "id": "document:understand/frameworks/spring.md",
+      "type": "document",
+      "name": "Spring Boot Framework Addendum",
+      "filePath": "understand/frameworks/spring.md",
+      "summary": "Framework addendum injected into prompts when Spring Boot is detected. Covers canonical file roles, @Autowired dependency injection patterns, Controller-Service-Repository chain, and JPA entity relationships.",
+      "tags": [
+        "framework-addendum",
+        "spring",
+        "java",
+        "analysis-guidance",
+        "architectural-layers"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown documenting Spring Boot layered architecture, annotation-driven development patterns, and AOP concepts."
+    },
+    {
+      "id": "document:understand/frameworks/vue.md",
+      "type": "document",
+      "name": "Vue Framework Addendum",
+      "filePath": "understand/frameworks/vue.md",
+      "summary": "Framework addendum injected into prompts when Vue is detected. Documents component parent-child composition, composable usage, store actions, router view mappings, and architectural layers.",
+      "tags": [
+        "framework-addendum",
+        "vue",
+        "frontend",
+        "analysis-guidance",
+        "architectural-layers"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering Composition API, Pinia stores, Vue Router navigation guards, and single-file component patterns."
+    },
+    {
+      "id": "document:understand/languages/cpp.md",
+      "type": "document",
+      "name": "C++ Language Prompt Snippet",
+      "filePath": "understand/languages/cpp.md",
+      "summary": "Language reference snippet for C++ analysis. Documents templates, RAII, smart pointers, move semantics, and import patterns including #include directives.",
+      "tags": [
+        "language-snippet",
+        "cpp",
+        "analysis-guidance",
+        "import-patterns",
+        "file-patterns"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown with key concepts, import patterns, file patterns, common frameworks, and example language notes."
+    },
+    {
+      "id": "document:understand/languages/csharp.md",
+      "type": "document",
+      "name": "C# Language Prompt Snippet",
+      "filePath": "understand/languages/csharp.md",
+      "summary": "Language reference snippet for C# analysis. Documents LINQ, async/await, generics, nullable reference types, and ASP.NET Core framework conventions.",
+      "tags": [
+        "language-snippet",
+        "csharp",
+        "analysis-guidance",
+        "import-patterns",
+        "file-patterns"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown with key concepts, using directives, file patterns, and common frameworks like ASP.NET Core and Entity Framework."
+    },
+    {
+      "id": "document:understand/languages/css.md",
+      "type": "document",
+      "name": "CSS Language Reference",
+      "filePath": "understand/languages/css.md",
+      "summary": "Language reference for CSS covering selectors and specificity, box model, flexbox, grid, custom properties, media queries, SCSS/Sass features (nesting, mixins, extends), CSS Modules, and cascade layers.",
+      "tags": [
+        "language-reference",
+        "css",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Defines edge patterns where CSS is related to HTML/component files and SCSS partials create dependency chains."
+    },
+    {
+      "id": "document:understand/languages/dockerfile.md",
+      "type": "document",
+      "name": "Dockerfile Language Reference",
+      "filePath": "understand/languages/dockerfile.md",
+      "summary": "Language reference for Dockerfiles covering multi-stage builds, layer caching, base images, COPY vs ADD, build arguments, health checks, entry point vs CMD, user permissions, .dockerignore patterns, and environment-specific Dockerfile variants.",
+      "tags": [
+        "language-reference",
+        "dockerfile",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Defines edge patterns where Dockerfiles deploy applications and depend on package manifests."
+    },
+    {
+      "id": "document:understand/languages/go.md",
+      "type": "document",
+      "name": "Go Language Prompt Snippet",
+      "filePath": "understand/languages/go.md",
+      "summary": "Language reference snippet for Go analysis. Documents goroutines, channels, interfaces, struct embedding, error handling, and import patterns.",
+      "tags": [
+        "language-snippet",
+        "go",
+        "analysis-guidance",
+        "import-patterns",
+        "file-patterns"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering Go's concurrency model, interface satisfaction, internal package enforcement, and common frameworks like Gin and Echo."
+    },
+    {
+      "id": "document:understand/languages/graphql.md",
+      "type": "document",
+      "name": "GraphQL Language Reference",
+      "filePath": "understand/languages/graphql.md",
+      "summary": "Language reference for GraphQL covering type system, queries, mutations, subscriptions, resolvers, fragments, directives, input types, interfaces and unions, schema stitching and federation, with notable file patterns for schema, resolvers, and codegen config.",
+      "tags": [
+        "language-reference",
+        "graphql",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Defines edge patterns where GraphQL schemas define schema for resolver implementations and codegen configuration."
+    },
+    {
+      "id": "document:understand/languages/html.md",
+      "type": "document",
+      "name": "HTML Language Reference",
+      "filePath": "understand/languages/html.md",
+      "summary": "Language reference for HTML covering semantic elements, document structure, forms and validation, accessibility attributes, meta tags, script/style loading, data attributes, template syntax, and Web Components.",
+      "tags": [
+        "language-reference",
+        "html",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Defines edge patterns where HTML files depend on JavaScript and CSS, and templates depend on server-side rendering code."
+    },
+    {
+      "id": "document:understand/languages/java.md",
+      "type": "document",
+      "name": "Java Language Prompt Snippet",
+      "filePath": "understand/languages/java.md",
+      "summary": "Language reference snippet for Java analysis. Documents generics, annotations, streams, lambdas, sealed classes, dependency injection, and Spring Boot conventions.",
+      "tags": [
+        "language-snippet",
+        "java",
+        "analysis-guidance",
+        "import-patterns",
+        "file-patterns"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering Java 17+ features, Maven/Gradle directory layout, checked vs unchecked exceptions, and common frameworks."
+    },
+    {
+      "id": "document:understand/languages/javascript.md",
+      "type": "document",
+      "name": "JavaScript Language Reference",
+      "filePath": "understand/languages/javascript.md",
+      "summary": "Language reference for JavaScript covering closures, prototypes, promises, event loop, destructuring, spread/rest operators, proxies, generators, symbols, WeakMap/WeakSet, ESM vs CJS module systems, import patterns, and common frameworks like React, Vue, Express, Next.js, and Svelte.",
+      "tags": [
+        "language-reference",
+        "javascript",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Explains ESM (.mjs) vs CommonJS (.cjs) distinctions and module resolution via package.json type field."
+    },
+    {
+      "id": "document:understand/languages/json.md",
+      "type": "document",
+      "name": "JSON Language Prompt Snippet",
+      "filePath": "understand/languages/json.md",
+      "summary": "Language reference snippet for JSON analysis. Documents strict syntax rules, JSON Schema, JSONC, JSON5, and notable file patterns like package.json and tsconfig.json.",
+      "tags": [
+        "language-snippet",
+        "json",
+        "analysis-guidance",
+        "edge-patterns",
+        "configuration"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Non-code language snippet with edge patterns for JSON config files that configure build tools, compilers, and runtime behavior."
+    },
+    {
+      "id": "document:understand/languages/kotlin.md",
+      "type": "document",
+      "name": "Kotlin Language Prompt Snippet",
+      "filePath": "understand/languages/kotlin.md",
+      "summary": "Language reference snippet for Kotlin analysis. Documents coroutines, data classes, sealed classes, extension functions, null safety, and Ktor/Spring Boot conventions.",
+      "tags": [
+        "language-snippet",
+        "kotlin",
+        "analysis-guidance",
+        "import-patterns",
+        "file-patterns"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering Kotlin-specific features like coroutines, Flow, scope functions, and Gradle Kotlin DSL build files."
+    },
+    {
+      "id": "document:understand/languages/markdown.md",
+      "type": "document",
+      "name": "Markdown Language Reference",
+      "filePath": "understand/languages/markdown.md",
+      "summary": "Language reference for Markdown covering heading hierarchy, front matter, fenced code blocks, reference-style links, tables, admonitions, task lists, HTML embedding, and notable file patterns like README.md, CONTRIBUTING.md, CHANGELOG.md, and ADR files.",
+      "tags": [
+        "language-reference",
+        "markdown",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Defines edge patterns where Markdown files document code components and links between .md files create related edges."
+    },
+    {
+      "id": "document:understand/languages/php.md",
+      "type": "document",
+      "name": "PHP Language Prompt Snippet",
+      "filePath": "understand/languages/php.md",
+      "summary": "Language reference snippet for PHP analysis. Documents namespaces, traits, type declarations, attributes, enums, fibers, and Laravel/Symfony conventions.",
+      "tags": [
+        "language-snippet",
+        "php",
+        "analysis-guidance",
+        "import-patterns",
+        "file-patterns"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured markdown covering PHP 8 features, PSR-4 autoloading, Composer dependency management, and common frameworks like Laravel and Symfony."
+    },
+    {
+      "id": "config:.understand-anything/.understandignore",
+      "type": "config",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Ignore file with .gitignore-style patterns to exclude files and directories from codebase analysis. Built-in defaults exclude node_modules, .git, dist, build, lock files, and minified JS. All patterns are commented out by default.",
+      "tags": [
+        "config",
+        "ignore",
+        "filter",
+        "exclusion"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Uses standard gitignore glob syntax with # comments, ! negation, and trailing / for directory matching."
+    },
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "Project configuration file with outputLanguage set to 'en' for English knowledge graph content generation.",
+      "tags": [
+        "config",
+        "settings",
+        "output"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Minimal JSON config containing a single key-value pair."
+    },
+    {
+      "id": "config:.understand-anything/intermediate/scan-result.json",
+      "type": "config",
+      "name": "scan-result.json",
+      "filePath": ".understand-anything/intermediate/scan-result.json",
+      "summary": "Complete scan result cataloging 60 files across code (12), config (1), and docs (47) categories. Languages found: markdown (47), javascript (6), python (5), json (1), unknown (1). Project: understand-anything — codebase understanding and knowledge graph generation skill for opencode/AI CLI tools.",
+      "tags": [
+        "scan",
+        "inventory",
+        "metadata",
+        "catalog"
+      ],
+      "complexity": "simple",
+      "languageNotes": "JSON file with structured metadata arrays including file paths, languages, categories, and estimated complexity."
+    },
+    {
+      "id": "config:.understand-anything/intermediate/batches.json",
+      "type": "config",
+      "name": "batches.json",
+      "filePath": ".understand-anything/intermediate/batches.json",
+      "summary": "Batch definitions splitting 60 files across 3 processing batches for parallel knowledge graph generation. Each batch includes file list with metadata, batchImportData for import relationships, and neighborMap for graph connectivity.",
+      "tags": [
+        "batch",
+        "pipeline",
+        "parallel",
+        "split"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Structured as an array of 3 batch objects, each with nested import data and neighbor maps."
+    },
+    {
+      "id": "config:.understand-anything/intermediate/import-map-input.json",
+      "type": "config",
+      "name": "import-map-input.json",
+      "filePath": ".understand-anything/intermediate/import-map-input.json",
+      "summary": "Import map input listing all 60 project files with language and file category metadata, used as input to the import relationship extraction step in the analysis pipeline.",
+      "tags": [
+        "import-map",
+        "dependencies",
+        "input",
+        "inventory"
+      ],
+      "complexity": "simple",
+      "languageNotes": "JSON file enumerating every project file with path, language, and fileCategory for import analysis."
+    },
+    {
+      "id": "config:.understand-anything/intermediate/import-map-output.json",
+      "type": "config",
+      "name": "import-map-output.json",
+      "filePath": ".understand-anything/intermediate/import-map-output.json",
+      "summary": "Expected output file for import relationship mappings between project files. Not yet generated — to be produced by the import map extraction stage.",
+      "tags": [
+        "import-map",
+        "dependencies",
+        "output",
+        "pending"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Not yet generated; expected JSON output of import extraction step."
+    },
+    {
+      "id": "document:understand/languages/python.md",
+      "type": "document",
+      "name": "Python Language Reference",
+      "filePath": "understand/languages/python.md",
+      "summary": "Language reference for Python covering decorators, list/dict comprehensions, generators, context managers, type hints, dunder methods, metaclasses, dataclasses, protocols, descriptors, async/await with asyncio, import patterns, and common frameworks like Django, FastAPI, Flask, SQLAlchemy, and Celery.",
+      "tags": [
+        "language-reference",
+        "python",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Covers Python-specific syntax patterns and idioms for codebase analysis prompts. Highlights @dataclass decorator behavior and __init__.py re-export patterns."
+    },
+    {
+      "id": "document:understand/languages/yaml.md",
+      "type": "document",
+      "name": "YAML Language Reference",
+      "filePath": "understand/languages/yaml.md",
+      "summary": "Language reference for YAML covering indentation-based nesting, anchors and aliases, merge keys, multi-line strings, document separators, tags and types, flow style, environment variable substitution, and notable file patterns for Docker Compose, CI/CD workflows, Kubernetes, and application config.",
+      "tags": [
+        "language-reference",
+        "yaml",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Defines edge patterns where YAML configures code modules, triggers pipelines, and deploys services."
+    },
+    {
+      "id": "document:understand/languages/shell.md",
+      "type": "document",
+      "name": "Shell Language Reference",
+      "filePath": "understand/languages/shell.md",
+      "summary": "Language reference for shell scripts covering shebang lines, variables, functions, conditionals, loops, pipes and redirection, exit codes, strict mode (set -euo pipefail), command substitution, here documents, and common file patterns for build, deploy, and entry point scripts.",
+      "tags": [
+        "language-reference",
+        "shell",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Defines edge patterns where shell scripts trigger processes, deploy applications, or configure environments."
+    },
+    {
+      "id": "document:understand/languages/sql.md",
+      "type": "document",
+      "name": "SQL Language Reference",
+      "filePath": "understand/languages/sql.md",
+      "summary": "Language reference for SQL covering DDL, DML, normalization, foreign keys, indexes, migrations, transactions, views, stored procedures, and constraints with notable file patterns for migrations, schema definitions, and seed data.",
+      "tags": [
+        "language-reference",
+        "sql",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Defines edge patterns where migrations create/alter tables and seed files depend on migration files."
+    },
+    {
+      "id": "document:understand/languages/terraform.md",
+      "type": "document",
+      "name": "Terraform Language Reference",
+      "filePath": "understand/languages/terraform.md",
+      "summary": "Language reference for Terraform covering declarative infrastructure, providers, resources, data sources, variables, outputs, modules, state management, workspaces, and plan/apply workflow with notable file patterns for main.tf, variables.tf, outputs.tf, and providers.tf.",
+      "tags": [
+        "language-reference",
+        "terraform",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Defines edge patterns where Terraform provisions infrastructure and module references create depends_on edges."
+    },
+    {
+      "id": "document:understand/languages/protobuf.md",
+      "type": "document",
+      "name": "Protobuf Language Reference",
+      "filePath": "understand/languages/protobuf.md",
+      "summary": "Language reference for Protocol Buffers covering message types, field numbers, scalar types, enums, services, oneof, repeated fields, maps, packages and imports, proto2 vs proto3 differences, and configuration with buf tooling.",
+      "tags": [
+        "language-reference",
+        "protobuf",
+        "documentation",
+        "prompt"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Defines edge patterns where proto files define schema for gRPC handlers and imports create depends_on edges."
+    },
+    {
+      "id": "document:understand/locales/zh.md",
+      "type": "document",
+      "name": "Chinese (Simplified) Locale Guide",
+      "filePath": "understand/locales/zh.md",
+      "summary": "Chinese Simplified locale output guidelines for knowledge graph generation. Provides tag naming convention suggestions, 1-2 sentence summary style with active voice, technical terminology retention recommendations, and layer naming conventions using a hybrid Chinese-English approach.",
+      "tags": [
+        "locale",
+        "chinese",
+        "i18n",
+        "guide"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Recommends retaining English for universal technical terms (middleware, API handler, ORM) while using Chinese for descriptive tags."
+    },
+    {
+      "id": "document:understand/locales/ja.md",
+      "type": "document",
+      "name": "Japanese Locale Guide",
+      "filePath": "understand/locales/ja.md",
+      "summary": "Japanese locale output guidelines for knowledge graph generation. Provides tag naming convention suggestions, summary style with active voice, technical terminology retention recommendations, and layer naming conventions using a hybrid Japanese-English approach.",
+      "tags": [
+        "locale",
+        "japanese",
+        "i18n",
+        "guide"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Recommends retaining English for universal technical terms while using Japanese for descriptive tags."
+    },
+    {
+      "id": "document:understand/locales/ko.md",
+      "type": "document",
+      "name": "Korean Locale Guide",
+      "filePath": "understand/locales/ko.md",
+      "summary": "Korean locale output guidelines for knowledge graph generation. Provides tag naming convention suggestions, summary style with active voice, technical terminology retention recommendations, and layer naming conventions using a hybrid Korean-English approach.",
+      "tags": [
+        "locale",
+        "korean",
+        "i18n",
+        "guide"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Recommends retaining English for universal technical terms while using Korean for descriptive tags."
+    },
+    {
+      "id": "concept:language-reference",
+      "type": "concept",
+      "name": "Language Reference Collection",
+      "filePath": "understand/languages/",
+      "summary": "Collection of 23 language-specific prompt snippets used by the understand-anything pipeline to generate accurate knowledge graph nodes. Covers Python, JavaScript, TypeScript, Go, Rust, Java, Kotlin, Swift, Ruby, PHP, C++, C#, Markdown, YAML, Dockerfile, Shell, HTML, CSS, SQL, Terraform, Protobuf, GraphQL, and JSON.",
+      "tags": [
+        "language-reference",
+        "prompts",
+        "collection",
+        "documentation"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Each language file is optimized for inclusion in LLM prompts to guide codebase analysis with language-specific syntax patterns, import conventions, and edge type guidance."
+    },
+    {
+      "id": "concept:locale-guide",
+      "type": "concept",
+      "name": "Locale Guide Collection",
+      "filePath": "understand/locales/",
+      "summary": "Collection of 6 locale-specific output guidelines for generating knowledge graph content in different languages: English, Chinese Simplified, Japanese, Korean, Russian, and Chinese Traditional.",
+      "tags": [
+        "locale",
+        "i18n",
+        "guide",
+        "collection"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Each locale file provides tag naming conventions, summary style, and technical term guidance for generating knowledge graph content in that language."
+    },
+    {
+      "id": "concept:analysis-pipeline",
+      "type": "concept",
+      "name": "Analysis Pipeline",
+      "filePath": ".understand-anything/intermediate/",
+      "summary": "Intermediate data pipeline that scans projects, batches files for parallel processing, extracts import maps, and generates knowledge graph nodes. Produces intermediate JSON artifacts (scan-result.json, batches.json, import-map-input.json) that feed into downstream graph generation and merging stages.",
+      "tags": [
+        "pipeline",
+        "intermediate",
+        "processing",
+        "orchestration"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Pipeline processes 60 files across 3 batches with neighbor maps ensuring consistent graph connectivity across batch boundaries."
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:understand/scan-project.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/extract-import-map.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/extract-structure.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/compute-batches.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/compute-batches.mjs",
+      "target": "module:graphology",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/compute-batches.mjs",
+      "target": "module:graphology-communities-louvain",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/build-fingerprints.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/generate-ignore.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "document:understand/SKILL.md",
+      "target": "file:understand/scan-project.mjs",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:understand/generate-ignore.mjs",
+      "target": "function:understand/generate-ignore.mjs:resolvePluginRoot",
+      "type": "contains",
+      "weight": 1,
+      "description": "File contains the resolvePluginRoot function definition.",
+      "direction": "forward"
+    },
+    {
+      "source": "file:understand/generate-ignore.mjs",
+      "target": "function:understand/generate-ignore.mjs:main",
+      "type": "contains",
+      "weight": 1,
+      "description": "File contains the main execution logic.",
+      "direction": "forward"
+    },
+    {
+      "source": "function:understand/generate-ignore.mjs:main",
+      "target": "function:understand/generate-ignore.mjs:resolvePluginRoot",
+      "type": "calls",
+      "weight": 0.8,
+      "description": "Main execution calls resolvePluginRoot to determine the plugin directory.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/gin.md",
+      "target": "document:understand/frameworks/nextjs.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/gin.md",
+      "target": "document:understand/frameworks/rails.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/gin.md",
+      "target": "document:understand/frameworks/react.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/gin.md",
+      "target": "document:understand/frameworks/spring.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/gin.md",
+      "target": "document:understand/frameworks/vue.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/nextjs.md",
+      "target": "document:understand/frameworks/rails.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/nextjs.md",
+      "target": "document:understand/frameworks/react.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/nextjs.md",
+      "target": "document:understand/frameworks/spring.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/nextjs.md",
+      "target": "document:understand/frameworks/vue.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/rails.md",
+      "target": "document:understand/frameworks/react.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/rails.md",
+      "target": "document:understand/frameworks/spring.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/rails.md",
+      "target": "document:understand/frameworks/vue.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/react.md",
+      "target": "document:understand/frameworks/spring.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/react.md",
+      "target": "document:understand/frameworks/vue.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/frameworks/spring.md",
+      "target": "document:understand/frameworks/vue.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Framework addendum documents share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/csharp.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/css.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/dockerfile.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/go.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/graphql.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/cpp.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/css.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/dockerfile.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/go.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/graphql.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/csharp.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/dockerfile.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/go.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/graphql.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/css.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/go.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/graphql.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/dockerfile.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/graphql.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/go.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/html.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/graphql.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/java.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/html.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/java.md",
+      "target": "document:understand/languages/javascript.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/java.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/java.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/java.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/java.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/javascript.md",
+      "target": "document:understand/languages/json.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/javascript.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/javascript.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/javascript.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/json.md",
+      "target": "document:understand/languages/kotlin.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/json.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/json.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/kotlin.md",
+      "target": "document:understand/languages/markdown.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/kotlin.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "document:understand/languages/markdown.md",
+      "target": "document:understand/languages/php.md",
+      "type": "related",
+      "weight": 0.5,
+      "description": "Language reference snippets share a common structure and purpose.",
+      "direction": "forward"
+    },
+    {
+      "source": "file:understand/generate-ignore.mjs",
+      "target": "config:.understand-anything/.understandignore",
+      "type": "configures",
+      "weight": 0.6,
+      "description": "generate-ignore.mjs writes and configures the .understand-anything/.understandignore file for a project.",
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/.understandignore",
+      "target": "config:.understand-anything/intermediate/scan-result.json",
+      "type": "configures",
+      "weight": 0.6,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/config.json",
+      "target": "concept:language-reference",
+      "type": "configures",
+      "weight": 0.6,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/config.json",
+      "target": "concept:locale-guide",
+      "type": "configures",
+      "weight": 0.6,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/config.json",
+      "target": "concept:analysis-pipeline",
+      "type": "configures",
+      "weight": 0.6,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/intermediate/scan-result.json",
+      "target": "config:.understand-anything/intermediate/batches.json",
+      "type": "documents",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/intermediate/scan-result.json",
+      "target": "config:.understand-anything/intermediate/import-map-input.json",
+      "type": "documents",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/intermediate/batches.json",
+      "target": "config:.understand-anything/intermediate/import-map-input.json",
+      "type": "documents",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/intermediate/batches.json",
+      "target": "config:.understand-anything/intermediate/import-map-output.json",
+      "type": "documents",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/intermediate/scan-result.json",
+      "target": "concept:language-reference",
+      "type": "documents",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/intermediate/scan-result.json",
+      "target": "concept:locale-guide",
+      "type": "documents",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/intermediate/scan-result.json",
+      "target": "concept:analysis-pipeline",
+      "type": "documents",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:analysis-pipeline",
+      "target": "config:.understand-anything/intermediate/scan-result.json",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:analysis-pipeline",
+      "target": "config:.understand-anything/intermediate/batches.json",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:analysis-pipeline",
+      "target": "config:.understand-anything/intermediate/import-map-input.json",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:analysis-pipeline",
+      "target": "config:.understand-anything/intermediate/import-map-output.json",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/python.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/markdown.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/javascript.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/yaml.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/dockerfile.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/shell.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/html.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/css.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/sql.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/terraform.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/protobuf.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "document:understand/languages/graphql.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:locale-guide",
+      "target": "document:understand/locales/zh.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:locale-guide",
+      "target": "document:understand/locales/ja.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:locale-guide",
+      "target": "document:understand/locales/ko.md",
+      "type": "contains",
+      "weight": 1,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:language-reference",
+      "target": "config:.understand-anything/intermediate/scan-result.json",
+      "type": "related",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "concept:locale-guide",
+      "target": "config:.understand-anything/intermediate/scan-result.json",
+      "type": "related",
+      "weight": 0.5,
+      "direction": "forward"
+    },
+    {
+      "source": "config:.understand-anything/intermediate/import-map-input.json",
+      "target": "config:.understand-anything/intermediate/import-map-output.json",
+      "type": "depends_on",
+      "weight": 0.6,
+      "direction": "forward"
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:core-pipeline",
+      "name": "Core Pipeline",
+      "description": "The main codebase analysis pipeline: scanning, batching, import extraction, structure extraction, graph merging, fingerprinting, and ignore generation.",
+      "nodeIds": [
+        "document:understand/SKILL.md",
+        "file:understand/scan-project.mjs",
+        "file:understand/compute-batches.mjs",
+        "file:understand/extract-import-map.mjs",
+        "file:understand/extract-structure.mjs",
+        "file:understand/merge-batch-graphs.py",
+        "file:understand/merge-subdomain-graphs.py",
+        "file:understand/build-fingerprints.mjs",
+        "file:understand/generate-ignore.mjs",
+        "config:.understand-anything/intermediate/scan-result.json",
+        "config:.understand-anything/intermediate/batches.json",
+        "config:.understand-anything/intermediate/import-map-input.json",
+        "config:.understand-anything/intermediate/import-map-output.json"
+      ]
+    },
+    {
+      "id": "layer:skills",
+      "name": "Skills Layer",
+      "description": "User-facing skills that wrap the core pipeline for specific use cases: query, dashboard, diff, domain, explain, knowledge, and onboarding.",
+      "nodeIds": [
+        "document:understand-chat/SKILL.md",
+        "document:understand-dashboard/SKILL.md",
+        "document:understand-diff/SKILL.md",
+        "document:understand-domain/SKILL.md",
+        "document:understand-explain/SKILL.md",
+        "document:understand-knowledge/SKILL.md",
+        "document:understand-onboard/SKILL.md"
+      ]
+    },
+    {
+      "id": "layer:domain-analysis",
+      "name": "Domain Analysis",
+      "description": "Scripts for extracting business domain context from codebases, including entry point detection and file tree scanning.",
+      "nodeIds": [
+        "file:understand-domain/extract-domain-context.py"
+      ]
+    },
+    {
+      "id": "layer:knowledge-processing",
+      "name": "Knowledge Processing",
+      "description": "Scripts for parsing and merging knowledge bases (wiki format) into knowledge graphs.",
+      "nodeIds": [
+        "file:understand-knowledge/merge-knowledge-graph.py",
+        "file:understand-knowledge/parse-knowledge-base.py"
+      ]
+    },
+    {
+      "id": "layer:language-references",
+      "name": "Language References",
+      "description": "Reference documents for language-specific patterns used during architecture analysis and code understanding.",
+      "nodeIds": [
+        "document:understand/languages/cpp.md",
+        "document:understand/languages/csharp.md",
+        "document:understand/languages/css.md",
+        "document:understand/languages/dockerfile.md",
+        "document:understand/languages/go.md",
+        "document:understand/languages/graphql.md",
+        "document:understand/languages/html.md",
+        "document:understand/languages/java.md",
+        "document:understand/languages/javascript.md",
+        "document:understand/languages/json.md",
+        "document:understand/languages/kotlin.md",
+        "document:understand/languages/markdown.md",
+        "document:understand/languages/php.md",
+        "document:understand/languages/python.md",
+        "document:understand/languages/yaml.md",
+        "document:understand/languages/shell.md",
+        "document:understand/languages/sql.md",
+        "document:understand/languages/terraform.md",
+        "document:understand/languages/protobuf.md"
+      ]
+    },
+    {
+      "id": "layer:framework-references",
+      "name": "Framework References",
+      "description": "Reference documents for framework-specific patterns used during architecture analysis.",
+      "nodeIds": [
+        "document:understand/frameworks/gin.md",
+        "document:understand/frameworks/nextjs.md",
+        "document:understand/frameworks/rails.md",
+        "document:understand/frameworks/react.md",
+        "document:understand/frameworks/spring.md",
+        "document:understand/frameworks/vue.md"
+      ]
+    },
+    {
+      "id": "layer:localization",
+      "name": "Localization",
+      "description": "Locale-specific guidance documents for generating knowledge graphs in non-English languages.",
+      "nodeIds": [
+        "document:understand/locales/zh.md",
+        "document:understand/locales/ja.md",
+        "document:understand/locales/ko.md"
+      ]
+    },
+    {
+      "id": "layer:configuration",
+      "name": "Configuration",
+      "description": "Project configuration files controlling analysis behavior.",
+      "nodeIds": [
+        "config:.understand-anything/.understandignore",
+        "config:.understand-anything/config.json"
+      ]
+    },
+    {
+      "id": "layer:concepts",
+      "name": "Concept Layer",
+      "description": "Abstract concept nodes representing high-level patterns in the codebase.",
+      "nodeIds": [
+        "concept:language-reference",
+        "concept:locale-guide",
+        "concept:analysis-pipeline"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Project Overview",
+      "description": "Start with the main SKILL.md to understand the 7-phase pipeline that analyzes codebases and produces interactive knowledge graphs.",
+      "nodeIds": [
+        "document:understand/SKILL.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Project Scanning",
+      "description": "The scan-project.mjs script discovers all project files, detects languages and frameworks, and builds an import map — the foundation of all subsequent analysis.",
+      "nodeIds": [
+        "file:understand/scan-project.mjs",
+        "config:.understand-anything/intermediate/scan-result.json"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Semantic Batching",
+      "description": "The compute-batches.mjs script groups files into semantic batches using Louvain community detection on the import graph, so related files are analyzed together.",
+      "nodeIds": [
+        "file:understand/compute-batches.mjs",
+        "config:.understand-anything/intermediate/batches.json"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "Import Map Extraction",
+      "description": "The extract-import-map.mjs script resolves imports across multiple languages (JavaScript/TypeScript, Python, Go) to build a complete dependency graph.",
+      "nodeIds": [
+        "file:understand/extract-import-map.mjs",
+        "config:.understand-anything/intermediate/import-map-input.json"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "Structure Extraction",
+      "description": "The extract-structure.mjs script uses TreeSitter to extract function and class definitions from source files, enabling detailed code-level nodes.",
+      "nodeIds": [
+        "file:understand/extract-structure.mjs"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "Graph Merging",
+      "description": "The merge-batch-graphs.py script combines per-batch graph files into a single assembled graph, normalizing node IDs, deduplicating, and linking test coverage.",
+      "nodeIds": [
+        "file:understand/merge-batch-graphs.py"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "Domain & Knowledge Sub-skills",
+      "description": "Specialized skills for extracting domain context and processing wiki-style knowledge bases into graph nodes.",
+      "nodeIds": [
+        "document:understand-domain/SKILL.md",
+        "document:understand-knowledge/SKILL.md",
+        "file:understand-domain/extract-domain-context.py",
+        "file:understand-knowledge/merge-knowledge-graph.py",
+        "file:understand-knowledge/parse-knowledge-base.py"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "User-Facing Skills",
+      "description": "Skills that provide the interactive interfaces to the knowledge graph: chat-based querying, visual dashboard, diff analysis, explain, and onboarding.",
+      "nodeIds": [
+        "document:understand-chat/SKILL.md",
+        "document:understand-dashboard/SKILL.md",
+        "document:understand-diff/SKILL.md",
+        "document:understand-explain/SKILL.md",
+        "document:understand-onboard/SKILL.md"
+      ]
+    },
+    {
+      "order": 9,
+      "title": "Language & Framework References",
+      "description": "Reference documents that guide how different programming languages and frameworks are analyzed, providing language-specific edge patterns and naming conventions.",
+      "nodeIds": [
+        "document:understand/languages/python.md",
+        "document:understand/languages/javascript.md",
+        "document:understand/frameworks/react.md",
+        "document:understand/frameworks/nextjs.md"
+      ]
+    },
+    {
+      "order": 10,
+      "title": "Localization & Configuration",
+      "description": "Locale guidance for multi-language output and configuration files that control analysis behavior.",
+      "nodeIds": [
+        "document:understand/locales/zh.md",
+        "document:understand/locales/ja.md",
+        "config:.understand-anything/config.json",
+        "config:.understand-anything/.understandignore"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1060 @@
+{
+  "nodes": [
+    {
+      "id": "document:understand/SKILL.md",
+      "type": "document",
+      "name": "/understand — Knowledge Graph Generation Pipeline",
+      "filePath": "understand/SKILL.md",
+      "summary": "Core orchestration skill that coordinates a 7-phase pipeline to analyze a codebase and produce an interactive knowledge graph. Phases cover pre-flight, ignore configuration, project scanning, semantic batch computation, file analysis via LLM subagents, architecture layer detection, guided tour generation, graph validation, and final save with fingerprint baselines for auto-update.",
+      "tags": ["skill", "knowledge-graph", "pipeline", "codebase-analysis", "orchestration", "multi-phase"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-chat/SKILL.md",
+      "type": "document",
+      "name": "/understand-chat — Knowledge Graph Query",
+      "filePath": "understand-chat/SKILL.md",
+      "summary": "Interactive query skill that answers questions about a codebase using the generated knowledge graph. Uses grep-based search strategies to find relevant nodes, edges, and layers while minimizing context usage.",
+      "tags": ["skill", "knowledge-graph", "query", "chat", "search"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-dashboard/SKILL.md",
+      "type": "document",
+      "name": "/understand-dashboard — Knowledge Graph Visualizer",
+      "filePath": "understand-dashboard/SKILL.md",
+      "summary": "Launch skill that starts an interactive web dashboard (Vite dev server) to visualize the knowledge graph. Resolves the plugin root via multi-candidate path search, builds dependencies, and launches the dashboard with a token-protected URL.",
+      "tags": ["skill", "dashboard", "visualization", "vite", "web-ui"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-diff/SKILL.md",
+      "type": "document",
+      "name": "/understand-diff — Git Diff Impact Analysis",
+      "filePath": "understand-diff/SKILL.md",
+      "summary": "Analysis skill that examines git diffs or pull requests against the knowledge graph to identify changed components, affected components (1-hop edges), impacted architectural layers, and risk assessment based on complexity and blast radius. Writes a diff-overlay JSON for the dashboard.",
+      "tags": ["skill", "diff", "git", "risk-analysis", "code-review", "impact-analysis"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-domain/SKILL.md",
+      "type": "document",
+      "name": "/understand-domain — Business Domain Extraction",
+      "filePath": "understand-domain/SKILL.md",
+      "summary": "Domain extraction skill that identifies business domains, flows, and process steps from a codebase. Works standalone with a lightweight scan (file tree, entry points, exports/imports) or derives from an existing /understand knowledge graph. Produces a domain-graph.json with flow visualization.",
+      "tags": ["skill", "domain-analysis", "business-flows", "knowledge-graph", "entry-points"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand-domain/extract-domain-context.py",
+      "type": "file",
+      "name": "extract-domain-context.py",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Lightweight Python codebase scanner that produces structured JSON context for the domain-analyzer agent. Extracts file trees (respecting .gitignore), detects entry points via regex patterns (HTTP routes, CLI commands, event handlers, cron jobs, GraphQL resolvers, gRPC services), captures file signatures (exports/imports), and reads project metadata files. Enforces output size limits to stay within agent context.",
+      "tags": ["python", "scanner", "domain-analysis", "entry-points", "regex", "gitignore"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-explain/SKILL.md",
+      "type": "document",
+      "name": "/understand-explain — Deep-Dive Code Explanation",
+      "filePath": "understand-explain/SKILL.md",
+      "summary": "Deep-dive explanation skill that looks up a specific file, function, or module in the knowledge graph and provides contextual analysis including architectural role (layer), internal structure (functions/classes), external connections (edges), and data flow from source code.",
+      "tags": ["skill", "explanation", "deep-dive", "code-understanding", "debugging"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-knowledge/SKILL.md",
+      "type": "document",
+      "name": "/understand-knowledge — Karpathy Wiki Knowledge Graph",
+      "filePath": "understand-knowledge/SKILL.md",
+      "summary": "Knowledge base analysis skill that processes Karpathy-pattern LLM wikis (three-layer pattern: raw sources + wiki markdown with wikilinks + schema file) into an interactive knowledge graph. Uses a deterministic parse script for structure extraction and LLM subagents for implicit knowledge inference (entities, claims). Produces force-directed layout graphs.",
+      "tags": ["skill", "knowledge-base", "wiki", "karpathy", "entity-extraction", "wikilinks", "markdown"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand-knowledge/merge-knowledge-graph.py",
+      "type": "file",
+      "name": "merge-knowledge-graph.py",
+      "filePath": "understand-knowledge/merge-knowledge-graph.py",
+      "summary": "Merge script for Karpathy-pattern knowledge graphs. Combines deterministic scan-manifest.json with LLM analysis batches into a final assembled graph. Handles entity deduplication (case-insensitive name matching), edge normalization via alias maps, node type canonicalization, layer building from index.md categories, and tour generation from index.md section ordering.",
+      "tags": ["python", "merge", "knowledge-graph", "deduplication", "karpathy"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand-knowledge/parse-knowledge-base.py",
+      "type": "file",
+      "name": "parse-knowledge-base.py",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Deterministic parser for Karpathy-pattern LLM wikis. Detects the three-layer pattern (raw sources + wiki markdown + schema), extracts wikilinks, headings, frontmatter, code blocks, and first paragraphs from markdown files. Resolves wikilinks against a built name map, derives categories from index.md section headings, computes backlinks, and builds topic nodes. Handles ambiguous basenames via collision detection.",
+      "tags": ["python", "parser", "wiki", "markdown", "karpathy", "wikilinks", "frontmatter"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "document:understand-onboard/SKILL.md",
+      "type": "document",
+      "name": "/understand-onboard — Developer Onboarding Guide",
+      "filePath": "understand-onboard/SKILL.md",
+      "summary": "Onboarding guide generator that produces comprehensive developer documentation from the knowledge graph. Structures the guide around project overview, architecture layers, key concepts, guided tour, file map, and complexity hotspots. Can save output to docs/ONBOARDING.md.",
+      "tags": ["skill", "onboarding", "documentation", "developer-guide", "learning"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/scan-project.mjs",
+      "type": "file",
+      "name": "scan-project.mjs",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Deterministic file enumerator and language/category detector for the project-scanner agent. Uses git ls-files with a recursive walker fallback, per-file language detection via a comprehensive extension/filename table, category assignment via priority-ordered rules (LICENSE, infra by filename, infra by path, extension-based mapping, fallback to code), line counting, and complexity estimation. Dual-filter accounting tracks user-driven .understandignore drops.",
+      "tags": ["javascript", "scanner", "file-enumeration", "language-detection", "git", "node"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/merge-batch-graphs.py",
+      "type": "file",
+      "name": "merge-batch-graphs.py",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Batch merge and normalization script for Phase 2 of /understand. Combines batch-*.json files from file-analyzer subagents, normalizes node IDs (strips double prefixes, project-name prefixes, canonicalizes func→function, adds missing prefixes), normalizes complexity values via alias map, rewrites edge references after ID changes, deduplicates nodes by ID and edges by (source, target, type, direction), runs a two-pass tested_by linker that preserves LLM pairing evidence while fixing direction, and recovers dropped imports edges from the scan importMap for deterministic completeness.",
+      "tags": ["python", "merge", "normalization", "graph-assembly", "test-linker", "deduplication"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/generate-ignore.mjs",
+      "type": "file",
+      "name": "generate-ignore.mjs",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Ignore file generator that writes a starter .understand-anything/.understandignore by delegating to generateStarterIgnoreFile from @understand-anything/core. Prefers PLUGIN_ROOT from environment over relative path heuristic to handle symlinked or copied skill installations.",
+      "tags": ["javascript", "ignore", "configuration", "node"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/extract-import-map.mjs",
+      "type": "file",
+      "name": "extract-import-map.mjs",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Deterministic import resolution script using tree-sitter via PluginRegistry to extract raw import paths and resolve them to project-internal file paths. Supports TypeScript/JavaScript (relative imports, tsconfig path aliases, NodeNext rewrites, CJS require()), Python (relative with leading dots, absolute with per-ancestor probing for multi-service repos), Go (go.mod prefix matching for multi-module monorepos), Java/Kotlin/C# (dotted-FQN suffix index), Ruby (require vs require_relative discrimination), PHP (PSR-4 autoload resolution), Rust (crate/super/self module probing), and C/C++ (quoted and angle include resolution). Parallel file I/O and config loading with per-file resilience.",
+      "tags": ["javascript", "import-resolution", "tree-sitter", "dependency-graph", "monorepo", "node"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/merge-subdomain-graphs.py",
+      "type": "file",
+      "name": "merge-subdomain-graphs.py",
+      "filePath": "understand/merge-subdomain-graphs.py",
+      "summary": "Auto-discovers and merges subdomain knowledge-graph files (*knowledge-graph*.json excluding the main output) into a single knowledge-graph.json. Handles node deduplication by ID (later occurrence wins), edge deduplication by (source, target, type) with higher-weight wins, layer merging by ID with union of nodeIds, tour step concatenation with duplicate title merging, and dangling reference cleanup for all sections.",
+      "tags": ["python", "merge", "knowledge-graph", "subdomain", "deduplication", "layer-merge"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/compute-batches.mjs",
+      "type": "file",
+      "name": "compute-batches.mjs",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Phase 1.5 batch computation script that runs Louvain community detection on the import graph to create semantic file batches for the file-analyzer pipeline. Handles code file grouping via community detection with size enforcement and alphabetical splitting for oversized communities, non-code file grouping into semantic groups (Dockerfile clusters, GitHub workflows, CI configs, SQL migrations, parent-dir catchall), exports extraction via tree-sitter for neighbor map enrichment, neighbor map computation with 1-hop degree truncation, and a merge-small pass that consolidates singleton/orphan batches to reduce subagent dispatch overhead.",
+      "tags": ["javascript", "batches", "louvain", "community-detection", "graphology", "import-graph", "node"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/extract-structure.mjs",
+      "type": "file",
+      "name": "extract-structure.mjs",
+      "filePath": "understand/extract-structure.mjs",
+      "summary": "Deterministic structural extraction script using PluginRegistry (TreeSitterPlugin + non-code parsers) from @understand-anything/core. Analyzes each batch file to extract functions, classes, exports, sections, definitions, services, endpoints, steps, resources, and call graphs. Reports per-file metrics (import count, export count, function count, etc.) and handles per-file resilience with skip-and-continue on failures.",
+      "tags": ["javascript", "structural-analysis", "tree-sitter", "code-analysis", "call-graph", "node"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "file:understand/build-fingerprints.mjs",
+      "type": "file",
+      "name": "build-fingerprints.mjs",
+      "filePath": "understand/build-fingerprints.mjs",
+      "summary": "Structural fingerprint baseline builder for auto-update incremental change detection. Invoked during Phase 7 of /understand after graph assembly. Uses TreeSitterPlugin and PluginRegistry (mirroring extract-structure.mjs) to generate fingerprints.json for comparing structural changes on subsequent commits. Must succeed before meta.json is written to prevent auto-update from misclassifying every file as CHANGED on the next run.",
+      "tags": ["javascript", "fingerprints", "auto-update", "structural-analysis", "tree-sitter", "node"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "module:@understand-anything/core",
+      "type": "module",
+      "name": "@understand-anything/core",
+      "filePath": "",
+      "summary": "Core library providing TreeSitterPlugin, PluginRegistry, builtinLanguageConfigs, registerAllParsers, createIgnoreFilter, generateStarterIgnoreFile, buildFingerprintStore, saveFingerprints, and other shared utilities consumed by all JS scripts in the understand-anything plugin.",
+      "tags": ["library", "core", "tree-sitter", "plugin-registry", "typescript"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "module:graphology",
+      "type": "module",
+      "name": "graphology",
+      "filePath": "",
+      "summary": "Graph data structure library used by compute-batches.mjs for Louvain community detection on the import graph.",
+      "tags": ["library", "graph", "data-structure"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "module:graphology-communities-louvain",
+      "type": "module",
+      "name": "graphology-communities-louvain",
+      "filePath": "",
+      "summary": "Louvain community detection algorithm for graphology, used by compute-batches.mjs to partition code files into semantically related batches based on their import graph structure.",
+      "tags": ["library", "community-detection", "louvain", "graph-partitioning"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/scan-project.mjs:detectLanguage",
+      "type": "function",
+      "name": "detectLanguage",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Detects a file's programming language by checking extension lookup table, filename lookup table, dotfile key extraction, and Dockerfile variants. Never returns null — falls back to lowercased extension or 'unknown'.",
+      "tags": ["function", "language-detection"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/scan-project.mjs:detectCategory",
+      "type": "function",
+      "name": "detectCategory",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Assigns a file category (code, config, docs, infra, data, script, markup) via priority-ordered rules: LICENSE exception, infra by filename, infra by path, extension-based mapping, dotfile config catch-all, and code fallback.",
+      "tags": ["function", "category-detection"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/scan-project.mjs:estimateComplexity",
+      "type": "function",
+      "name": "estimateComplexity",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Maps total file count to a complexity tier: small (1-30), moderate (31-150), large (151-500), very-large (>500). Edge case: 0 files maps to small.",
+      "tags": ["function", "complexity-estimation"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/scan-project.mjs:enumerateFiles",
+      "type": "function",
+      "name": "enumerateFiles",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Enumerates all files in a project root, preferring git ls-files with -z NUL-terminated output for non-ASCII path safety, falling back to a recursive directory walker with hard-skip dirs.",
+      "tags": ["function", "file-enumeration", "git"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/scan-project.mjs:countLines",
+      "type": "function",
+      "name": "countLines",
+      "filePath": "understand/scan-project.mjs",
+      "summary": "Counts newline-delimited lines in a file by scanning the byte buffer for 0x0a characters. Matches wc -l semantics. Per-file failure emits a Warning and returns null.",
+      "tags": ["function", "line-counting"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:normalize_node_id",
+      "type": "function",
+      "name": "normalize_node_id",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Normalizes node IDs by stripping double prefixes (file:file:), project-name prefixes, canonicalizing func: to function:, and adding missing type prefixes for bare file paths.",
+      "tags": ["function", "normalization", "id-sanitization"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:normalize_complexity",
+      "type": "function",
+      "name": "normalize_complexity",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Normalizes complexity values from aliases (low→simple, medium→moderate, high→complex) and numeric ranges (1-3→simple, 4-6→moderate, 7+→complex). Unknown values default to moderate. Returns (normalized, status) tuple.",
+      "tags": ["function", "normalization", "complexity"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:link_tests",
+      "type": "function",
+      "name": "link_tests",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Two-pass tested_by edge linker. Pass 1 canonicalizes LLM-emitted test→production edges by flipping direction, dropping semantically broken pairs. Pass 2 supplements path-convention pairings for unmatched test files using language-specific naming conventions (JS/TS .test infix, Go _test suffix, Python test_ prefix, Java Maven/Gradle layout, C# mirroring, C/C++ test_ prefix/suffix). Tags production nodes with 'tested'.",
+      "tags": ["function", "test-linker", "edge-canonicalization", "path-conventions"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:production_candidates",
+      "type": "function",
+      "name": "production_candidates",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Generates ordered candidate production file paths for a given test file path, using language-specific conventions: JS/TS sibling de-infix and mirrored tree, Go _test suffix stripping, Python test_ prefix/suffix with test directory walk-out, Java Maven src/test/java→src/main/java mapping, C# mirroring, and C/C++ conventions.",
+      "tags": ["function", "path-generation", "test-framework"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:merge_and_normalize",
+      "type": "function",
+      "name": "merge_and_normalize",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Main merge pipeline: combines batch nodes/edges, normalizes IDs and complexity, rewrites edge references, deduplicates nodes by ID (keep last) and edges by key with higher-weight wins, runs the tested_by linker, and produces a detailed correction report.",
+      "tags": ["function", "merge", "normalization", "pipeline"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-batch-graphs.py:recover_imports_from_scan",
+      "type": "function",
+      "name": "recover_imports_from_scan",
+      "filePath": "understand/merge-batch-graphs.py",
+      "summary": "Recovers imports edges that file-analyzer agents dropped despite being present in scan-result.json's deterministic importMap. Scans every importMap entry and emits missing imports edges with weight 0.7 and recoveredFromImportMap flag.",
+      "tags": ["function", "import-recovery", "edge-repair"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:resolveTsJsImport",
+      "type": "function",
+      "name": "resolveTsJsImport",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Resolves TypeScript/JavaScript imports. Handles relative imports with extension probing (including NodeNext .js→.ts rewrite) and tsconfig path aliases with per-importer nearest-tsconfig walk-up for monorepo support.",
+      "tags": ["function", "import-resolution", "typescript", "javascript", "path-aliases"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:resolvePythonImport",
+      "type": "function",
+      "name": "resolvePythonImport",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Resolves Python imports. Relative imports (starts with .) use leading-dot counting for parent walk. Absolute imports probe every ancestor directory as a candidate Python root for multi-service repo support. Returns multiple matches for from-package-import-submodule patterns.",
+      "tags": ["function", "import-resolution", "python", "multi-service"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:resolveGoImport",
+      "type": "function",
+      "name": "resolveGoImport",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Resolves Go imports by walking up from the importer to find the nearest go.mod, stripping the module prefix, and expanding package-level imports to all .go files in the target directory. Handles multi-module monorepos correctly.",
+      "tags": ["function", "import-resolution", "go", "monorepo", "package-level"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:buildResolutionContext",
+      "type": "function",
+      "name": "buildResolutionContext",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Builds the shared resolution context with parallel loading of tsconfig.json files, go.mod files, and composer.json autoload maps. Indexes .go, .java, .kt, and .cs files by directory/suffix for fast per-import resolution.",
+      "tags": ["function", "context-building", "config-loading", "parallel-io"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-import-map.mjs:resolveImport",
+      "type": "function",
+      "name": "resolveImport",
+      "filePath": "understand/extract-import-map.mjs",
+      "summary": "Language-dispatching import resolver that routes raw import sources to the appropriate language-specific resolver (TS/JS, Python, Go, Java, Kotlin, C#, PHP, Rust, C/C++). Returns array of project-relative resolved paths.",
+      "tags": ["function", "dispatcher", "import-resolution", "multi-language"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/compute-batches.mjs:extractExports",
+      "type": "function",
+      "name": "extractExports",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Extracts top-level exported symbol names from code files using tree-sitter via PluginRegistry. Uses bounded parallel I/O (64 concurrent reads) with sequential tree-sitter parsing on the main thread. Per-file failures produce warnings with empty fallback.",
+      "tags": ["function", "exports-extraction", "tree-sitter", "parallel-io"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/compute-batches.mjs:runLouvain",
+      "type": "function",
+      "name": "runLouvain",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Runs Louvain community detection on the import graph using graphology. Builds an undirected graph from code files and their importMap entries, then partitions into communities. Falls back to count-based alphabetical chunking on failure.",
+      "tags": ["function", "community-detection", "louvain", "graph-partitioning"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/compute-batches.mjs:mergeSmallBatches",
+      "type": "function",
+      "name": "mergeSmallBatches",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Merges small mergeable batches (below MIN_BATCH_SIZE=3) into consolidated misc batches capped at MAX_MERGE_TARGET=25 files each. Preserves semantic non-code groupings (Groups A-D, marked mergeable=false) regardless of size.",
+      "tags": ["function", "batch-optimization", "merge", "dispatch-overhead"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/compute-batches.mjs:buildNonCodeBatches",
+      "type": "function",
+      "name": "buildNonCodeBatches",
+      "filePath": "understand/compute-batches.mjs",
+      "summary": "Builds semantic batches for non-code files organized into groups: A (per-directory Dockerfile clusters), B (GitHub workflows), C (CI configs), D (SQL migrations), and E (remaining files grouped by parent directory, max 20 per batch).",
+      "tags": ["function", "batch-building", "non-code", "docker", "ci", "sql"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/extract-structure.mjs:buildResult",
+      "type": "function",
+      "name": "buildResult",
+      "filePath": "understand/extract-structure.mjs",
+      "summary": "Maps tree-sitter structural analysis output to the file-analyzer result schema. Extracts functions, classes, exports, sections, definitions, services, endpoints, steps, resources, and call graphs. Falls back to basic metrics when no parser matched.",
+      "tags": ["function", "result-building", "structural-analysis", "schema-mapping"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-domain/extract-domain-context.py:scan_file_tree",
+      "type": "function",
+      "name": "scan_file_tree",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Recursively walks a project directory to build a flat list of source file paths, respecting gitignore patterns, skip directories, max depth (6), max files per directory (50), and total file limit (5000).",
+      "tags": ["function", "file-tree", "scanning", "gitignore"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-domain/extract-domain-context.py:detect_entry_points",
+      "type": "function",
+      "name": "detect_entry_points",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Scans source files for entry point patterns using regex: HTTP routes (Express, Flask, FastAPI, NestJS, Next.js), CLI commands, event listeners, cron schedules, GraphQL resolvers, gRPC services, and exported handlers. Returns structured entries with file, line, type, and snippet.",
+      "tags": ["function", "entry-points", "regex", "route-detection"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-domain/extract-domain-context.py:extract_file_signatures",
+      "type": "function",
+      "name": "extract_file_signatures",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Extracts exports and imports from priority-scored source files (prioritizing business logic keywords like controller, service, handler). Samples up to 40 files with 80 lines each, extracting JS/TS and Python exports and imports.",
+      "tags": ["function", "file-signatures", "exports", "imports", "sampling"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-domain/extract-domain-context.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "understand-domain/extract-domain-context.py",
+      "summary": "Entry point for extract-domain-context.py. Parses arguments, runs the scanning pipeline (file tree, entry points, signatures, metadata), enforces output size limits via progressive trimming, and writes domain-context.json.",
+      "tags": ["function", "entry-point", "pipeline"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-knowledge/merge-knowledge-graph.py:merge",
+      "type": "function",
+      "name": "merge",
+      "filePath": "understand-knowledge/merge-knowledge-graph.py",
+      "summary": "Main merge pipeline for Karpathy knowledge graphs. Loads scan-manifest.json as base, processes analysis-batch-*.json files with entity deduplication, node type normalization, edge alias resolution, and deduped entity ID remapping. Builds layers from categories, assigns orphan entities to parent article layers via name/content matching, generates tour from index.md ordering, and detects project name from index.md H1.",
+      "tags": ["function", "merge", "karpathy", "pipeline"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-knowledge/parse-knowledge-base.py:detect_format",
+      "type": "function",
+      "name": "detect_format",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Detects if a directory follows the Karpathy LLM wiki three-layer pattern by checking for index.md, log.md, raw/ directory, and schema files.",
+      "tags": ["function", "detection", "format-recognition"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-knowledge/parse-knowledge-base.py:parse_wiki",
+      "type": "function",
+      "name": "parse_wiki",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Full wiki parser that builds article nodes with wikilinks, headings, frontmatter, complexity from link density, and knowledgeMeta. Resolves wikilinks against known article IDs, builds topic nodes from index.md categories, creates source nodes from raw/ directory, computes backlinks, and deduplicates edges.",
+      "tags": ["function", "wiki-parser", "karpathy", "node-building"],
+      "complexity": "complex",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-knowledge/parse-knowledge-base.py:parse_index",
+      "type": "function",
+      "name": "parse_index",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Parses index.md to extract categories from ## section headings and their associated wikilink article references.",
+      "tags": ["function", "index-parser", "categories"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand-knowledge/parse-knowledge-base.py:resolve_wikilink",
+      "type": "function",
+      "name": "resolve_wikilink",
+      "filePath": "understand-knowledge/parse-knowledge-base.py",
+      "summary": "Resolves a wikilink target to an article node ID using a case-insensitive name map with unambiguous basename resolution and collision detection.",
+      "tags": ["function", "wikilink", "resolution", "name-matching"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/merge-subdomain-graphs.py:merge_graphs",
+      "type": "function",
+      "name": "merge_graphs",
+      "filePath": "understand/merge-subdomain-graphs.py",
+      "summary": "Merges multiple knowledge graph dicts into one by deduplicating nodes by ID (later occurrence wins), deduplicating edges by key with higher-weight wins, dropping dangling refs, merging layers by ID with union nodeIds, and concatenating tour steps with duplicate title merging.",
+      "tags": ["function", "merge", "deduplication", "graph-combination"],
+      "complexity": "moderate",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/build-fingerprints.mjs:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "understand/build-fingerprints.mjs",
+      "summary": "Builds structural fingerprint baseline by initializing TreeSitterPlugin and PluginRegistry, calling buildFingerprintStore, and saving fingerprints.json. Must succeed before meta.json write to prevent auto-update misclassification.",
+      "tags": ["function", "fingerprints", "auto-update"],
+      "complexity": "simple",
+      "languageNotes": ""
+    },
+    {
+      "id": "function:understand/generate-ignore.mjs:resolvePluginRoot",
+      "type": "function",
+      "name": "resolvePluginRoot",
+      "filePath": "understand/generate-ignore.mjs",
+      "summary": "Resolves the plugin root directory by checking the PLUGIN_ROOT environment variable first, then falling back to the relative path heuristic (two directories up from skills/understand/).",
+      "tags": ["function", "path-resolution", "plugin-detection"],
+      "complexity": "simple",
+      "languageNotes": ""
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:understand/scan-project.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/extract-import-map.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/extract-structure.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/compute-batches.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/compute-batches.mjs",
+      "target": "module:graphology",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/compute-batches.mjs",
+      "target": "module:graphology-communities-louvain",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/build-fingerprints.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:understand/generate-ignore.mjs",
+      "target": "module:@understand-anything/core",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "document:understand/SKILL.md",
+      "target": "file:understand/scan-project.mjs",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understand/SKILL.md",
+      "target": "file:understanding/merge-batch-graphs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understand/SKILL.md",
+      "target": "file:understanding/generate-ignore.mjs",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understand/SKILL.md",
+      "target": "file:understanding/extract-import-map.mjs",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understand/SKILL.md",
+      "target": "file:understanding/merge-subdomain-graphs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understand/SKILL.md",
+      "target": "file:understanding/compute-batches.mjs",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understand/SKILL.md",
+      "target": "file:understanding/extract-structure.mjs",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understand/SKILL.md",
+      "target": "file:understanding/build-fingerprints.mjs",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understand-domain/SKILL.md",
+      "target": "file:understanding/extract-domain-context.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understand-knowledge/SKILL.md",
+      "target": "file:understanding/merge-knowledge-graph.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understand-knowledge/SKILL.md",
+      "target": "file:understanding/parse-knowledge-base.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:understanding/scan-project.mjs",
+      "target": "function:understanding/scan-project.mjs:detectLanguage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/scan-project.mjs",
+      "target": "function:understanding/scan-project.mjs:detectCategory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/scan-project.mjs",
+      "target": "function:understanding/scan-project.mjs:estimateComplexity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/scan-project.mjs",
+      "target": "function:understanding/scan-project.mjs:enumerateFiles",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/scan-project.mjs",
+      "target": "function:understanding/scan-project.mjs:countLines",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/merge-batch-graphs.py",
+      "target": "function:understanding/merge-batch-graphs.py:normalize_node_id",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/merge-batch-graphs.py",
+      "target": "function:understanding/merge-batch-graphs.py:normalize_complexity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/merge-batch-graphs.py",
+      "target": "function:understanding/merge-batch-graphs.py:link_tests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/merge-batch-graphs.py",
+      "target": "function:understanding/merge-batch-graphs.py:production_candidates",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/merge-batch-graphs.py",
+      "target": "function:understanding/merge-batch-graphs.py:merge_and_normalize",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/merge-batch-graphs.py",
+      "target": "function:understanding/merge-batch-graphs.py:recover_imports_from_scan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/extract-import-map.mjs",
+      "target": "function:understanding/extract-import-map.mjs:resolveTsJsImport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/extract-import-map.mjs",
+      "target": "function:understanding/extract-import-map.mjs:resolvePythonImport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/extract-import-map.mjs",
+      "target": "function:understanding/extract-import-map.mjs:resolveGoImport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/extract-import-map.mjs",
+      "target": "function:understanding/extract-import-map.mjs:buildResolutionContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/extract-import-map.mjs",
+      "target": "function:understanding/extract-import-map.mjs:resolveImport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/compute-batches.mjs",
+      "target": "function:understanding/compute-batches.mjs:extractExports",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/compute-batches.mjs",
+      "target": "function:understanding/compute-batches.mjs:runLouvain",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/compute-batches.mjs",
+      "target": "function:understanding/compute-batches.mjs:mergeSmallBatches",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/compute-batches.mjs",
+      "target": "function:understanding/compute-batches.mjs:buildNonCodeBatches",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/extract-structure.mjs",
+      "target": "function:understanding/extract-structure.mjs:buildResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/domain/extract-domain-context.py",
+      "target": "function:understanding/domain/extract-domain-context.py:scan_file_tree",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/domain/extract-domain-context.py",
+      "target": "function:understanding/domain/extract-domain-context.py:detect_entry_points",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/domain/extract-domain-context.py",
+      "target": "function:understanding/domain/extract-domain-context.py:extract_file_signatures",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/domain/extract-domain-context.py",
+      "target": "function:understanding/domain/extract-domain-context.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/knowledge/merge-knowledge-graph.py",
+      "target": "function:understanding/knowledge/merge-knowledge-graph.py:merge",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/knowledge/parse-knowledge-base.py",
+      "target": "function:understanding/knowledge/parse-knowledge-base.py:detect_format",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/knowledge/parse-knowledge-base.py",
+      "target": "function:understanding/knowledge/parse-knowledge-base.py:parse_wiki",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/knowledge/parse-knowledge-base.py",
+      "target": "function:understanding/knowledge/parse-knowledge-base.py:parse_index",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/knowledge/parse-knowledge-base.py",
+      "target": "function:understanding/knowledge/parse-knowledge-base.py:resolve_wikilink",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/merge-subdomain-graphs.py",
+      "target": "function:understanding/merge-subdomain-graphs.py:merge_graphs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/build-fingerprints.mjs",
+      "target": "function:understanding/build-fingerprints.mjs:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:understanding/generate-ignore.mjs",
+      "target": "function:understanding/generate-ignore.mjs:resolvePluginRoot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:understanding/SKILL.md",
+      "target": "document:understanding/chat/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understanding/SKILL.md",
+      "target": "document:understanding/dashboard/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understanding/SKILL.md",
+      "target": "document:understanding/diff/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understanding/SKILL.md",
+      "target": "document:understanding/domain/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understanding/SKILL.md",
+      "target": "document:understanding/explain/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understanding/SKILL.md",
+      "target": "document:understanding/knowledge/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understanding/SKILL.md",
+      "target": "document:understanding/onboard/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:understanding/chat/SKILL.md",
+      "target": "document:understanding/SKILL.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:understanding/dashboard/SKILL.md",
+      "target": "document:understanding/SKILL.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:understanding/diff/SKILL.md",
+      "target": "document:understanding/SKILL.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:understanding/explain/SKILL.md",
+      "target": "document:understanding/SKILL.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:understanding/onboard/SKILL.md",
+      "target": "document:understanding/SKILL.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:understanding/domain/SKILL.md",
+      "target": "document:understanding/SKILL.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:understanding/scan-project.mjs",
+      "target": "file:understanding/compute-batches.mjs",
+      "type": "triggers",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:understanding/compute-batches.mjs",
+      "target": "file:understanding/extract-structure.mjs",
+      "type": "triggers",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:understanding/merge-batch-graphs.py",
+      "target": "file:understanding/extract-import-map.mjs",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:understanding/extract-import-map.mjs",
+      "target": "file:understanding/scan-project.mjs",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:understanding/extract-structure.mjs",
+      "target": "file:understanding/extract-import-map.mjs",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:understanding/build-fingerprints.mjs",
+      "target": "file:understanding/extract-structure.mjs",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:understanding/merge-subdomain-graphs.py",
+      "target": "file:understanding/merge-batch-graphs.py",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

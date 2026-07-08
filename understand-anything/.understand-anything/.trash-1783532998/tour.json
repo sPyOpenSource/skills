@@ -1,0 +1,95 @@
+[
+  {
+    "order": 1,
+    "title": "Project Overview",
+    "description": "Understand-Anything is a codebase analysis skill suite that generates interactive knowledge graphs from source code. It uses a multi-phase pipeline to scan, analyze, and visualize codebase structure, dependencies, and architecture.",
+    "nodeIds": [
+      "document:understand/SKILL.md",
+      "concept:knowledge-graph",
+      "concept:codebase-analysis"
+    ]
+  },
+  {
+    "order": 2,
+    "title": "Core Pipeline Scripts",
+    "description": "The heart of the analysis pipeline. scan-project.mjs enumerates files and detects languages/categories. extract-import-map.mjs resolves imports via tree-sitter. compute-batches.mjs groups files into semantic batches. merge-batch-graphs.py combines batch outputs into a unified graph.",
+    "nodeIds": [
+      "file:understand/scan-project.mjs",
+      "file:understand/extract-import-map.mjs",
+      "file:understand/compute-batches.mjs",
+      "file:understand/merge-batch-graphs.py"
+    ]
+  },
+  {
+    "order": 3,
+    "title": "Graph Assembly and Validation",
+    "description": "After batch analysis, merge-subdomain-graphs.py combines subdomain graphs, build-fingerprints.mjs creates structural baselines for incremental updates, and extract-structure.mjs extracts detailed structure from source files.",
+    "nodeIds": [
+      "file:understand/merge-subdomain-graphs.py",
+      "file:understand/build-fingerprints.mjs",
+      "file:understand/extract-structure.mjs"
+    ]
+  },
+  {
+    "order": 4,
+    "title": "Ignore Configuration",
+    "description": "generate-ignore.mjs creates starter .understandignore files from @understand-anything/core defaults, helping users control which files are excluded from analysis.",
+    "nodeIds": [
+      "file:understand/generate-ignore.mjs"
+    ]
+  },
+  {
+    "order": 5,
+    "title": "Domain Analysis",
+    "description": "The domain-analysis skill extracts business domain context from codebases, providing a domain flow graph that complements the knowledge graph.",
+    "nodeIds": [
+      "document:understand-domain/SKILL.md",
+      "module:understand-domain",
+      "file:understand-domain/extract-domain-context.py"
+    ]
+  },
+  {
+    "order": 6,
+    "title": "Knowledge Processing",
+    "description": "The knowledge-processing skill handles merging knowledge graphs and parsing knowledge bases (Karpathy-pattern LLM wikis) into interactive graph visualizations.",
+    "nodeIds": [
+      "document:understand-knowledge/SKILL.md",
+      "module:understand-knowledge",
+      "file:understand-knowledge/merge-knowledge-graph.py",
+      "file:understand-knowledge/parse-knowledge-base.py"
+    ]
+  },
+  {
+    "order": 7,
+    "title": "Language and Framework References",
+    "description": "The pipeline uses language-specific guidance files (languages/) and framework-specific addendums (frameworks/) to inform the architecture analyzer about edge patterns, node types, and summary conventions.",
+    "nodeIds": [
+      "document:understand/languages/cpp.md",
+      "document:understand/languages/csharp.md",
+      "document:understand/languages/css.md",
+      "document:understand/frameworks/django.md",
+      "document:understand/frameworks/express.md",
+      "document:understand/frameworks/fastapi.md"
+    ]
+  },
+  {
+    "order": 8,
+    "title": "User Interfaces: Chat, Dashboard, Diff, Explain, Onboard",
+    "description": "These sub-skills provide user-facing interfaces: chat-based codebase querying, interactive dashboard visualization, git diff analysis, code explanation, and onboarding guide generation.",
+    "nodeIds": [
+      "document:understand-chat/SKILL.md",
+      "document:understand-dashboard/SKILL.md",
+      "document:understand-diff/SKILL.md",
+      "document:understand-explain/SKILL.md",
+      "document:understand-onboard/SKILL.md"
+    ]
+  },
+  {
+    "order": 9,
+    "title": "Configuration",
+    "description": "Configuration files control the analysis behavior, including output language, auto-update settings, and intermediate analysis artifacts.",
+    "nodeIds": [
+      "config:.understand-anything/config.json"
+    ]
+  }
+]

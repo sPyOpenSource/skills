@@ -1,0 +1,121 @@
+[
+  {
+    "id": "layer:core-pipeline",
+    "name": "Core Pipeline",
+    "description": "The main codebase analysis pipeline: scanning, batching, import extraction, structure extraction, graph merging, fingerprinting, and ignore generation.",
+    "nodeIds": [
+      "document:understand/SKILL.md",
+      "file:understand/scan-project.mjs",
+      "file:understand/compute-batches.mjs",
+      "file:understand/extract-import-map.mjs",
+      "file:understand/extract-structure.mjs",
+      "file:understand/merge-batch-graphs.py",
+      "file:understand/merge-subdomain-graphs.py",
+      "file:understand/build-fingerprints.mjs",
+      "file:understand/generate-ignore.mjs",
+      "config:.understand-anything/intermediate/scan-result.json",
+      "config:.understand-anything/intermediate/batches.json",
+      "config:.understand-anything/intermediate/import-map-input.json",
+      "config:.understand-anything/intermediate/import-map-output.json"
+    ]
+  },
+  {
+    "id": "layer:skills",
+    "name": "Skills Layer",
+    "description": "User-facing skills that wrap the core pipeline for specific use cases: query, dashboard, diff, domain, explain, knowledge, and onboarding.",
+    "nodeIds": [
+      "document:understand-chat/SKILL.md",
+      "document:understand-dashboard/SKILL.md",
+      "document:understand-diff/SKILL.md",
+      "document:understand-domain/SKILL.md",
+      "document:understand-explain/SKILL.md",
+      "document:understand-knowledge/SKILL.md",
+      "document:understand-onboard/SKILL.md"
+    ]
+  },
+  {
+    "id": "layer:domain-analysis",
+    "name": "Domain Analysis",
+    "description": "Scripts for extracting business domain context from codebases, including entry point detection and file tree scanning.",
+    "nodeIds": [
+      "file:understand-domain/extract-domain-context.py"
+    ]
+  },
+  {
+    "id": "layer:knowledge-processing",
+    "name": "Knowledge Processing",
+    "description": "Scripts for parsing and merging knowledge bases (wiki format) into knowledge graphs.",
+    "nodeIds": [
+      "file:understand-knowledge/merge-knowledge-graph.py",
+      "file:understand-knowledge/parse-knowledge-base.py"
+    ]
+  },
+  {
+    "id": "layer:language-references",
+    "name": "Language References",
+    "description": "Reference documents for language-specific patterns used during architecture analysis and code understanding.",
+    "nodeIds": [
+      "document:understand/languages/cpp.md",
+      "document:understand/languages/csharp.md",
+      "document:understand/languages/css.md",
+      "document:understand/languages/dockerfile.md",
+      "document:understand/languages/go.md",
+      "document:understand/languages/graphql.md",
+      "document:understand/languages/html.md",
+      "document:understand/languages/java.md",
+      "document:understand/languages/javascript.md",
+      "document:understand/languages/json.md",
+      "document:understand/languages/kotlin.md",
+      "document:understand/languages/markdown.md",
+      "document:understand/languages/php.md",
+      "document:understand/languages/python.md",
+      "document:understand/languages/yaml.md",
+      "document:understand/languages/shell.md",
+      "document:understand/languages/sql.md",
+      "document:understand/languages/terraform.md",
+      "document:understand/languages/protobuf.md"
+    ]
+  },
+  {
+    "id": "layer:framework-references",
+    "name": "Framework References",
+    "description": "Reference documents for framework-specific patterns used during architecture analysis.",
+    "nodeIds": [
+      "document:understand/frameworks/gin.md",
+      "document:understand/frameworks/nextjs.md",
+      "document:understand/frameworks/rails.md",
+      "document:understand/frameworks/react.md",
+      "document:understand/frameworks/spring.md",
+      "document:understand/frameworks/vue.md"
+    ]
+  },
+  {
+    "id": "layer:localization",
+    "name": "Localization",
+    "description": "Locale-specific guidance documents for generating knowledge graphs in non-English languages.",
+    "nodeIds": [
+      "document:understand/locales/zh.md",
+      "document:understand/locales/ja.md",
+      "document:understand/locales/ko.md"
+    ]
+  },
+  {
+    "id": "layer:configuration",
+    "name": "Configuration",
+    "description": "Project configuration files controlling analysis behavior.",
+    "nodeIds": [
+      "config:.understand-anything/.understandignore",
+      "config:.understand-anything/config.json"
+    ]
+  },
+  {
+    "id": "layer:concepts",
+    "name": "Concept Layer",
+    "description": "Abstract concept nodes representing high-level patterns in the codebase.",
+    "nodeIds": [
+      "concept:language-reference",
+      "concept:locale-guide",
+      "concept:analysis-pipeline"
+    ]
+  }
+]
