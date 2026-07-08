@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serial Console Debugging — Lesson 1</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .hardware-list { list-style: none; padding: 0; margin: 0.75rem 0; }
+  .hardware-list li {
+    padding: 0.4rem 0.75rem;
+    margin: 0.25rem 0;
+    background: var(--code-bg);
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  .hardware-list li code { background: transparent; padding: 0; }
+  .cmd { margin: 0; font-size: 0.85rem; }
+  .term-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+  }
+  .diagram {
+    display: block;
+    margin: 1rem auto;
+    max-width: 100%;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    white-space: pre;
+    background: var(--code-bg);
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+  .checklist { list-style: none; padding: 0; }
+  .checklist li::before { content: "☐ "; font-size: 1.1rem; }
+  .checklist li.done::before { content: "☑ "; color: var(--correct); }
+  .step { margin-bottom: 0.5rem; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="tag">Lesson 1</span>
+  <span>Serial Console Debugging</span>
+  <span>→</span>
+  <a href="../reference/serial-console-quickref.html">Reference</a>
+</nav>
+
+<h1>Serial Console Debugging</h1>
+<p class="sidenote">Baremetal Hardware Debugging — Lesson 1 of ?</p>
+
+<p>
+Your RTOS prints beautifully to the PL011 UART in QEMU. On real hardware, that serial output is your <em>only window</em> into what the CPU is doing — until you get JTAG working. This lesson covers the practical setup and use of the serial console on the BeagleBone AI.
+</p>
+
+<blockquote>
+  The serial console is the first thing you make work on baremetal. Everything else — exception handlers, timer ticks, model loading — you verify through that one pipe.
+</blockquote>
+
+<h2>What You'll Learn</h2>
+
+<ul>
+  <li>What hardware you need to connect to the BBAI's serial port</li>
+  <li>How your existing UART code maps to the BBAI's UART3 peripheral</li>
+  <li>How to connect, configure the terminal, and verify output</li>
+  <li>A systematic checklist for when you see nothing</li>
+  <li>How to extend your exception handlers to dump useful debug info</li>
+</ul>
+
+<h2>1. The Hardware Setup</h2>
+
+<p>To see serial output from the BBAI, you need:</p>
+
+<ul class="hardware-list">
+  <li><strong>BBAI board</strong> — powered via the 5V barrel jack or micro-USB (USB0)</li>
+  <li><strong>USB-to-UART cable</strong> — 3.3V FTDI cable (e.g. FT232RL). Common pinout: black=GND, green=TX, white=RX</li>
+  <li><strong>Dupont wires</strong> (female-to-female) to connect the cable to the BBAI's expansion header</li>
+</ul>
+
+<p>The BBAI exposes UART0 on the P9 expansion header:</p>
+
+<div class="diagram">P9 header (look at the board with the USB ports facing you):
+
+  P9.24 (pin 11)  →  UART0 TX  →  connect to USB-UART RX (white)
+  P9.26 (pin 13)  →  UART0 RX  →  connect to USB-UART TX (green)
+  P9.1  (pin 1)   →  GND       →  connect to USB-UART GND (black)</div>
+
+<p class="sidenote">Pin numbers on the BBAI P9 header start at 1 (top-left, silk-screened). P9.24 = pin 11, P9.26 = pin 13, P9.1 = pin 1. Double-check with the <a href="https://beagleboard.org/static/beaglebone/a/Docs.html">BBAI System Reference Manual</a> if unsure.</p>
+
+<h2>2. Your Code's UART Setup</h2>
+
+<p>Your project already has dual-path UART code in <code>src/serial.c</code>:</p>
+
+<pre>#ifdef QEMU
+#define UART_BASE 0x09000000      // PL011 on QEMU virt
+#else
+#define UART3_BASE 0x49020000     // UART3 on BBAI
+                                     // (connected to expansion header)
+#endif</pre>
+
+<table style="width:100%; border-collapse: collapse; margin:0.75rem 0;">
+  <tr style="border-bottom:1px solid var(--border);">
+    <th style="text-align:left; padding:0.3rem 0.5rem;">Target</th>
+    <th style="text-align:left; padding:0.3rem 0.5rem;">UART</th>
+    <th style="text-align:left; padding:0.3rem 0.5rem;">Base Address</th>
+    <th style="text-align:left; padding:0.3rem 0.5rem;">Type</th>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.3rem 0.5rem;">QEMU virt</td>
+    <td style="padding:0.3rem 0.5rem;">PL011</td>
+    <td style="padding:0.3rem 0.5rem;"><code>0x09000000</code></td>
+    <td style="padding:0.3rem 0.5rem;">PrimeCell UART</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);">
+    <td style="padding:0.3rem 0.5rem;">BBAI</td>
+    <td style="padding:0.3rem 0.5rem;">UART3</td>
+    <td style="padding:0.3rem 0.5rem;"><code>0x49020000</code></td>
+    <td style="padding:0.3rem 0.5rem;">TI UART (16750-compat)</td>
+  </tr>
+</table>
+
+<p>Key difference: PL011 and TI UART have <em>different register layouts</em>. Your code handles this with <code>#ifdef QEMU</code> — the BBAI path uses TI UART register offsets (<code>LSR</code> at <code>+0x14</code>, <code>THR</code>/<code>RBR</code> at <code>+0x00</code>).</p>
+
+<p>The BBAI's <strong>UART3</strong> is muxed onto the expansion header pins. UART0 is what U-Boot uses by default, but your kernel uses UART3. You connect to UART0 for the U-Boot console; your kernel's output comes from UART3. If you want both on one cable, you can reconfigure U-Boot or change your kernel to use UART0 — but for now, treat them separately.</p>
+
+<div class="quiz">
+  <p>Quiz: Your BBAI kernel code writes to UART3 at 0x49020000. The USB-UART connects to UART0 on the P9 header. What will you see?</p>
+  <button class="quiz-option" onclick="check(this, false)">Kernel boot output</button>
+  <button class="quiz-option" onclick="check(this, false)">U-Boot output</button>
+  <button class="quiz-option" onclick="check(this, false)">Nothing — wrong cable</button>
+  <button class="quiz-option" onclick="check(this, true)">U-Boot output only (kernel uses a different UART)</button>
+  <div class="quiz-feedback" id="quiz1-feedback"></div>
+</div>
+
+<h2>3. Connecting and Seeing Output</h2>
+
+<h3>Step 1: Identify the USB-UART device</h3>
+
+<pre>$ ls /dev/tty.usbserial*
+/dev/tty.usbserial-AB0XXXXX</pre>
+
+<p class="sidenote">On macOS it's <code>/dev/tty.usbserial-...</code>. On Linux it's <code>/dev/ttyUSB0</code>. On Windows it's <code>COM3</code> or similar.</p>
+
+<h3>Step 2: Connect with screen (or picocom)</h3>
+
+<pre>$ screen /dev/tty.usbserial-AB0XXXXX 115200</pre>
+
+<p>Configure the terminal for <strong>115200 baud, 8 data bits, no parity, 1 stop bit</strong> (115200 8N1). This is the BBAI's default UART speed.</p>
+
+<h3>Step 3: Power on the BBAI</h3>
+
+<p>With the terminal open, apply power. You should see U-Boot boot output immediately. When your kernel runs (chainloaded via U-Boot), its debug output appears on <em>UART3</em> — connect a second USB-UART to the UART3 pins (see BBAI manual for pinmux assignments) or reconfigure your kernel to use UART0.</p>
+
+<h2>4. The "I See Nothing" Checklist</h2>
+
+<p>When the terminal stays black, work through this in order:</p>
+
+<ol class="checklist">
+  <li class="step"><strong>Is the board powered?</strong> — The PWR LED (near the USB port) should be solid. If not, check the power supply (5V, 2A minimum).</li>
+  <li class="step"><strong>Are TX and RX crossed?</strong> — The cable's TX goes to the board's RX, and the cable's RX goes to the board's TX. This is the #1 mistake. Swap them and try again.</li>
+  <li class="step"><strong>Is GND connected?</strong> — Without a common ground, the signal has no reference. Double-check the black wire.</li>
+  <li class="step"><strong>Is the baud rate correct?</strong> — U-Boot defaults to 115200. If you set your screen to 9600 or 57600, you'll see garbage or nothing. Try all common rates (9600, 19200, 38400, 57600, 115200).</li>
+  <li class="step"><strong>Is the cable 3.3V?</strong> — 5V cables can damage the BBAI's UART pins. Most FTDI cables are 3.3V or have a jumper; verify yours.</li>
+  <li class="step"><strong>Is UART clocked?</strong> — On baremetal, the UART peripheral needs a clock from the PRCM. Check <code>CM_L4PER_UART3_CLKCTRL</code> (at <code>0x4A009B28</code>). If the module is in DISABLE mode, writes to TX are silently dropped. This is your most likely baremetal pitfall.</li>
+  <li class="step"><strong>Is the pinmux configured?</strong> — The UART3 pins need to be muxed to Mode 1 (UART mode). Check the control module padconf registers. Your code handles this in <code>pinmux_init_mmc2()</code> but you may need a <code>pinmux_init_uart3()</code> as well.</li>
+</ol>
+
+<div class="quiz">
+  <p>Quiz: You power the BBAI, open screen at 115200, see nothing. What's the first thing to check?</p>
+  <button class="quiz-option" onclick="check(this, false)">Rebuild the kernel with more debug prints</button>
+  <button class="quiz-option" onclick="check(this, true)">Swap TX and RX wires</button>
+  <button class="quiz-option" onclick="check(this, false)">Increase the baud rate</button>
+  <button class="quiz-option" onclick="check(this, false)">Replace the USB-UART cable</button>
+  <div class="quiz-feedback" id="quiz2-feedback"></div>
+</div>
+
+<h2>5. Making Your Exception Handlers More Useful</h2>
+
+<p>Your current exception handlers in <code>src/exception.c</code> already print frame info, but on real hardware you'll want more context. Add these to your data abort handler:</p>
+
+<pre>// Inside arch_data_abort_handler, after reading FAR:
+unsigned int dfsr;
+asm volatile("mrc p15, 0, %0, c5, c0, 0" : "=r" (dfsr));  // Data Fault Status
+
+dprintf("DFSR = %08x\n", dfsr);
+dprintf("FAR  = %08x\n", far);
+
+// Decode the status bits
+unsigned int status = dfsr & 0x3F;
+switch (status) {
+    case 0b000001: dprintf("  Cause: Alignment fault\n"); break;
+    case 0b000011: dprintf("  Cause: Access flag fault (section)\n"); break;
+    case 0b001000: dprintf("  Cause: Precise external abort (parity/ECC)\n"); break;
+    case 0b001111: dprintf("  Cause: Domain fault (section)\n"); break;
+    case 0b010001: dprintf("  Cause: Translation fault (page)\n"); break;
+    default:       dprintf("  Cause: Status code %u\n", status); break;
+}</pre>
+
+<p>These fault status codes are defined in the ARMv7-A ARM (section B3.11). They are the difference between "something crashed" and "I know exactly why it crashed."</p>
+
+<h2>Summary</h2>
+
+<ul>
+  <li>The serial console is your primary debug window on real hardware</li>
+  <li>Your code supports both QEMU PL011 and BBAI UART3 via <code>#ifdef QEMU</code></li>
+  <li>Connect USB-UART: P9.24 (TX), P9.26 (RX), P9.1 (GND) — 115200 8N1</li>
+  <li>When you see nothing: check power → swap TX/RX → check GND → check baud → check voltage → check PRCM clock → check pinmux</li>
+  <li>Enrich your exception handlers with DFSR/IFSR decoding for faster root cause analysis</li>
+</ul>
+
+<div class="sidenote">
+  <strong>Next:</strong> <a href="../reference/serial-console-quickref.html">Reference: Serial Console Quick Reference</a> — pinout, terminal commands, and register map.
+</div>
+
+<div class="footer">
+  <p><strong>Primary source:</strong> <a href="https://beagleboard.org/getting-started#serial">BeagleBoard.org Serial Console Guide</a> — official BBAI serial setup instructions.</p>
+  <p><strong>References:</strong> AM572x TRM <a href="https://www.ti.com/lit/pdf/spruhz6">SPRUHZ6</a> (UART3 registers, PRCM), ARM DDI 0406C (exception model, DFSR encoding).</p>
+  <p>Any questions? Ask the agent — that's me!</p>
+</div>
+
+<script>
+function check(btn, correct) {
+  const parent = btn.parentElement;
+  const feedback = parent.querySelector('.quiz-feedback');
+  const allOptions = parent.querySelectorAll('.quiz-option');
+  allOptions.forEach(b => { b.disabled = true; });
+  if (correct) {
+    btn.classList.add('correct');
+    feedback.textContent = '✓ Correct!';
+  } else {
+    btn.classList.add('wrong');
+    feedback.textContent = '✗ Try again.';
+  }
+  feedback.classList.add('show');
+}
+</script>
+
+</body>
+</html>

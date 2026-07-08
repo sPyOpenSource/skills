@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serial Console Quick Reference</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  @media print { body { font-size: 11px; } }
+  table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-size: 0.85rem; }
+  td, th { border: 1px solid var(--border); padding: 0.3rem 0.5rem; text-align: left; }
+  th { background: var(--code-bg); }
+  .reg { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+  h2 { page-break-before: always; }
+  h2:first-of-type { page-break-before: avoid; }
+  .note { font-size: 0.8rem; color: var(--muted); font-style: italic; margin-top: 0.25rem; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="tag">Reference</span>
+  <a href="../lessons/0001-serial-console-debugging.html">Lesson 1</a>
+  <span>→</span>
+  <span>Serial Console Quick Reference</span>
+</nav>
+
+<h1>Serial Console Quick Reference</h1>
+<p class="sidenote">Print-friendly cheat sheet for baremetal UART debugging on BBAI</p>
+
+<h2>BBAI Serial Pinout</h2>
+
+<table>
+  <tr><th>Signal</th><th>Header</th><th>Pin</th><th>USB-UART Wire</th></tr>
+  <tr><td>UART0 TX</td><td>P9</td><td>24 (pin 11)</td><td>RX (white)</td></tr>
+  <tr><td>UART0 RX</td><td>P9</td><td>26 (pin 13)</td><td>TX (green)</td></tr>
+  <tr><td>GND</td><td>P9</td><td>1 (pin 1)</td><td>GND (black)</td></tr>
+</table>
+<p class="note">UART0 is the default U-Boot console. Your kernel uses UART3 at 0x49020000 — you'll need a second UART or reconfigure to UART0.</p>
+
+<h2>UART Configuration</h2>
+<table>
+  <tr><th>Parameter</th><th>Value</th></tr>
+  <tr><td>Baud rate</td><td>115200</td></tr>
+  <tr><td>Data bits</td><td>8</td></tr>
+  <tr><td>Parity</td><td>None</td></tr>
+  <tr><td>Stop bits</td><td>1</td></tr>
+  <tr><td>Flow control</td><td>None</td></tr>
+</table>
+
+<h2>Terminal Commands (macOS)</h2>
+<table>
+  <tr><th>Tool</th><th>Command</th></tr>
+  <tr><td>screen</td><td><code>screen /dev/tty.usbserial-XXXX 115200</code></td></tr>
+  <tr><td>picocom</td><td><code>picocom -b 115200 /dev/tty.usbserial-XXXX</code></td></tr>
+  <tr><td>minicom</td><td><code>minicom -D /dev/tty.usbserial-XXXX -b 115200</code></td></tr>
+</table>
+<p class="note">Exit screen with <code>Ctrl-A, k, y</code>. Exit picocom with <code>Ctrl-A, Ctrl-X</code>.</p>
+
+<h2>BBAI UART Register Map (TI UART — 16750 Compatible)</h2>
+<table>
+  <tr><th>Offset</th><th>Abbr</th><th>Name</th><th>Notes</th></tr>
+  <tr><td class="reg">0x00</td><td>RBR/THR/DLL</td><td>Receive Buffer / Transmit Hold / Divisor Latch Low</td><td>Write to TX, Read from RX</td></tr>
+  <tr><td class="reg">0x04</td><td>IER/DLH</td><td>Interrupt Enable / Divisor Latch High</td></tr>
+  <tr><td class="reg">0x08</td><td>FCR/IIR</td><td>FIFO Control / Interrupt ID</td></tr>
+  <tr><td class="reg">0x0C</td><td>LCR</td><td>Line Control</td><td>DLAB bit (0x80) to access DLL/DLH</td></tr>
+  <tr><td class="reg">0x10</td><td>MCR</td><td>Modem Control</td></tr>
+  <tr><td class="reg">0x14</td><td>LSR</td><td>Line Status</td><td>Bit 5=THR empty (TX ready), Bit 0=DR (data ready)</td></tr>
+  <tr><td class="reg">0x18</td><td>MSR</td><td>Modem Status</td></tr>
+  <tr><td class="reg">0x20</td><td>SYSR</td><td>System Control</td><td>Reset UART</td></tr>
+</table>
+
+<h2>PL011 UART Register Map (QEMU)</h2>
+<table>
+  <tr><th>Offset</th><th>Name</th><th>Notes</th></tr>
+  <tr><td class="reg">0x000</td><td>DR</td><td>Data Register — write TX, read RX</td></tr>
+  <tr><td class="reg">0x018</td><td>FR</td><td>Flag Register — bit 5 = TXFF (TX busy), bit 4 = RXFE (RX empty)</td></tr>
+  <tr><td class="reg">0x024</td><td>IBRD</td><td>Integer Baud Rate Divisor</td></tr>
+  <tr><td class="reg">0x028</td><td>FBRD</td><td>Fractional Baud Rate Divisor</td></tr>
+  <tr><td class="reg">0x02C</td><td>LCRH</td><td>Line Control — WLEN bits, stick parity, FIFO enable</td></tr>
+  <tr><td class="reg">0x030</td><td>CR</td><td>Control Register — UART enable + TX enable + RX enable</td></tr>
+</table>
+
+<h2>PRCM UART3 Clock Control</h2>
+<table>
+  <tr><th>Register</th><th>Address</th><th>Bits</th><th>Description</th></tr>
+  <tr><td>CM_L4PER_UART3_CLKCTRL</td><td class="reg">0x4A009B28</td><td>1:0</td><td>0=DISABLE, 1=ENABLE, 2=AUTO</td></tr>
+</table>
+<p class="note">Write <code>2</code> (AUTO) or <code>1</code> (ENABLE) to this register before touching UART3. On reset it may be 0, causing silent TX drops.</p>
+
+<h2>ARM Data Fault Status (DFSR) Quick Decode</h2>
+<table>
+  <tr><th>DFSR[5:0]</th><th>Meaning</th></tr>
+  <tr><td>0b000001</td><td>Alignment fault</td></tr>
+  <tr><td>0b000011</td><td>Access flag fault (section/page)</td></tr>
+  <tr><td>0b000100</td><td>Instruction cache maintenance fault</td></tr>
+  <tr><td>0b000101</td><td>Translation fault (section)</td></tr>
+  <tr><td>0b000111</td><td>Translation fault (page)</td></tr>
+  <tr><td>0b001001</td><td>Domain fault (section)</td></tr>
+  <tr><td>0b001011</td><td>Domain fault (page)</td></tr>
+  <tr><td>0b001101</td><td>Permission fault (section)</td></tr>
+  <tr><td>0b001111</td><td>Permission fault (page)</td></tr>
+  <tr><td>0b010000</td><td>Synchronous external abort (translation table walk)</td></tr>
+  <tr><td>0b010001</td><td>Synchronous external abort (access)</td></tr>
+  <tr><td>0b100001</td><td>Alignment fault (alignment checking enabled via SCTLR.A)</td></tr>
+</table>
+<p class="note">DFSR is CP15 c5,c0. Read with <code>MRC p15, 0, Rd, c5, c0, 0</code>.</p>
+
+</body>
+</html>
