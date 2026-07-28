@@ -1,1 +1,5 @@
 .DS_Store
+.curator_state
+/.curator_backups/
+/node_modules/
+/packages/
