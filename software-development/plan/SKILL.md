@@ -1,7 +1,7 @@
 ---
 name: plan
 description: Write a markdown plan to .hermes/plans/; no execution.
-version: 2.0.0
+version: 2.1.0
 author: Hermes Agent (writing-craft adapted from obra/superpowers)
 license: MIT
 platforms: [linux, macos, windows]
@@ -15,59 +15,54 @@ metadata:
 
 Use this skill when the user wants a plan instead of execution.
 
-## Core behavior
+## Core Behavior
 
-For this turn, you are planning only.
+For this turn, you are **planning only**:
+- Do not implement code
+- Do not edit project files except the plan markdown file
+- Do not run mutating terminal commands, commit, push, or perform external actions
+- You may inspect the repo with read-only commands/tools
+- Deliverable: markdown plan saved to `.hermes/plans/` in active workspace
 
-- Do not implement code.
-- Do not edit project files except the plan markdown file.
-- Do not run mutating terminal commands, commit, push, or perform external actions.
-- You may inspect the repo or other context with read-only commands/tools when needed.
-- Your deliverable is a markdown plan saved inside the active workspace under `.hermes/plans/`.
+## Output Requirements
 
-## Output requirements
-
-Write a markdown plan that is concrete and actionable.
-
-Include, when relevant:
+Write a concrete, actionable markdown plan. Include when relevant:
 - Goal
 - Current context / assumptions
 - Proposed approach
 - Step-by-step plan
 - Files likely to change
 - Tests / validation
-- Risks, tradeoffs, and open questions
+- Risks, tradeoffs, open questions
 
-If the task is code-related, include exact file paths, likely test targets, and verification steps.
+For code tasks: exact file paths, likely test targets, verification steps.
 
-## Save location
+## Save Location
 
-Save the plan with `write_file` under:
-- `.hermes/plans/YYYY-MM-DD_HHMMSS-<slug>.md`
+Save with `write_file` under:
+```
+.hermes/plans/YYYY-MM-DD_HHMMSS-<slug>.md
+```
+Relative to active working directory / backend workspace (backend-aware). If runtime provides specific target path, use that.
 
-Treat that as relative to the active working directory / backend workspace. Hermes file tools are backend-aware, so using this relative path keeps the plan with the workspace on local, docker, ssh, modal, and daytona backends.
+## Interaction Style
 
-If the runtime provides a specific target path, use that exact path.
-If not, create a sensible timestamped filename yourself under `.hermes/plans/`.
-
-## Interaction style
-
-- If the request is clear enough, write the plan directly.
-- If no explicit instruction accompanies `/plan`, infer the task from the current conversation context.
-- If it is genuinely underspecified, ask a brief clarifying question instead of guessing.
-- After saving the plan, reply briefly with what you planned and the saved path.
+- Request clear enough → write plan directly
+- No explicit instruction with `/plan` → infer task from conversation context
+- Genuinely underspecified → ask brief clarifying question instead of guessing
+- After saving → reply briefly with what you planned and saved path
 
 ---
 
 # Writing the Plan Well
 
-The rest of this skill is the craft of authoring a *good* implementation plan — the content that goes inside the markdown file above.
+The rest of this skill is the craft of authoring a *good* implementation plan.
 
 ## Overview
 
-Write comprehensive implementation plans assuming the implementer has zero context for the codebase and questionable taste. Document everything they need: which files to touch, complete code, testing commands, docs to check, how to verify. Give them bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+Write comprehensive plans assuming the implementer has **zero context** for the codebase and **questionable taste**. Document everything: which files to touch, complete code, testing commands, docs to check, how to verify. Give bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
 
-Assume the implementer is a skilled developer but knows almost nothing about the toolset or problem domain. Assume they don't know good test design very well.
+Assume implementer is skilled but knows almost nothing about toolset or problem domain. Assume they don't know good test design well.
 
 **Core principle:** A good plan makes implementation obvious. If someone has to guess, the plan is incomplete.
 
@@ -76,7 +71,7 @@ Assume the implementer is a skilled developer but knows almost nothing about the
 **Always use before:**
 - Implementing multi-step features
 - Breaking down complex requirements
-- Delegating to subagents via subagent-driven-development
+- Delegating to subagents via `subagent-driven-development`
 
 **Don't skip when:**
 - Feature seems simple (assumptions cause bugs)
@@ -90,14 +85,14 @@ Assume the implementer is a skilled developer but knows almost nothing about the
 Every step is one action:
 - "Write the failing test" — step
 - "Run it to make sure it fails" — step
-- "Implement the minimal code to make the test pass" — step
-- "Run the tests and make sure they pass" — step
+- "Implement minimal code to pass" — step
+- "Run tests to verify pass" — step
 - "Commit" — step
 
 **Too big:**
 ```markdown
 ### Task 1: Build authentication system
-[50 lines of code across 5 files]
+[50 lines across 5 files]
 ```
 
 **Right size:**
@@ -117,7 +112,6 @@ Every step is one action:
 ### Header (Required)
 
 Every plan MUST start with:
-
 ```markdown
 # [Feature Name] Implementation Plan
 
@@ -135,7 +129,6 @@ Every plan MUST start with:
 ### Task Structure
 
 Each task follows this format:
-
 ````markdown
 ### Task N: [Descriptive Name]
 
@@ -182,41 +175,28 @@ git commit -m "feat: add specific feature"
 ## Writing Process
 
 ### Step 1: Understand Requirements
-
-Read and understand:
-- Feature requirements
-- Design documents or user description
-- Acceptance criteria
-- Constraints
+Read: feature requirements, design docs/user description, acceptance criteria, constraints
 
 ### Step 2: Explore the Codebase
-
-Use Hermes tools to understand the project:
-
+Use Hermes tools:
 ```python
-# Understand project structure
+# Project structure
 search_files("*.py", target="files", path="src/")
 
-# Look at similar features
+# Similar features
 search_files("similar_pattern", path="src/", file_glob="*.py")
 
-# Check existing tests
+# Existing tests
 search_files("*.py", target="files", path="tests/")
 
-# Read key files
+# Key files
 read_file("src/app.py")
 ```
 
 ### Step 3: Design Approach
-
-Decide:
-- Architecture pattern
-- File organization
-- Dependencies needed
-- Testing strategy
+Decide: architecture pattern, file organization, dependencies needed, testing strategy
 
 ### Step 4: Write Tasks
-
 Create tasks in order:
 1. Setup/infrastructure
 2. Core functionality (TDD for each)
@@ -225,36 +205,31 @@ Create tasks in order:
 5. Cleanup/documentation
 
 ### Step 5: Add Complete Details
-
-For each task, include:
+For each task include:
 - **Exact file paths** (not "the config file" but `src/config/settings.py`)
-- **Complete code examples** (not "add validation" but the actual code)
+- **Complete code examples** (not "add validation" but actual code)
 - **Exact commands** with expected output
-- **Verification steps** that prove the task works
+- **Verification steps** proving task works
 
 ### Step 6: Review the Plan
-
 Check:
-- [ ] Tasks are sequential and logical
-- [ ] Each task is bite-sized (2-5 min)
-- [ ] File paths are exact
-- [ ] Code examples are complete (copy-pasteable)
-- [ ] Commands are exact with expected output
+- [ ] Tasks sequential and logical
+- [ ] Each task bite-sized (2-5 min)
+- [ ] File paths exact
+- [ ] Code examples complete (copy-pasteable)
+- [ ] Commands exact with expected output
 - [ ] No missing context
 - [ ] DRY, YAGNI, TDD principles applied
 
 ## Principles
 
 ### DRY (Don't Repeat Yourself)
-
 **Bad:** Copy-paste validation in 3 places
 **Good:** Extract validation function, use everywhere
 
 ### YAGNI (You Aren't Gonna Need It)
-
 **Bad:** Add "flexibility" for future requirements
 **Good:** Implement only what's needed now
-
 ```python
 # Bad — YAGNI violation
 class User:
@@ -272,8 +247,7 @@ class User:
 ```
 
 ### TDD (Test-Driven Development)
-
-Every task that produces code should include the full TDD cycle:
+Every code-producing task includes full TDD cycle:
 1. Write failing test
 2. Run to verify failure
 3. Write minimal code
@@ -282,7 +256,6 @@ Every task that produces code should include the full TDD cycle:
 See `test-driven-development` skill for details.
 
 ### Frequent Commits
-
 Commit after every task:
 ```bash
 git add [files]
@@ -291,33 +264,19 @@ git commit -m "type: description"
 
 ## Common Mistakes
 
-### Vague Tasks
-
-**Bad:** "Add authentication"
-**Good:** "Create User model with email and password_hash fields"
-
-### Incomplete Code
-
-**Bad:** "Step 1: Add validation function"
-**Good:** "Step 1: Add validation function" followed by the complete function code
-
-### Missing Verification
-
-**Bad:** "Step 3: Test it works"
-**Good:** "Step 3: Run `pytest tests/test_auth.py -v`, expected: 3 passed"
-
-### Missing File Paths
-
-**Bad:** "Create the model file"
-**Good:** "Create: `src/models/user.py`"
+| Mistake | Fix |
+|---------|-----|
+| Vague tasks ("Add authentication") | Specific ("Create User model with email and password_hash fields") |
+| Incomplete code ("Add validation function") | Complete code after step description |
+| Missing verification ("Test it works") | Exact command + expected output (`pytest tests/test_auth.py -v`, expected: 3 passed) |
+| Missing file paths ("Create the model file") | Exact path (`src/models/user.py`) |
 
 ## Execution Handoff
 
-After saving the plan, offer the execution approach:
+After saving the plan:
+> "Plan complete and saved. Ready to execute using `subagent-driven-development` — I'll dispatch a fresh subagent per task with two-stage review (spec compliance then code quality). Shall I proceed?"
 
-**"Plan complete and saved. Ready to execute using subagent-driven-development — I'll dispatch a fresh subagent per task with two-stage review (spec compliance then code quality). Shall I proceed?"**
-
-When executing, use the `subagent-driven-development` skill:
+When executing, use `subagent-driven-development`:
 - Fresh `delegate_task` per task with full context
 - Spec compliance review after each task
 - Code quality review after spec passes
