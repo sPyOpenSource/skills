@@ -8,7 +8,7 @@ except ImportError:
     sys.exit("SKIP/ERROR: pyyaml not available")
 
 ROOT = pathlib.Path(
-    "/Users/xuyi/Source/skills/"  # TODO: make this relative to the repo root
+    "./"  # TODO: make this relative to the repo root
 )
 TPL = ROOT / "writing-skills/templates/test-confirmation-gate.md"
 SKILL = ROOT / "writing-skills/SKILL.md"
