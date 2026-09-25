@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Lifecycle — Reference</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <span class="tag">Reference</span>
+  <a href="../lessons/0003-skill-contract.html">Lesson 3</a>
+  <span>→</span>
+  <span>Skill Lifecycle</span>
+</nav>
+
+<h1>Skill Lifecycle</h1>
+<p class="sidenote">Print-friendly cheat sheet for reasoning about OpenCode skills</p>
+
+<p>A skill becomes useful through several boundaries. Keep the documented runtime behavior separate from the model's judgment and this repository's conventions.</p>
+
+<h2>The Trace</h2>
+
+<pre>user request
+    ↓
+discovery paths → SKILL.md files
+    ↓
+available_skills: name + description
+    ↓
+model selects a plausible skill
+    ↓
+skill tool loads the full file (if permitted)
+    ↓
+agent follows the body and may read companion files</pre>
+
+<h2>Stage Reference</h2>
+
+<table>
+  <tr>
+    <th>Stage</th>
+    <th>Question</th>
+    <th>Source of truth</th>
+  </tr>
+  <tr>
+    <td>Discovery</td>
+    <td>Is the file in a recognized skill directory?</td>
+    <td>OpenCode searches project and global <code>.opencode</code>, <code>.agents</code>, and <code>.claude</code> paths.</td>
+  </tr>
+  <tr>
+    <td>Identification</td>
+    <td>Does the file have valid frontmatter and a matching name?</td>
+    <td><code>name</code> and <code>description</code> are required; the name matches its directory.</td>
+  </tr>
+  <tr>
+    <td>Listing</td>
+    <td>What information can the agent use to choose?</td>
+    <td>The <code>skill</code> tool exposes the name and description in <code>&lt;available_skills&gt;</code>.</td>
+  </tr>
+  <tr>
+    <td>Selection</td>
+    <td>Does the request plausibly match the description?</td>
+    <td>Model judgment; a specific description improves routing.</td>
+  </tr>
+  <tr>
+    <td>Loading</td>
+    <td>Can this agent access the selected skill?</td>
+    <td>The native <code>skill</code> tool and the configured permission.</td>
+  </tr>
+  <tr>
+    <td>Execution</td>
+    <td>What procedure should the agent follow?</td>
+    <td>The body of <code>SKILL.md</code>, plus any referenced files and tools.</td>
+  </tr>
+</table>
+
+<h2>Contract Layers</h2>
+
+<table>
+  <tr>
+    <th>Layer</th>
+    <th>Job</th>
+    <th>Common mistake</th>
+  </tr>
+  <tr>
+    <td><code>name</code></td>
+    <td>Stable identity and directory match</td>
+    <td>Using a name that differs from the folder</td>
+  </tr>
+  <tr>
+    <td><code>description</code></td>
+    <td>Routing text: when the skill is relevant</td>
+    <td>Writing a miniature manual instead of trigger conditions</td>
+  </tr>
+  <tr>
+    <td>Body</td>
+    <td>Procedure, constraints, and completion checks</td>
+    <td>Leaving the actual instructions in companion files that never get loaded</td>
+  </tr>
+  <tr>
+    <td>Companion files</td>
+    <td>On-demand detail, examples, scripts, or references</td>
+    <td>Assuming every companion file is automatically available</td>
+  </tr>
+  <tr>
+    <td>Permission</td>
+    <td>Controls whether loading is allowed, denied, or needs approval</td>
+    <td>Debugging selection when the skill is actually hidden</td>
+  </tr>
+</table>
+
+<h2>OpenCode vs. Repository Convention</h2>
+
+<p>OpenCode documents <code>name</code>, <code>description</code>, <code>license</code>, <code>compatibility</code>, and <code>metadata</code> as recognized frontmatter fields. This repository also uses fields such as <code>version</code>, <code>author</code>, <code>platforms</code>, and nested Hermes metadata. Those fields can serve repository tooling and human readers, but do not assume OpenCode uses them for routing.</p>
+
+<h2>Fast Diagnosis</h2>
+
+<ol>
+  <li>Confirm the file is named exactly <code>SKILL.md</code>.</li>
+  <li>Confirm it sits in a recognized discovery path.</li>
+  <li>Parse the frontmatter and compare <code>name</code> with the directory.</li>
+  <li>Check whether a permission rule hides or blocks the skill.</li>
+  <li>Read the description as a router, not as the full instructions.</li>
+  <li>Load the body before judging whether the procedure is complete.</li>
+</ol>
+
+<div class="footer">
+  <p><strong>Primary source:</strong> <a href="https://opencode.ai/docs/skills/">OpenCode Agent Skills documentation</a>.</p>
+  <p><strong>Related:</strong> <a href="skill-anatomy.html">SKILL.md Anatomy</a> · <a href="../lessons/0002-skill-configuration.html">Lesson 2: Configuration</a></p>
+</div>
+
+</body>
+</html>

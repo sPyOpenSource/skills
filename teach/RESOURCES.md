@@ -1,41 +1,27 @@
-# Baremetal Hardware Debugging — Resources
+# Skills Architecture — Resources
 
 ## Knowledge
 
-### BeagleBone AI Hardware
+- [OpenCode Agent Skills documentation](https://opencode.ai/docs/skills/)
+  Primary source for discovery paths, required frontmatter, name and description rules, the `skill` tool, permissions, and troubleshooting. Use for every claim about how OpenCode discovers and loads skills.
 
-- [BeagleBone AI System Reference Manual](https://beagleboard.org/static/beaglebone/a/Docs.html)
-  Official documentation: schematics, memory map, pinmux, PRCM. Use for: anything about the BBAI hardware itself.
+- [OpenCode source repository](https://github.com/anomalyco/opencode)
+  Primary implementation reference when the documentation leaves behavior underspecified. Use for checking the current implementation rather than guessing from examples.
 
-- [AM572x Sitara Processor Technical Reference Manual](https://www.ti.com/lit/pdf/spruhz6)
-  The SoC manual for the BBAI's dual-core A15 + 2x M4 + 2x DSP. 7000+ pages. Use for: PRCM registers, UART config, pinmux controller, GIC distributor.
+- [This repository's `writing-skills` guide](../writing-skills/SKILL.md)
+  Local conventions for descriptions, progressive disclosure, information hierarchy, and testing skill instructions. Use for the repository's design principles, not as a replacement for the OpenCode runtime contract.
 
-### Serial / UART Debugging
+- [The `opencode` skill](../autonomous-ai-agents/opencode/SKILL.md)
+  A concrete example of frontmatter routing text, a procedure, verification criteria, and companion operational guidance. Use for tracing a real skill from selection to execution.
 
-- [BeagleBone AI Serial Console](https://beagleboard.org/getting-started#serial)
-  Official guide: connecting a USB-UART cable, identifying pins, baud rate (115200 8N1).
+- [The `ask-matt` skill](../ask-matt/SKILL.md)
+  A router skill whose body maps situations to other skills. Use when explaining how one skill can direct the agent toward another workflow.
 
-### JTAG / OpenOCD
+## Wisdom (Communities)
 
-- [OpenOCD User's Guide](https://openocd.org/doc/html/index.html)
-  Reference for JTAG debugging on ARM. Scripts for TI Sitara / OMAP targets.
+- [OpenCode Discord](https://opencode.ai/discord)
+  Community for testing understanding against current agent behavior and asking about edge cases. Prefer questions grounded in a minimal reproducible skill and the official docs.
 
-- [Tag-Connect TC2050-IDC](https://www.tag-connect.com/product/tc2050-idc-legacy)
-  The 10-pin JTAG cable for the BBAI's mini-JTAG header. This + ARM-20 adapter gets you OpenOCD access.
+## Gaps
 
-### ARM Debug Architecture
-
-- [ARM Architecture Reference Manual ARMv7-A (ARM DDI 0406C)](https://developer.arm.com/documentation/ddi0406/latest/)
-  Chapter B1: System registers. Chapter B6: Debug. Use for: understanding monitor mode, debug registers, vector catch.
-
-### Crash Debugging (Data/Prefetch Aborts)
-
-- [ARM Exceptions and Interrupts](https://developer.arm.com/documentation/dui0473/m/exceptions-and-interrupts)
-  Understanding exception types, vector table, and fault status registers (DFSR, IFSR, DFAR, IFAR).
-
-## Tools
-
-- `screen` / `minicom` / `picocom` — terminal emulators for serial console
-- OpenOCD — JTAG debug server
-- GDB (arm-none-eabi-gdb) — debugger client
-- Saleae Logic / sigrok — cheap logic analyzer for UART/timing debug
+- OpenCode documents the skill contract and tool boundary, but model-based selection is probabilistic. Lessons should distinguish documented guarantees from useful mental models.

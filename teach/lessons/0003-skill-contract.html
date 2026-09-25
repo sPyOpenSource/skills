@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Skill Contract — Lesson 3</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="0002-skill-configuration.html">Lesson 2</a>
+  <span>→</span>
+  <span class="tag">Lesson 3</span>
+  <span>The Skill Contract</span>
+  <span>→</span>
+  <a href="../reference/skill-lifecycle.html">Lifecycle reference</a>
+</nav>
+
+<h1>The Skill Contract</h1>
+<p class="sidenote">Skills Architecture — from a file on disk to agent behavior</p>
+
+<p>You already know that a skill is a <code>SKILL.md</code> file and that OpenCode can list and load skills. The useful next question is: <strong>which part of the skill is doing the work at each moment?</strong></p>
+
+<blockquote>
+  A skill is a contract across layers: the file must be discoverable, its description must make it selectable, its body must make the behavior repeatable, and its permission must allow access.
+</blockquote>
+
+<h2>One Request, Five Boundaries</h2>
+
+<p>Trace the request “use OpenCode to implement a feature in an isolated worktree” through the system:</p>
+
+<pre>request
+  → discovery finds SKILL.md files
+  → available_skills lists names and descriptions
+  → the agent selects a plausible skill
+  → the skill tool loads the full file
+  → the agent follows the body and uses referenced tools</pre>
+
+<table>
+  <tr>
+    <th>Boundary</th>
+    <th>What matters</th>
+    <th>Failure to inspect</th>
+  </tr>
+  <tr>
+    <td>Discovery</td>
+    <td>File location and <code>SKILL.md</code> spelling</td>
+    <td>“The skill exists” when it is outside the search paths</td>
+  </tr>
+  <tr>
+    <td>Listing</td>
+    <td><code>name</code> and <code>description</code></td>
+    <td>A vague description that cannot support selection</td>
+  </tr>
+  <tr>
+    <td>Selection</td>
+    <td>Request-to-description fit</td>
+    <td>Expecting the model to infer undocumented intent</td>
+  </tr>
+  <tr>
+    <td>Loading</td>
+    <td>The native <code>skill</code> tool and permission</td>
+    <td>A hidden or denied skill being treated as a bad match</td>
+  </tr>
+  <tr>
+    <td>Execution</td>
+    <td>The body, references, tools, and completion checks</td>
+    <td>Reading metadata and assuming it is the procedure</td>
+  </tr>
+</table>
+
+<h2>Three Parts, Three Jobs</h2>
+
+<h3>1. The description routes</h3>
+
+<p>The <code>description</code> is the small piece of text that helps the agent decide <em>when</em> the skill is relevant. It is not a substitute for the instructions. In this repository, the <a href="../../autonomous-ai-agents/opencode/SKILL.md"><code>opencode</code> skill</a> advertises itself as “Delegate coding to OpenCode CLI (features, PR review).” That is routing text: it names the situation, not every command in the body.</p>
+
+<h3>2. The body instructs</h3>
+
+<p>After selection, the full <code>SKILL.md</code> enters the agent's working context. The body contains the procedure, constraints, examples, and verification. In the same skill, the <code>When to Use</code>, <code>Procedure</code>, and <code>Verification</code> sections do the behavioral work.</p>
+
+<h3>3. Companion files extend</h3>
+
+<p>References, scripts, templates, and examples can keep the main file focused. They are not automatically a second skill: the agent must be directed to them, and the main file must still contain enough context to use them safely.</p>
+
+<div class="quiz" data-quiz="routing">
+  <p>Retrieval check: a skill is listed but the agent keeps choosing another skill for a request that clearly needs it. What should you inspect first?</p>
+  <button class="quiz-option" data-correct="false" data-feedback="The release number is not the routing signal. Inspect the description first.">The release version</button>
+  <button class="quiz-option" data-correct="true" data-feedback="Correct. The description is the model-facing routing text.">The routing description</button>
+  <button class="quiz-option" data-correct="false" data-feedback="The license does not tell the agent when to load the skill.">The license field</button>
+  <button class="quiz-option" data-correct="false" data-feedback="The author is useful metadata, but it is not the primary routing signal.">The author name</button>
+  <div class="quiz-feedback"></div>
+</div>
+
+<h2>Runtime Contract vs. Repository Convention</h2>
+
+<p>The <a href="https://opencode.ai/docs/skills/">official OpenCode documentation</a> defines the runtime contract: <code>name</code> and <code>description</code> are required, <code>name</code> must match the containing directory, and the description must be specific enough for the agent to choose correctly. OpenCode also documents optional <code>license</code>, <code>compatibility</code>, and <code>metadata</code> fields.</p>
+
+<p>This repository adds conventions such as <code>version</code>, <code>author</code>, <code>platforms</code>, and nested Hermes metadata. Those fields may help this repository's own tooling and human readers. Do not mistake a convention for an OpenCode routing guarantee.</p>
+
+<table>
+  <tr>
+    <th>Question</th>
+    <th>Best source</th>
+  </tr>
+  <tr>
+    <td>Where does OpenCode search?</td>
+    <td>Official skill documentation and the active project configuration</td>
+  </tr>
+  <tr>
+    <td>When should this skill load?</td>
+    <td>The skill's description, interpreted against the user's request</td>
+  </tr>
+  <tr>
+    <td>How should the agent proceed?</td>
+    <td>The skill body and any files it explicitly references</td>
+  </tr>
+  <tr>
+    <td>Is loading allowed?</td>
+    <td>The agent/tool permission configuration</td>
+  </tr>
+</table>
+
+<h2>Trace It Yourself</h2>
+
+<ol>
+  <li>Open <a href="../../autonomous-ai-agents/opencode/SKILL.md"><code>autonomous-ai-agents/opencode/SKILL.md</code></a>.</li>
+  <li>Point to the one line that would help select it for a request about delegating a code change.</li>
+  <li>Find the section that tells the agent how to verify the delegated work.</li>
+  <li>Name one field that is useful repository metadata but is not needed to answer “when should this load?”</li>
+</ol>
+
+<details>
+  <summary>Reveal a model answer</summary>
+  <p>The description is the routing line. The <code>Verification</code> section supplies the completion checks. <code>version</code>, <code>author</code>, and <code>platforms</code> are supporting metadata unless the runtime documentation says otherwise.</p>
+</details>
+
+<div class="quiz" data-quiz="loading">
+  <p>Retrieval check: after the agent selects a skill, what does the native skill tool load?</p>
+  <button class="quiz-option" data-correct="false" data-feedback="The body is only part of the loaded file.">Only the frontmatter</button>
+  <button class="quiz-option" data-correct="true" data-feedback="Correct. Loading brings the full SKILL.md into the working context.">The complete SKILL.md</button>
+  <button class="quiz-option" data-correct="false" data-feedback="A directory is an input to discovery, not the loaded instruction.">Only the directory</button>
+  <button class="quiz-option" data-correct="false" data-feedback="Metadata helps with identity and routing; it is not the whole skill.">Only the metadata</button>
+  <div class="quiz-feedback"></div>
+</div>
+
+<h2>Summary</h2>
+
+<ul>
+  <li><strong>Discovery</strong> finds candidate files; it does not prove they will be selected.</li>
+  <li><strong>Description</strong> routes by making a request-to-skill match plausible.</li>
+  <li><strong>Body</strong> instructs by supplying the repeatable procedure.</li>
+  <li><strong>Permissions</strong> gate loading; they are separate from relevance.</li>
+  <li><strong>Repository conventions</strong> and OpenCode's runtime contract are related but not identical.</li>
+</ul>
+
+<div class="footer">
+  <p><strong>Primary source:</strong> <a href="https://opencode.ai/docs/skills/">OpenCode Agent Skills documentation</a>.</p>
+  <p><strong>Next:</strong> <a href="../reference/skill-lifecycle.html">Skill Lifecycle reference</a> · <a href="../reference/skill-anatomy.html">SKILL.md Anatomy</a> · <a href="0002-skill-configuration.html">Lesson 2</a></p>
+  <p>Ask me a follow-up question whenever a boundary is still fuzzy; that is part of learning the system.</p>
+</div>
+
+<script src="../assets/quiz.js"></script>
+
+</body>
+</html>
