@@ -1,7 +1,7 @@
 # Confirmation-Gate Behavior Test Packs for Skill Authors
 
 - **Date:** 2026-09-25
-- **Status:** Approved in brainstorming
+- **Status:** Design approved; written spec awaiting user review
 - **Scope:** Lightweight, skill-local behavior tests for confirmation gates
 
 ## Summary
@@ -58,6 +58,8 @@ A confirmation-gate test pack is required when a skill allows an agent to cross 
 - forcing a state change;
 - performing an external side effect; or
 - taking another action that the skill explicitly defines as requiring confirmation.
+
+A **material gate change** alters when the gate applies, which action is protected, or the required confirmation wording or form. Editorial changes outside those behaviors do not invalidate an existing pack.
 
 The rule applies to:
 
