@@ -33,6 +33,7 @@ The curator state confirms the tension: `.curator_state` records `"llm: skipped 
 3. Keep the published catalog complete: every installable skill stays in the repository. Removing a name-collided copy is a bug fix, not a reduction, because only one copy of a colliding name was ever loadable.
 4. Keep curation reversible in a single edit.
 5. Eliminate silent name collisions from the loaded set.
+6. Keep the tool and its committed schema example independent of the local manifest, so the repository is usable by anyone who clones it.
 
 ## Non-Goals
 
@@ -86,7 +87,7 @@ skills:
 
 Keys under `skills:` are install paths relative to the repository root, so both nested (`creative/p5js`) and top-level (`graphify`) skills are addressable.
 
-A key under `categories:` names a top-level directory, and it governs every skill beneath it at any depth — `mlops: active` covers `mlops/research/dspy` and `mlops/inference/llama-cpp`. A top-level directory that directly contains a `SKILL.md` rather than subdirectories is itself a single skill, and its own key governs it (`writing-plans: active`). These two cases are distinguished by inspecting for nested `SKILL.md` files, not by a naming convention.
+A key under `categories:` matches the **first path component** of a skill's install path, and it governs every skill beneath it at any depth — `mlops: active` covers `mlops/research/dspy` and `mlops/inference/llama-cpp`. The same rule covers a top-level directory that is itself a single skill: `writing-plans/SKILL.md` has first component `writing-plans`, so `writing-plans: active` governs it. No special-casing or nested-file inspection is required.
 
 More specific keys always win: a `skills:` entry beats a `categories:` entry, which beats `default`. A path may not appear under both `categories:` and `skills:`.
 
@@ -101,12 +102,16 @@ The file is gitignored. It encodes personal policy and has no place in a shared 
 ```jsonc
 "permission": {
   "skill": {
+    // >>> curated by scripts/curate.py — regenerate: python3 scripts/curate.py sync >>>
     "*": "deny",
     "brainstorming": "allow",
     "writing-plans": "allow"
+    // <<< curated by scripts/curate.py <<<
   }
 }
 ```
+
+The markers are `//` line comments, which opencode's JSONC parser accepts and the tool never has to strip: it locates the region by text and splices, so the `//` inside a `https://` base URL elsewhere in the file is irrelevant. The region holds only pattern-to-value pairs — no sentinel keys — because `permission.skill` is a schema-validated map whose values must be `allow`, `deny`, or `ask`.
 
 Patterns match skill `name`, not install path, so the tier system collapses to `"*": "deny"` plus one `allow` per active skill. The invariant "not listed means off" is then enforced by opencode rather than held by convention.
 
@@ -126,7 +131,7 @@ Two failure modes follow from an allowlist and are addressed in the tool: a prom
 
 `scripts/curate.py`, standard library plus PyYAML — already a soft dependency of the repository's `gate_tests.py`, which skips cleanly when it is absent. Three subcommands:
 
-- **`plan`** — resolve the cascade and print active and archived counts, the active set's total frontmatter size in tokens, and any skill present on disk that appeared since the last recorded review. Read-only.
+- **`plan`** — resolve the cascade, print active and archived counts, the active set's total frontmatter size in tokens, and any skill present on disk that appeared since the last recorded review. Recording the review is `plan`'s side effect, which is what makes "I have looked at this list" a checkable fact rather than an assumption.
 - **`sync`** — rewrite the marked region from the resolved active set. Idempotent.
 - **`check`** — everything `plan` reports, plus manifest consistency and whether the config region matches what `sync` would write. Exits non-zero on any failure. This is the verification entry point.
 
@@ -140,7 +145,8 @@ Each condition produces a specific message, never a stack trace:
 |---|---|
 | Exception names a skill that does not exist | Error naming the path and the closest matches |
 | Two skills resolve to the same `name` | Error listing both install paths; this is the collision case that makes allowlist patterns ambiguous |
-| `opencode.jsonc` missing or unparseable | Error with the exact remediation; `sync` does not create the file |
+| `opencode.jsonc` missing | Error naming the expected path; `sync` never creates the file |
+| Marked region absent from `opencode.jsonc` | Error printing the exact skeleton to paste once; the tool never invents JSON structure in a hand-edited file |
 | Config region differs from `sync` output | Error naming the drifted skill names; instruct to run `sync` |
 | A promoted skill absent from the config region | Error — catches the typo that would otherwise fail silently |
 | No manifest present | `plan` and `check` exit non-zero pointing at `curation.example.yaml` |
