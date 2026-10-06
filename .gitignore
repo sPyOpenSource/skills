@@ -3,3 +3,4 @@
 /.curator_backups/
 /node_modules/
 /packages/
+__pycache__/
