@@ -14,7 +14,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from curation.skills import SKIP_DIRS, discover_skills, est_tokens
+from curation.skills import SKIP_DIRS, discover_skills, est_tokens, frontmatter_span
 
 # label -> (members that may be considered for keeping; keep-count lives in propose.py)
 FAMILIES = {
@@ -43,9 +43,25 @@ FAMILIES = {
     ],
 }
 
+# description longer than this counts as an offender in the totals
+DESC_OFFENDER = 400
+
 REF_RE = re.compile(
-    r"`([^`\s]+\.(?:md|py|sh|ts|js|json|ya?ml|txt))`|\]\(([^)\s]+\.(?:md|py|sh|ts|js|json|ya?ml|txt))\)"
+    r"`([^`\s]+\.(?:md|py|sh|ts|js|json|ya?ml|txt))`"
+    r"|\]\(([^)\s#?]+\.(?:md|py|sh|ts|js|json|ya?ml|txt))[^)\s]*(?:\s+\"[^\"]*\")?\)"
 )
+
+
+def _is_pruned(parts: tuple[str, ...]) -> bool:
+    return any(p.startswith(".") or p in SKIP_DIRS for p in parts)
+
+
+def _subtree_has_skill(base: pathlib.Path) -> bool:
+    for skill_md in base.rglob("SKILL.md"):
+        if _is_pruned(skill_md.relative_to(base).parts):
+            continue
+        return True
+    return False
 
 
 def inert_dirs(root: str) -> list[str]:
@@ -53,18 +69,17 @@ def inert_dirs(root: str) -> list[str]:
     rootp = pathlib.Path(root)
     out = []
     for desc in rootp.rglob("DESCRIPTION.md"):
-        rel_parts = desc.relative_to(rootp).parts
-        if any(p.startswith(".") or p in SKIP_DIRS for p in rel_parts):
+        if _is_pruned(desc.relative_to(rootp).parts):
             continue
-        if not any(desc.parent.rglob("SKILL.md")):
+        if not _subtree_has_skill(desc.parent):
             out.append(desc.parent.relative_to(rootp).as_posix())
     return sorted(set(out))
 
 
 def _body_text(skill_md: pathlib.Path) -> str:
-    text = skill_md.read_text(encoding="utf-8")
-    end = text.find("\n---", 3)
-    return text[end + 4:] if text.startswith("---") and end != -1 else text
+    text = skill_md.read_text(encoding="utf-8-sig")
+    span = frontmatter_span(text)
+    return text[len(span):] if span else text
 
 
 def broken_refs(root: str, rel_path: str) -> list[str]:
@@ -74,7 +89,7 @@ def broken_refs(root: str, rel_path: str) -> list[str]:
     broken = []
     for m in REF_RE.finditer(body):
         ref = m.group(1) or m.group(2)
-        if ref.startswith(("http://", "https://", "~", "/")):
+        if ref.startswith(("http://", "https://", "//", "~", "/")):
             continue
         if not (base / ref).exists() and not (pathlib.Path(root) / ref).exists():
             broken.append(ref)
@@ -105,9 +120,13 @@ def inventory(root: str) -> dict:
         "totals": {
             "skills": len(rows),
             "fm_tokens": sum(r["fm_tokens"] for r in rows),
-            "offenders": sum(1 for r in rows if r["desc_chars"] > 400),
+            "offenders": sum(1 for r in rows if r["desc_chars"] > DESC_OFFENDER),
         },
     }
+
+
+def _md_cell(value) -> str:
+    return str(value).replace("|", r"\|")
 
 
 def to_markdown(inv: dict) -> str:
@@ -117,15 +136,15 @@ def to_markdown(inv: dict) -> str:
     ]
     for r in inv["skills"]:
         lines.append(
-            f"| {r['path']} | {r['name']} | {r['desc_chars']} | {r['fm_tokens']} "
-            f"| {','.join(r['families'])} | {','.join(r['broken_refs'])} |"
+            f"| {_md_cell(r['path'])} | {_md_cell(r['name'])} | {r['desc_chars']} | {r['fm_tokens']} "
+            f"| {_md_cell(', '.join(r['families']))} | {_md_cell(', '.join(r['broken_refs']))} |"
         )
     lines.append("")
     lines.append(f"Inert directories: {', '.join(inv['inert_dirs']) or '(none)'}")
     t = inv["totals"]
     lines.append(
         f"Totals: {t['skills']} skills, {t['fm_tokens']} fm tokens, "
-        f"{t['offenders']} description offenders (>400 chars)"
+        f"{t['offenders']} description offenders (>{DESC_OFFENDER} chars)"
     )
     return "\n".join(lines) + "\n"
 
@@ -136,7 +155,19 @@ def main(argv=None) -> int:
     ap.add_argument("--json", help="write inventory JSON here")
     ap.add_argument("--md", help="write inventory markdown here")
     args = ap.parse_args(argv)
-    inv = inventory(args.root)
+    for target in (args.json, args.md):
+        if target and (
+            target.endswith(os.sep)
+            or os.path.isdir(target)
+            or os.path.dirname(target) == target
+        ):
+            print(f"error: {target} is not a file", file=sys.stderr)
+            return 2
+    try:
+        inv = inventory(args.root)
+    except OSError as e:
+        print(f"error: {e}", file=sys.stderr)
+        return 2
     md = to_markdown(inv)
     if args.json:
         os.makedirs(os.path.dirname(args.json) or ".", exist_ok=True)
