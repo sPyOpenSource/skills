@@ -62,7 +62,7 @@ def frontmatter_span(text: str) -> str | None:
 def _parse_frontmatter(span: str) -> dict:
     try:
         data = yaml.safe_load(span[3: span.rfind("---")])
-    except yaml.YAMLError:
+    except (yaml.YAMLError, RecursionError):
         return {}
     return data if isinstance(data, dict) else {}
 

@@ -179,6 +179,18 @@ class DiscoverSkillsTests(unittest.TestCase):
         self.assertEqual(skill.name, "日本語スキル 🚀")
         self.assertEqual(skill.description, "絵文字と中文描述 ✨")
 
+    def test_deeply_nested_yaml_recursion_error_yields_empty_fields(self):
+        path = os.path.join(self.root, "deep")
+        os.makedirs(path)
+        with open(os.path.join(path, "SKILL.md"), "w", encoding="utf-8") as fh:
+            fh.write(
+                "---\nname: deep\ndescription: " + "[" * 600 + "]" * 600 + "\n---\n\n# hi\n"
+            )
+        (skill,) = discover_skills(self.root)
+        self.assertEqual(skill.name, "")
+        self.assertEqual(skill.description, "")
+        self.assertGreater(skill.fm_chars, 0)
+
     def test_root_skill_md_yields_dot_path(self):
         with open(os.path.join(self.root, "SKILL.md"), "w", encoding="utf-8") as fh:
             fh.write("---\nname: toproot\ndescription: At the root.\n---\n\n# hi\n")
