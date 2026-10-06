@@ -133,10 +133,20 @@ class InventoryTests(unittest.TestCase):
         os.makedirs(os.path.join(self.root, "beta", "references"))
         with open(os.path.join(self.root, "beta", "references", "exists.md"), "w", encoding="utf-8") as fh:
             fh.write("ok\n")
+        write_skill(
+            self.root,
+            "refs",
+            "refs",
+            body='see [a](docs/a.md#frag), [b](docs/b.md "Title") and `//host/c.md`.',
+        )
         inv = inventory(self.root)
         rows = {r["path"]: r for r in inv["skills"]}
         self.assertEqual(rows["alpha"]["broken_refs"], ["references/missing.md"])
         self.assertEqual(rows["beta"]["broken_refs"], [])
+        self.assertIn("docs/a.md", rows["refs"]["broken_refs"])
+        self.assertNotIn("docs/a.md#frag", rows["refs"]["broken_refs"])
+        self.assertIn("docs/b.md", rows["refs"]["broken_refs"])
+        self.assertNotIn("//host/c.md", rows["refs"]["broken_refs"])
 
     def test_external_and_absolute_refs_are_not_flagged(self):
         write_skill(self.root, "alpha", "alpha",
@@ -226,6 +236,21 @@ class CliTests(unittest.TestCase):
         )
         self.assertEqual(res.returncode, 2)
         self.assertIn("error:", res.stderr)
+        self.assertEqual(res.stdout, "")
+
+    def test_write_path_oserror_exits_2_with_error_on_stderr(self):
+        blocker = os.path.join(self.root, "blocker")
+        with open(blocker, "w", encoding="utf-8") as fh:
+            fh.write("not a directory\n")
+        res = subprocess.run(
+            [sys.executable, SCRIPT, "--root", self.root, "--json", os.path.join(blocker, "out.json")],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(res.returncode, 2)
+        self.assertTrue(res.stderr.startswith("error:"), res.stderr)
+        self.assertNotIn("Traceback", res.stderr)
         self.assertEqual(res.stdout, "")
 
     def test_directory_output_target_is_rejected(self):

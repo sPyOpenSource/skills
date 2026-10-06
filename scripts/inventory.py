@@ -165,23 +165,26 @@ def main(argv=None) -> int:
             return 2
     try:
         inv = inventory(args.root)
+        md = to_markdown(inv)
+        if args.json:
+            os.makedirs(os.path.dirname(args.json) or ".", exist_ok=True)
+            with open(args.json, "w", encoding="utf-8") as fh:
+                json.dump(inv, fh, indent=1)
+        if args.md:
+            os.makedirs(os.path.dirname(args.md) or ".", exist_ok=True)
+            with open(args.md, "w", encoding="utf-8") as fh:
+                fh.write(md)
+        if not args.json and not args.md:
+            sys.stdout.write(md)
+        else:
+            t = inv["totals"]
+            print(
+                f"inventory: {t['skills']} skills, {t['fm_tokens']} fm tokens, "
+                f"{t['offenders']} offenders"
+            )
     except OSError as e:
         print(f"error: {e}", file=sys.stderr)
         return 2
-    md = to_markdown(inv)
-    if args.json:
-        os.makedirs(os.path.dirname(args.json) or ".", exist_ok=True)
-        with open(args.json, "w", encoding="utf-8") as fh:
-            json.dump(inv, fh, indent=1)
-    if args.md:
-        os.makedirs(os.path.dirname(args.md) or ".", exist_ok=True)
-        with open(args.md, "w", encoding="utf-8") as fh:
-            fh.write(md)
-    if not args.json and not args.md:
-        sys.stdout.write(md)
-    else:
-        t = inv["totals"]
-        print(f"inventory: {t['skills']} skills, {t['fm_tokens']} fm tokens, {t['offenders']} offenders")
     return 0
 
 
