@@ -267,5 +267,84 @@ class CliTests(unittest.TestCase):
         self.assertEqual(res.stdout, "")
 
 
+from propose import FAMILY_KEEP, propose, to_manifest
+
+
+def body_bytes(root, rel):
+    total = 0
+    for dirpath, _, filenames in os.walk(os.path.join(root, rel)):
+        for f in filenames:
+            total += os.path.getsize(os.path.join(dirpath, f))
+    return total
+
+
+class ProposeTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.root = self.tmp.name
+        self.addCleanup(self.tmp.cleanup)
+        self.out = os.path.join(self.root, ".curation_review")
+        os.makedirs(self.out)
+
+    def test_category_members_and_inert_dirs_go_to_archive(self):
+        write_skill(self.root, "creative/one", "one")
+        write_skill(self.root, "grill-me", "grill-me")
+        os.makedirs(os.path.join(self.root, "gifs"))
+        with open(os.path.join(self.root, "gifs", "DESCRIPTION.md"), "w", encoding="utf-8") as fh:
+            fh.write("x\n")
+        files = propose(self.root, archive_categories={"creative"}, out_dir=self.out)
+        archive = set(l for l in files["archive"].splitlines() if l and not l.startswith("#"))
+        active = set(l for l in files["active"].splitlines() if l and not l.startswith("#"))
+        self.assertIn("creative/one", archive)
+        self.assertIn("gifs", archive)
+        self.assertIn("grill-me", active)
+        self.assertNotIn("creative/one", active)
+
+    def test_family_keeps_largest_by_body_bytes(self):
+        write_skill(self.root, "grill-me", "grill-me", body="x" * 10)
+        write_skill(self.root, "grilling", "grilling", body="y" * 500)
+        write_skill(self.root, "grill-with-docs", "grill-with-docs", body="z" * 10)
+        files = propose(self.root, archive_categories=set(), out_dir=self.out)
+        active = files["active"].split()
+        archive = files["archive"].split()
+        self.assertEqual(FAMILY_KEEP["grill"], 1)
+        self.assertIn("grilling", active)
+        self.assertIn("grill-me", archive)
+        self.assertIn("grill-with-docs", archive)
+
+    def test_category_verdict_beats_family_membership(self):
+        write_skill(self.root, "creative/claude-design", "claude-design", body="y" * 500)
+        write_skill(self.root, "prototype", "prototype", body="x" * 10)
+        files = propose(self.root, archive_categories={"creative"}, out_dir=self.out)
+        self.assertIn("creative/claude-design", files["archive"])
+        self.assertIn("prototype", files["active"])
+
+    def test_rewrite_list_is_active_offenders_only(self):
+        write_skill(self.root, "alpha", "alpha", description="x" * 500)
+        write_skill(self.root, "creative/one", "one", description="y" * 500)
+        files = propose(self.root, archive_categories={"creative"}, out_dir=self.out)
+        paths = [l.split("\t")[0] for l in files["rewrite"].splitlines() if l]
+        self.assertEqual(paths, ["alpha"])
+
+    def test_manifest_groups_whole_categories(self):
+        write_skill(self.root, "github/one", "one")
+        write_skill(self.root, "github/two", "two")
+        write_skill(self.root, "solo", "solo")
+        write_skill(self.root, "creative/cut", "cut")
+        files = propose(self.root, archive_categories={"creative"}, out_dir=self.out)
+        active = files["active"].split()
+        manifest = to_manifest(active, [s.path for s in discover_skills(self.root)])
+        self.assertEqual(manifest["default"], "archived")
+        self.assertEqual(manifest["categories"], {"github": "active"})
+        self.assertIn("solo", manifest["skills"])
+        self.assertNotIn("creative/cut", manifest["skills"])
+
+    def test_missing_family_member_is_an_error(self):
+        # FAMILIES lists prototype; it does not exist in this fixture tree
+        write_skill(self.root, "grill-me", "grill-me")
+        with self.assertRaises(SystemExit):
+            propose(self.root, archive_categories=set(), out_dir=self.out)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
