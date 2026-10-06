@@ -4,7 +4,9 @@
 Outputs land in .curation_review/. Every file is hand-editable; overlap
 between archive.txt and active.txt is checked by archive_skills.py and
 the comm check in the approval step — propose itself writes complements
-by construction.
+by construction. curation.proposed.yaml is generated from the lists at
+propose time — if the lists are hand-edited afterwards, regenerate the
+manifest (or edit it directly) before relying on it.
 """
 
 import argparse
@@ -27,6 +29,8 @@ def body_bytes(root: str, rel: str) -> int:
     total = 0
     for dirpath, _, filenames in os.walk(os.path.join(root, rel)):
         for f in filenames:
+            if f.startswith("."):
+                continue
             total += os.path.getsize(os.path.join(dirpath, f))
     return total
 
@@ -79,14 +83,17 @@ def propose(root: str, archive_categories: set[str], out_dir: str) -> dict:
             reasons[r["path"]] = "rule 3: category verdict"
 
     # Rule 2: redundancy families, keep-ranked by body size (largest first).
-    # A family partially present (some members known, some missing) is fatal
-    # only when rules 1 and 3 produced nothing — then the family ranking is
-    # the whole proposal, so incomplete family data cannot be trusted. Trees
-    # that omit whole families (fixtures, partial checkouts) are fine.
+    # Snapshot whether rules 1/3 yielded candidates: a family partially
+    # present (some members known, some missing) is fatal only when rules 1
+    # and 3 produced nothing — then the family ranking is the whole proposal,
+    # so incomplete family data cannot be trusted. Rule 2 archives produced by
+    # earlier families must not suppress that error. Trees that omit whole
+    # families (fixtures, partial checkouts) are fine.
+    rules13 = bool(reasons)
     for label, members in FAMILIES.items():
         present = [m for m in members if m in known]
         missing = [m for m in members if m not in known]
-        if present and missing and not reasons:
+        if present and missing and not rules13:
             sys.exit(f"error: family '{label}' member(s) not found: {', '.join(missing)}")
         keep = FAMILY_KEEP[label]
         eligible = [m for m in members if m in known and m not in reasons]
@@ -104,11 +111,14 @@ def propose(root: str, archive_categories: set[str], out_dir: str) -> dict:
     active_set = set(active_paths)
     broken_rows = [r for r in rows if r["path"] in active_set and r["broken_refs"]]
     broken_md = "# Broken references in surviving skills\n\n"
-    broken_md += "\n".join(
-        f"- `{r['path']}`: {', '.join('`' + b + '`' for b in r['broken_refs'])}"
-        for r in broken_rows
-    )
-    broken_md += "\n"
+    if broken_rows:
+        broken_md += "\n".join(
+            f"- `{r['path']}`: {', '.join('`' + b + '`' for b in r['broken_refs'])}"
+            for r in broken_rows
+        )
+        broken_md += "\n"
+    else:
+        broken_md += "(none)\n"
 
     offenders = [
         (r["path"], r["desc_chars"]) for r in rows
@@ -117,10 +127,10 @@ def propose(root: str, archive_categories: set[str], out_dir: str) -> dict:
 
     os.makedirs(out_dir, exist_ok=True)
     files = {
-        "archive": "\n".join(archive_paths) + "\n",
-        "active": "\n".join(active_paths) + "\n",
+        "archive": ("\n".join(archive_paths) + "\n") if archive_paths else "",
+        "active": ("\n".join(active_paths) + "\n") if active_paths else "",
         "rewrite": "\n".join(f"{p}\t{n}" for p, n in offenders) + ("\n" if offenders else ""),
-        "reasons": "\n".join(f"{p}\t{reasons[p]}" for p in archive_paths) + "\n",
+        "reasons": ("\n".join(f"{p}\t{reasons[p]}" for p in archive_paths) + "\n") if archive_paths else "",
         "manifest": yaml.safe_dump(to_manifest(active_paths, all_paths), sort_keys=False),
         "broken": broken_md,
     }
@@ -146,7 +156,15 @@ def main(argv=None) -> int:
     ap.add_argument("--out", default=".curation_review")
     args = ap.parse_args(argv)
     cats = {c.strip() for c in args.archive_categories.split(",") if c.strip()}
-    files = propose(args.root, cats, args.out)
+    try:
+        files = propose(args.root, cats, args.out)
+    except SystemExit as e:
+        if e.code:
+            print(e.code, file=sys.stderr)
+        return 2
+    except OSError as e:
+        print(f"error: {e}", file=sys.stderr)
+        return 2
     n_arch = len(_lines(files["archive"]))
     n_act = len(_lines(files["active"]))
     n_rw = len([l for l in files["rewrite"].splitlines() if l])

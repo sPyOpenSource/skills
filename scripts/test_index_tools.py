@@ -7,6 +7,8 @@ import sys
 import tempfile
 import unittest
 
+import yaml
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from curation.skills import discover_skills, est_tokens
@@ -20,6 +22,7 @@ from inventory import (
 )
 
 SCRIPT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inventory.py")
+PROPOSE_SCRIPT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "propose.py")
 
 
 def write_skill(root, relpath, name, description="A skill.", body=""):
@@ -266,8 +269,48 @@ class CliTests(unittest.TestCase):
         self.assertIn(f"error: {outdir} is not a file", res.stderr)
         self.assertEqual(res.stdout, "")
 
+    def test_propose_bad_root_exits_2_with_error_on_stderr(self):
+        res = subprocess.run(
+            [sys.executable, PROPOSE_SCRIPT, "--root", "/nonexistent/path-xyz"],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(res.returncode, 2)
+        self.assertIn("error:", res.stderr)
+        self.assertNotIn("Traceback", res.stderr)
+        self.assertEqual(res.stdout, "")
 
-from propose import FAMILY_KEEP, propose, to_manifest
+    def test_propose_unwritable_out_exits_2_with_error_on_stderr(self):
+        blocker = os.path.join(self.root, "blocker")
+        with open(blocker, "w", encoding="utf-8") as fh:
+            fh.write("not a directory\n")
+        res = subprocess.run(
+            [sys.executable, PROPOSE_SCRIPT, "--root", self.root, "--out", os.path.join(blocker, "sub")],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(res.returncode, 2)
+        self.assertIn("error:", res.stderr)
+        self.assertNotIn("Traceback", res.stderr)
+        self.assertEqual(res.stdout, "")
+
+    def test_propose_family_guard_exits_2_with_error_on_stderr(self):
+        write_skill(self.root, "grill-me", "grill-me")
+        res = subprocess.run(
+            [sys.executable, PROPOSE_SCRIPT, "--root", self.root, "--out", self.root],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(res.returncode, 2)
+        self.assertIn("error: family 'grill'", res.stderr)
+        self.assertNotIn("Traceback", res.stderr)
+        self.assertEqual(res.stdout, "")
+
+
+from propose import _lines, FAMILY_KEEP, propose, to_manifest
 
 
 def body_bytes(root, rel):
@@ -344,6 +387,86 @@ class ProposeTests(unittest.TestCase):
         write_skill(self.root, "grill-me", "grill-me")
         with self.assertRaises(SystemExit):
             propose(self.root, archive_categories=set(), out_dir=self.out)
+
+    def test_earlier_family_rule2_archives_do_not_suppress_missing_member_error(self):
+        # grill is complete and archives two members (rule 2), so reasons is
+        # non-empty by the time the partial understand family is visited; the
+        # snapshot must still see no rule 1/3 candidates and bail out.
+        write_skill(self.root, "grill-me", "grill-me", body="x" * 10)
+        write_skill(self.root, "grill-with-docs", "grill-with-docs", body="y" * 10)
+        write_skill(self.root, "grilling", "grilling", body="z" * 10)
+        write_skill(self.root, "understand-anything/understand", "understand")
+        with self.assertRaises(SystemExit):
+            propose(self.root, archive_categories=set(), out_dir=self.out)
+
+    def test_partial_family_is_allowed_when_rule13_candidates_exist(self):
+        # 2 of understand's 8 members present, but a rule-1 inert dir provides
+        # candidates: the partial family must not be fatal, and its present
+        # members must stay active (under-keep, never phantom paths).
+        write_skill(self.root, "understand-anything/understand", "understand")
+        write_skill(self.root, "understand-anything/understand-chat", "understand-chat")
+        os.makedirs(os.path.join(self.root, "gifs"))
+        with open(os.path.join(self.root, "gifs", "DESCRIPTION.md"), "w", encoding="utf-8") as fh:
+            fh.write("x\n")
+        files = propose(self.root, archive_categories=set(), out_dir=self.out)
+        active = files["active"].split()
+        self.assertIn("understand-anything/understand", active)
+        self.assertIn("understand-anything/understand-chat", active)
+        self.assertNotIn("understand-anything/understand", files["archive"])
+        self.assertNotIn("understand-anything/understand-chat", files["archive"])
+
+    def test_archive_reasons_tsv_lines_carry_rule_tags(self):
+        write_skill(self.root, "creative/one", "one")
+        os.makedirs(os.path.join(self.root, "gifs"))
+        with open(os.path.join(self.root, "gifs", "DESCRIPTION.md"), "w", encoding="utf-8") as fh:
+            fh.write("x\n")
+        files = propose(self.root, archive_categories={"creative"}, out_dir=self.out)
+        lines = set(l for l in files["reasons"].splitlines() if l)
+        self.assertIn("creative/one\trule 3: category verdict", lines)
+        self.assertTrue(any(l.startswith("gifs\trule 1:") for l in lines), lines)
+
+    def test_broken_refs_md_lists_surviving_skill_refs(self):
+        write_skill(self.root, "alpha", "alpha", body="See `missing.md`.")
+        files = propose(self.root, archive_categories=set(), out_dir=self.out)
+        self.assertIn("- `alpha`: `missing.md`", files["broken"])
+
+    def test_broken_refs_md_uses_none_placeholder_when_no_survivor_has_refs(self):
+        write_skill(self.root, "alpha", "alpha")
+        files = propose(self.root, archive_categories=set(), out_dir=self.out)
+        self.assertIn("(none)", files["broken"])
+
+    def test_family_tie_break_prefers_lexicographically_smaller_path(self):
+        write_skill(self.root, "grill-me", "grill-me", body="x" * 100)
+        write_skill(self.root, "grilling", "grilling", body="x" * 100)
+        os.makedirs(os.path.join(self.root, "gifs"))
+        with open(os.path.join(self.root, "gifs", "DESCRIPTION.md"), "w", encoding="utf-8") as fh:
+            fh.write("x\n")
+        files = propose(self.root, archive_categories=set(), out_dir=self.out)
+        self.assertEqual(files["active"].split(), ["grill-me"])
+        self.assertIn("grilling", files["archive"].split())
+
+    def test_dotfile_in_skill_dir_does_not_affect_ranking(self):
+        write_skill(self.root, "grill-me", "grill-me", body="x" * 10)
+        write_skill(self.root, "grilling", "grilling", body="y" * 500)
+        write_skill(self.root, "grill-with-docs", "grill-with-docs", body="z" * 10)
+        store = os.path.join(self.root, "grill-me", ".DS_Store")
+        with open(store, "w", encoding="utf-8") as fh:
+            fh.write("B" * 1_000_000)
+        files = propose(self.root, archive_categories=set(), out_dir=self.out)
+        self.assertEqual(files["active"].split(), ["grilling"])
+        self.assertIn("grill-me", files["archive"].split())
+        self.assertIn("grill-with-docs", files["archive"].split())
+
+    def test_empty_root_writes_empty_lists_and_base_manifest(self):
+        files = propose(self.root, archive_categories=set(), out_dir=self.out)
+        self.assertEqual(files["archive"], "")
+        self.assertEqual(files["active"], "")
+        self.assertEqual(_lines(files["archive"]), [])
+        self.assertEqual(_lines(files["active"]), [])
+        self.assertEqual(
+            yaml.safe_load(files["manifest"]),
+            {"default": "archived", "categories": {}, "skills": {}},
+        )
 
 
 if __name__ == "__main__":
