@@ -350,3 +350,12 @@ When the orchestration involves significant context usage, long review loops, or
 - **`references/gates-taxonomy.md`** — The four canonical gate types (Pre-flight, Revision, Escalation, Abort) with behavior, recovery, and examples. Load when designing or reviewing any workflow that has validation checkpoints — use the vocabulary explicitly so each gate has defined entry, failure behavior, and resumption rules.
 
 Both references adapted from gsd-build/get-shit-done (MIT © 2025 Lex Christopherson).
+
+## References
+
+- `references/sdd-playbook.md` — deeper operational detail: pre-flight plan review, model selection, reviewer-prompt construction, file handoffs, durable progress
+- `references/implementer-prompt.md` — prompt template for the implementer subagent
+- `references/task-reviewer-prompt.md` — prompt template for the task-reviewer subagent
+- `scripts/task-brief` — extract one task's text from a plan into a file
+- `scripts/sdd-workspace` — resolve the short-lived artifact directory
+- `scripts/review-package` — build a review package for one task
