@@ -24,6 +24,12 @@ CMD ["vllm", "serve", "meta-llama/Llama-3-8B-Instruct", \
      "--gpu-memory-utilization", "0.9"]
 ```
 
+> **Security:** this binds to all interfaces with **no API key** — anyone who can
+> reach port 8000 can use the model. Add auth unless the container is only
+> reachable on a private network: `--api-key`, a reverse proxy in front of
+> `127.0.0.1`, and/or a firewall rule scoping the port to trusted IPs. See
+> SKILL.md "Workflow 1 — Production API deployment" for the pattern.
+
 **Build and run**:
 ```bash
 docker build -t vllm-server .

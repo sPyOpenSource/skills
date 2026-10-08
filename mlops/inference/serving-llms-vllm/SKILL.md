@@ -53,6 +53,8 @@ print(client.chat.completions.create(
 "
 ```
 
+`api_key='EMPTY'` only works because the default server has **no auth**. If the server runs with `--api-key <key>`, the client must send `api_key='<key>'`. Never bind the keyless server beyond localhost (see security note under Workflow 1).
+
 ## Common workflows
 
 ### Workflow 1: Production API deployment
@@ -94,6 +96,18 @@ vllm serve meta-llama/Meta-Llama-3-8B-Instruct \
   --port 8000 \
   --host 0.0.0.0
 ```
+
+> **Security: `--host 0.0.0.0` + `api_key='EMPTY'` is an unauthenticated public
+> endpoint.** Anyone who can reach the port can submit prompts (GPU cost) and,
+> depending on your setup, read responses. Before binding to all interfaces:
+> 1. Require an API key: `--api-key "$(openssl rand -hex 16)"` (then all clients
+>    send `Authorization: Bearer <key>`; `api_key='EMPTY'` will no longer work).
+> 2. Or keep it local-only (`--host 127.0.0.1`) and front it with an
+>    authenticated reverse proxy (Nginx/Caddy) or an ingress that terminates TLS
+>    and auth.
+> 3. Never expose `--host 0.0.0.0` on a public IP without one of the above and a
+>    firewall rule restricting the port.
+> Do not use `sudo ufw allow 8000` (open to the world) for a keyless server.
 
 **Step 2: Test with limited traffic**
 

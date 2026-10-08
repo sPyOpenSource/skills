@@ -305,10 +305,25 @@ curl -s -X PUT \
 
 ```bash
 gh secret set API_KEY --body "your-secret-value"
-gh secret set SSH_KEY < ~/.ssh/id_rsa
 gh secret list
 gh secret delete API_KEY
 ```
+
+**Never put a private SSH key in a repo secret.** Secrets like `gh secret set SSH_KEY < ~/.ssh/id_rsa` expose your personal key to anyone with CI access and to every workflow run. For push access from Actions, use a **deploy key** instead — a separate key scoped to one repository:
+
+```bash
+# 1. Create a dedicated key (never reuse your personal ~/.ssh key)
+ssh-keygen -t ed25519 -C "deploy-myrepo-ci" -f ~/.ssh/deploy_myrepo -N ""
+
+# 2. Add the PUBLIC key as a deploy key (Settings → Deploy keys → Add), or via gh:
+gh api repos/$OWNER/$REPO/keys \
+  -f title="ci-deploy" -f key="$(cat ~/.ssh/deploy_myrepo.pub)" -F read_only=false
+
+# 3. Store the PRIVATE key as a secret for the workflow to use
+gh secret set SSH_DEPLOY_KEY < ~/.ssh/deploy_myrepo
+```
+
+Prefer GitHub's `actions/deploy-key`-style checkout with `ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}`, or better, OIDC/`GITHUB_TOKEN` when it fits — no stored key at all.
 
 **With curl:**
 

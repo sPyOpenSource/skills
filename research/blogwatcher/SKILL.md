@@ -23,12 +23,33 @@ Pick one method:
 
 - **Go:** `go install github.com/JulienTant/blogwatcher-cli/cmd/blogwatcher-cli@latest`
 - **Docker:** `docker run --rm -v blogwatcher-cli:/data ghcr.io/julientant/blogwatcher-cli`
-- **Binary (Linux amd64):** `curl -sL https://github.com/JulienTant/blogwatcher-cli/releases/latest/download/blogwatcher-cli_linux_amd64.tar.gz | tar xz -C /usr/local/bin blogwatcher-cli`
-- **Binary (Linux arm64):** `curl -sL https://github.com/JulienTant/blogwatcher-cli/releases/latest/download/blogwatcher-cli_linux_arm64.tar.gz | tar xz -C /usr/local/bin blogwatcher-cli`
-- **Binary (macOS Apple Silicon):** `curl -sL https://github.com/JulienTant/blogwatcher-cli/releases/latest/download/blogwatcher-cli_darwin_arm64.tar.gz | tar xz -C /usr/local/bin blogwatcher-cli`
-- **Binary (macOS Intel):** `curl -sL https://github.com/JulienTant/blogwatcher-cli/releases/latest/download/blogwatcher-cli_darwin_amd64.tar.gz | tar xz -C /usr/local/bin blogwatcher-cli`
+- **Binary (Linux amd64):** download, verify, install (see below)
+- **Binary (Linux arm64):** same pattern with `blogwatcher-cli_linux_arm64.tar.gz`
+- **Binary (macOS Apple Silicon):** same pattern with `blogwatcher-cli_darwin_arm64.tar.gz`
+- **Binary (macOS Intel):** same pattern with `blogwatcher-cli_darwin_amd64.tar.gz`
 
 All releases: https://github.com/JulienTant/blogwatcher-cli/releases
+
+**Verify binaries before installing.** Never pipe a download straight into `tar -C /usr/local/bin` — download to a temp dir first, check the release checksum when one is published, then install:
+
+```bash
+OS=$(uname -s | tr '[:upper:]' '[:lower:]')          # linux | darwin
+case "$(uname -m)" in x86_64) ARCH=amd64 ;; arm64|aarch64) ARCH=arm64 ;; *) echo "unsupported arch"; exit 1 ;; esac
+URL="https://github.com/JulienTant/blogwatcher-cli/releases/latest/download/blogwatcher-cli_${OS}_${ARCH}.tar.gz"
+TMP=$(mktemp -d) && curl -sSL -o "$TMP/blogwatcher-cli.tar.gz" "$URL"
+
+# Checksums: use the release's checksums file when published
+curl -sSL -o "$TMP/checksums.txt" \
+  "https://github.com/JulienTant/blogwatcher-cli/releases/latest/download/checksums.txt" 2>/dev/null \
+  && (cd "$TMP" && shasum -a 256 -c checksums.txt --ignore-missing) \
+  || echo "WARN: no checksums file published — inspect the archive before installing"
+
+tar -xz -C "$TMP" blogwatcher-cli
+install -m 0755 "$TMP/blogwatcher-cli" /usr/local/bin/blogwatcher-cli
+rm -rf "$TMP"
+```
+
+If no checksums file is published, ask the user to confirm before installing to `/usr/local/bin` (needs sudo).
 
 ### Docker with persistent storage
 

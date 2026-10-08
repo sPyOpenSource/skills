@@ -321,7 +321,7 @@ See `references/network-patterns.md` for complete build scripts + shader code.
 
 - MCP runs on localhost only (port 40404). No authentication — any local process can send commands.
 - `td_execute_python` has unrestricted access to the TD Python environment and filesystem as the TD process user.
-- `setup.sh` downloads twozero.tox from the official 404zero.com URL. Verify the download if concerned.
+- `setup.sh` downloads twozero.tox from the official 404zero.com URL. A `.tox` is executable content loaded into TouchDesigner — inspect it, then set `TWOZERO_SHA256=$(shasum -a 256 ~/Downloads/twozero.tox)` before re-running setup so future downloads are checksum-verified.
 - The skill never sends data outside localhost. All MCP communication is local.
 
 ## References

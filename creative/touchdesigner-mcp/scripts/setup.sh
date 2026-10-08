@@ -8,6 +8,9 @@ OK="${GREEN}✔${NC}"; FAIL="${RED}✘${NC}"; WARN="${YELLOW}⚠${NC}"
 
 TWOZERO_URL="https://www.404zero.com/pisang/twozero.tox"
 TOX_PATH="$HOME/Downloads/twozero.tox"
+# Optional pinned checksum: set TWOZERO_SHA256 to enforce integrity on download.
+# Get it once from a trusted run: shasum -a 256 ~/Downloads/twozero.tox
+TWOZERO_SHA256="${TWOZERO_SHA256:-}"
 HERMES_HOME_DIR="${HERMES_HOME:-$HOME/.hermes}"
 HERMES_CFG="${HERMES_HOME_DIR}/config.yaml"
 MCP_PORT=40404
@@ -30,13 +33,46 @@ else
 fi
 
 # ── 2. Ensure twozero.tox exists ──
+# A .tox is executable content loaded into TouchDesigner — verify before installing.
 if [[ -f "$TOX_PATH" ]]; then
-    echo -e " ${OK} twozero.tox already exists at ${TOX_PATH}"
+    if [[ -n "$TWOZERO_SHA256" ]]; then
+        actual=$(shasum -a 256 "$TOX_PATH" | awk '{print $1}')
+        if [[ "$actual" == "$TWOZERO_SHA256" ]]; then
+            echo -e " ${OK} twozero.tox checksum verified at ${TOX_PATH}"
+        else
+            echo -e " ${FAIL} Checksum mismatch for ${TOX_PATH}"
+            echo "       expected: $TWOZERO_SHA256"
+            echo "       actual:   $actual"
+            exit 1
+        fi
+    else
+        echo -e " ${WARN} twozero.tox exists at ${TOX_PATH} (no TWOZERO_SHA256 set — not verified)"
+    fi
 else
     echo -e " ${WARN} twozero.tox not found — downloading..."
-    if curl -fSL -o "$TOX_PATH" "$TWOZERO_URL" 2>/dev/null; then
-        echo -e " ${OK} Downloaded twozero.tox to ${TOX_PATH}"
+    TMP_TOX="$(mktemp -t twozero).tox"
+    if curl -fSL -o "$TMP_TOX" "$TWOZERO_URL" 2>/dev/null; then
+        # Reject obvious failure pages and verify checksum when pinned
+        if ! file "$TMP_TOX" | grep -qiE 'data|binary|touchdesigner'; then
+            echo -e " ${FAIL} Download does not look like a .tox file — discarding"
+            rm -f "$TMP_TOX"
+            manual_steps+=("Download twozero.tox manually from ${TWOZERO_URL} to ${TOX_PATH}")
+        elif [[ -n "$TWOZERO_SHA256" && "$(shasum -a 256 "$TMP_TOX" | awk '{print $1}')" != "$TWOZERO_SHA256" ]]; then
+            echo -e " ${FAIL} Checksum mismatch — discarding download"
+            rm -f "$TMP_TOX"
+            exit 1
+        else
+            mv "$TMP_TOX" "$TOX_PATH"
+            if [[ -n "$TWOZERO_SHA256" ]]; then
+                echo -e " ${OK} Downloaded and verified twozero.tox at ${TOX_PATH}"
+            else
+                echo -e " ${OK} Downloaded twozero.tox to ${TOX_PATH}"
+                echo -e " ${WARN} Unverified download — set TWOZERO_SHA256 after inspecting the file:"
+                echo "         shasum -a 256 ${TOX_PATH}"
+            fi
+        fi
     else
+        rm -f "$TMP_TOX"
         echo -e " ${FAIL} Failed to download twozero.tox from ${TWOZERO_URL}"
         echo "       Please download manually and place at ${TOX_PATH}"
         manual_steps+=("Download twozero.tox from ${TWOZERO_URL} to ${TOX_PATH}")

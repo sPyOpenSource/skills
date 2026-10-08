@@ -210,6 +210,8 @@ curl http://localhost:8000/health
 2. **Check port binding**:
 ```bash
 # Bind to all interfaces for remote access
+# SECURITY: keyless 0.0.0.0 = unauthenticated endpoint. Add --api-key or a
+# firewall scoping the port to trusted IPs before opening it beyond localhost.
 vllm serve MODEL --host 0.0.0.0 --port 8000
 
 # Check if port is in use
@@ -219,6 +221,7 @@ lsof -i :8000
 3. **Check firewall**:
 ```bash
 # Allow port through firewall
+# Prefer scoping to a trusted source:  sudo ufw allow from 10.0.0.0/8 to any port 8000
 sudo ufw allow 8000
 ```
 
